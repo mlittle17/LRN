@@ -1,21 +1,26 @@
-const express = require('express');
-const path = require('path');
-const app = express();
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('/', (req,res) => {
-  res.send('hello');
+const express = require("express");
+const app = express(); // create express app
+
+app.use(express.json());
+
+app.post('/test', async(req, res) => {
+  try {
+    console.log('i am hitting post test');
+    res.send("This is from test route");
+  } catch (err) {
+    console.log('problem', err);
+  }
 });
-// An api endpoint that returns a short list of items
-app.get('/api/getList', (req,res) => {
-    var list = ["item1", "item2", "item3"];
-    res.json(list);
-    console.log('Sent list of items');
+
+app.get("/", (req, res) => {
+  res.send("This is from express.js");
 });
-// Handles any requests that don't match the ones above
-app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+
+app.get("/test", (req, res) => {
+  res.send("This is from test get");
 });
-const port = process.env.PORT || 8000;
-app.listen(port);
-console.log('App is listening on port ' + port);
+
+// start express server on port 5000
+app.listen(8000, () => {
+  console.log("server started on port 8000");
+});
