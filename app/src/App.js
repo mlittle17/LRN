@@ -5,7 +5,7 @@ import './App.css';
 function App() {
 
   useEffect(() => {
-    axios.get('/')
+    axios.post('/test')
     .then(response => {
       console.log(response);
     })
