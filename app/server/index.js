@@ -38,7 +38,9 @@ io.on("connection", socket => {
       }
   });
 
-
+  socket.on("offer", payload => {
+      io.to(payload.target).emit("offer", payload);
+  });
 
 
 
