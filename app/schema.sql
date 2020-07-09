@@ -1,3 +1,6 @@
+Drop Database If Exists lrn;
+Create Database lrn;
+
 CREATE TABLE users (
   Id SERIAL PRIMARY KEY NOT NULL,
   username VARCHAR(50) NOT NULL,
