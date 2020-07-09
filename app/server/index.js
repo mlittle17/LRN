@@ -46,7 +46,10 @@ io.on("connection", socket => {
       io.to(payload.target).emit("answer", payload);
   });
 
-
+  socket.on("ice-candidate", incoming => {
+      io.to(incoming.target).emit("ice-candidate", incoming.candidate);
+  });
+});
 
 // start express server
 app.listen(8000, () => {
