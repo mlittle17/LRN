@@ -42,7 +42,9 @@ io.on("connection", socket => {
       io.to(payload.target).emit("offer", payload);
   });
 
-
+  socket.on("answer", payload => {
+      io.to(payload.target).emit("answer", payload);
+  });
 
 
 
