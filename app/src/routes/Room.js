@@ -89,7 +89,7 @@ const Room = (props) => {
         }).catch(e => console.log(e));
     }
 
-    const handleRecieveCall(incoming) => {
+    const handleRecieveCall = (incoming) => {
         peerRef.current = createPeer();
         const desc = new RTCSessionDescription(incoming.sdp);
         peerRef.current.setRemoteDescription(desc).then(() => {
