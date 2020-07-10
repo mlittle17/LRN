@@ -83,21 +83,10 @@ io.on('connection', socket => {
 
   // the payload contains who we are as a user and the 'offer' object.
 
-<<<<<<< HEAD
-app.get('/authTest', (req, res) => {
-  res.send('Logged In!');
-});
-app.post('/user', createUser);
-app.post('/user', createUser);
-app.post('/topic', createTopic);
-app.get('/user', getAllUser);
-app.post('/event', createEvent);
-=======
   // listen for the answer event
   socket.on('answer', payload => {
     io.to(payload.target).emit('answer', payload);
   });
->>>>>>> 74d964153d946be085bec4a7d8598dadd313e140
 
   // what is ice canidate?
   // each peer will come up with an 'ice server'
