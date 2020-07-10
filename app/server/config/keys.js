@@ -4,5 +4,8 @@ module.exports = {
   google: {
     clientID: '986631321216-n48rdct7h242bhiveccrobds87j5vhr4.apps.googleusercontent.com',
     clientSecret: '2OKD4EI2Ntq-zSBUxfzRPHTF'
+  },
+  session: {
+    cookieKey: 'this is a test'
   }
 };
