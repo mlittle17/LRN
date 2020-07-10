@@ -149,7 +149,7 @@
 
 import React, { useState } from 'react'
 import { NavLink, Switch, Route } from 'react-router-dom';
-import { Menu, Segment } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
 import Home from './Home.jsx';
 import Profile from './Profile.jsx';
@@ -173,46 +173,50 @@ const Navbar = () => {
           active={activeItem === 'home'}
           onClick={handleItemClick}
         >
-          <NavLink to="/" class="item">Home</NavLink>
+          <NavLink to="/" class="item">
+            <div id="top">
+              <img id="logo" alt="LRN logo" src="../styles/images/logo.png" />
+            </div>
+          </NavLink>
         </Menu.Item>
 
-        <Menu.Item
-          name='sessions'
-          active={activeItem === 'sessions'}
-          onClick={handleItemClick}
-        >
-          <NavLink to="/profile" class="item">Profile</NavLink>
-        </Menu.Item>
-
-        <Menu.Item
-          name='profile'
-          active={activeItem === 'profile'}
-          onClick={handleItemClick}
-        >
-          <NavLink to="/sessions" class="item">Sessions</NavLink>
-        </Menu.Item>
-
-        <Menu.Menu position='right' class="right menu">
           <Menu.Item
-            name='logout'
-            active={activeItem === 'logout'}
+            name='sessions'
+            active={activeItem === 'sessions'}
             onClick={handleItemClick}
           >
-            <NavLink to="/logout" class="item">Logout</NavLink>
+            <NavLink to="/profile" class="item">Profile</NavLink>
           </Menu.Item>
-        </Menu.Menu>
+
+          <Menu.Item
+            name='profile'
+            active={activeItem === 'profile'}
+            onClick={handleItemClick}
+          >
+            <NavLink to="/sessions" class="item">Sessions</NavLink>
+          </Menu.Item>
+
+          <Menu.Menu position='right' class="right menu">
+            <Menu.Item
+              name='logout'
+              active={activeItem === 'logout'}
+              onClick={handleItemClick}
+            >
+              <NavLink to="/logout" class="item">Logout</NavLink>
+            </Menu.Item>
+          </Menu.Menu>
       </Menu>
 
-      <div>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/sessions" component={Sessions} />
-          <Route exact path="/logout" component={Logout} />
-        </Switch>
-      </div>
+        <div>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/sessions" component={Sessions} />
+            <Route exact path="/logout" component={Logout} />
+          </Switch>
+        </div>
 
-      {/* <Segment>
+        {/* <Segment>
         <img src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
       </Segment> */}
     </div>
