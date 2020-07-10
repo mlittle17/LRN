@@ -1,4 +1,4 @@
-const db = require('../db/index')
+const db = require('../db/index');
 // a change
 // database methods will go here then import into routes
 /*
@@ -7,14 +7,15 @@ Users
 
 // method for inserting user info
 const createUser = async(req, res) => {
-  let { user, firstName, lastName, emails, image, zipcode } = req.body;
   try{
-     await db.none("INSERT INTO users (username, namefirst, namelast, email, imageurl, zip) VALUES (?, ?, ?, ?, ?, ?)", [user, firstName, lastName, emails, image, zipcode]);
+     await db.query("INSERT INTO users (username, namefirst, namelast, email, imageurl, zip) VALUES ( ${user}, ${firstName}, ${lastName}, ${emails}, ${image}, ${zipcode})", req.body);
     res.send({message: 'user added'})
   } catch(err){
     console.log('nah bruh', err);
   }
 };
+
+// method that gets  particular users info
 const getUser = async(req, res) => {
   try{
    let user = await db.one(`SELECT * FROM user WHERE id = ${req.params.id}`);
@@ -33,18 +34,34 @@ const getAllUser = async(req, res) => {
   }
 }
 
-// method that gets  particular users info
 
 /*
 Events
  */
 // method that insert into event
+const createEvent = async(req, res) => {
+  try{
+    // not working yet
+     await db.query("INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_Id}, ${classLimit})", req.body);
+    res.send({message: 'event added'})
+  } catch(err){
+    console.log('nah bruh', err);
+  }
+};
 // method that get from event
 
 /*
 Topic
  */
 // method that insert into topic
+const createTopic = async(req,res) => {
+  try{
+    await db.query("INSERT INTO topic (name) VALUES (${name})", req.body);
+    res.send('it worked')
+  } catch(err){
+    console.log('nah', err);
+  }
+};
 // method that get from topix
 
 /*
@@ -80,5 +97,7 @@ Flash card packs
 module.exports = {
   getAllUser,
   getUser,
-  createUser
+  createUser,
+  createTopic,
+  createEvent,
 }

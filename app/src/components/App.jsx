@@ -20,7 +20,6 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div>LRN</div>
       <Router>
         <div className="App">
         </div>

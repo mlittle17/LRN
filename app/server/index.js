@@ -29,6 +29,8 @@ app.get('/test', (req, res) => {
 
 app.post('/user', createUser)
 
+const { app } = require('./app');
+
 // start express server
 // Creating your own HTTP server to allow us the ability to reuse the server
 // Useful for running socket.io in the same server instance
