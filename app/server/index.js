@@ -1,35 +1,12 @@
-const express = require('express');
+const { app } = require('./app');
 
-const app = express();
 const http = require('http');
 
 const server = http.createServer(app);
 const socket = require('socket.io');
 
 const io = socket(server);
-const { createUser, getAllUser } = require('./db/methods');
 
-app.use(express.json());
-
-app.post('/test', async(req, res) => {
-  try {
-    res.send('This is from test route');
-  } catch (err) {
-    console.log('problem', err);
-  }
-});
-
-app.get('/', (req, res) => {
-  res.send('This is from express.js');
-});
-
-app.get('/test', (req, res) => {
-  res.send('This is from test get');
-});
-
-app.post('/user', createUser)
-
-const { app } = require('./app');
 
 // start express server
 // Creating your own HTTP server to allow us the ability to reuse the server
