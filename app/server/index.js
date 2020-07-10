@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, getAllUser } = require('./db/methods');
+const { createUser, getAllUser, createTopic, createEvent, getUser } = require('./db/methods');
 
 const app = express(); // create express app
 
@@ -22,7 +22,10 @@ app.get('/test', (req, res) => {
   res.send('This is from test get');
 });
 
-app.post('/user', createUser)
+app.post('/user', createUser);
+app.post('/topic', createTopic);
+app.get('/user', getAllUser)
+app.post('/event', createEvent)
 
 // start express server on port 5000
 app.listen(8000, () => {
