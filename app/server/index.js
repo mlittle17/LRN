@@ -4,6 +4,9 @@ const http = require("http");
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
+const { createUser, getAllUser } = require('./db/methods');
+
+const app = express(); // create express app
 
 app.use(express.json());
 
