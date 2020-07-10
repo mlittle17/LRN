@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 
 // auth login
-router.get('login', (req, res) => {
+router.get('/login', (req, res) => {
   res.render('login');
 });
 
@@ -18,6 +18,7 @@ router.get('/google', passport.authenticate('google', {
 
 // callback route for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+  req.user
   res.send('you reached')
 })
 
