@@ -155,6 +155,8 @@ import Home from './Home.jsx';
 import Profile from './Profile.jsx';
 import Sessions from './Sessions.jsx';
 import Logout from './Logout.jsx';
+import CreateRoom from "../routes/CreateRoom";
+import Room from "../routes/Room";
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -207,8 +209,10 @@ const Navbar = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/profile" component={Profile} />
-          <Route exact path="/sessions" component={Sessions} />
+          {/* <Route exact path="/sessions" component={Sessions} /> */}
           <Route exact path="/logout" component={Logout} />
+          <Route path="/sessions" exact component={CreateRoom} />
+          <Route path="/room/:roomID" component={Room} />
         </Switch>
       </div>
 
