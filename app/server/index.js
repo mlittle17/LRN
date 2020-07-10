@@ -1,5 +1,7 @@
 const express = require('express');
-const { createUser, getAllUser, createTopic, createEvent, getUser } = require('./db/methods');
+const {
+  createUser, getAllUser, createTopic, createEvent, getUser,
+} = require('./db/methods');
 
 const app = express(); // create express app
 const authRoutes = require('./auth-routes');
@@ -10,12 +12,12 @@ const keys = require('./config/keys');
 
 app.use(express.json());
 
-// 
+//
 app.use(cookieSession({
   // cookie will last for one day
   maxAge: 24 * 60 * 60 * 1000,
   // being stored in keys.js
-  keys: [keys.session.cookieKey]
+  keys: [keys.session.cookieKey],
 }));
 
 // initialize passport
@@ -43,13 +45,13 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/authTest', (req, res) => {
-  res.send('Logged In!')
+  res.send('Logged In!');
 });
-app.post('/user', createUser)
+app.post('/user', createUser);
 app.post('/user', createUser);
 app.post('/topic', createTopic);
-app.get('/user', getAllUser)
-app.post('/event', createEvent)
+app.get('/user', getAllUser);
+app.post('/event', createEvent);
 
 // start express server on port 5000
 app.listen(8000, () => {
