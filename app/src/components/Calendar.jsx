@@ -7,26 +7,26 @@ import SessionCard from './SessionCard.jsx';
 const localizer = momentLocalizer(moment);
 
 const mySessionsList = [{
-  'title': 'DTS STARTS',
-  'start': new Date(2020, 7, 13, 0, 0, 0),
-  'end': new Date(2020, 7, 20, 0, 0, 0),
+  title: 'DTS STARTS',
+  start: new Date(2020, 7, 13, 0, 0, 0),
+  end: new Date(2020, 7, 20, 0, 0, 0),
 },
 {
-  'title': 'DTS ENDS',
-  'start': new Date(2020, 10, 6, 0, 0, 0),
-  'end': new Date(2020, 10, 13, 0, 0, 0),
+  title: 'DTS ENDS',
+  start: new Date(2020, 10, 6, 0, 0, 0),
+  end: new Date(2020, 10, 13, 0, 0, 0),
 },
 {
-  'title': 'Conference',
-  'start': new Date(2021, 3, 11),
-  'end': new Date(2021, 3, 13),
-  'desc': 'Big conference for important people',
+  title: 'Conference',
+  start: new Date(2021, 3, 11),
+  end: new Date(2021, 3, 13),
+  desc: 'Big conference for important people',
 },
 {
-  'title': 'Meeting',
-  'start': new Date(2021, 3, 12, 10, 30, 0, 0),
-  'end': new Date(2021, 3, 12, 12, 30, 0, 0),
-  'desc': 'Pre-meeting meeting, to prepare for the meeting',
+  title: 'Meeting',
+  start: new Date(2021, 3, 12, 10, 30, 0, 0),
+  end: new Date(2021, 3, 12, 12, 30, 0, 0),
+  desc: 'Pre-meeting meeting, to prepare for the meeting',
 }];
 
 const SessionCalendar = ({
