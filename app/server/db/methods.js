@@ -49,6 +49,26 @@ const createEvent = async(req, res) => {
 };
 // method that get from event
 
+const getAllEvents = async(req, res) => {
+  try {
+    const events = await db.any('SELECT * FROM event');
+    res.send(events);
+  } catch (err) {
+    console.log(`no events, ${err}`);
+  }
+};
+
+// get events of a particular user
+
+const getEventbyUser = async(req, res) => {
+  try {
+    const userEvents = await db.any(`SELECT * FROM event where users_Id = ${req.params.id}`);
+    res.send(userEvents);
+  } catch (err) {
+    console.log(`this user is boring, ${err}`);
+  }
+};
+
 /*
 Topic
  */
@@ -61,7 +81,23 @@ const createTopic = async(req, res) => {
     console.log('nah', err);
   }
 };
-// method that get from topix
+// method that get from topic
+const getTopic = async(req, res) => {
+  try {
+    await db.any('SELECT * FROM topic');
+  } catch (err) {
+    console.log(`they not ready for this knowledge, ${err}`);
+  }
+};
+
+// get topics a user likes
+const getTopicByUser = async(req, res) => {
+  try {
+    await db.any(`SELECT * FROM topic WHERE user_id = ${req.params.id}`);
+  } catch (err) {
+    console.log(`no user topics, ${err}`);
+  }
+};
 
 /*
 Document
@@ -94,9 +130,13 @@ Flash card packs
 // method that get from Flash Card Pack
 
 module.exports = {
+  createEvent,
+  getAllEvents,
   getAllUser,
   getUser,
   createUser,
   createTopic,
-  createEvent,
+  getTopic,
+  getTopicByUser,
+  getEventbyUser,
 };
