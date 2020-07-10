@@ -13,7 +13,7 @@ CREATE TABLE users (
 
 CREATE TABLE event (
   Id SERIAL PRIMARY KEY NOT NULL,
-  topic SERIAL NOT NULL,
+  topic VARCHAR NOT NULL,
   date VARCHAR(50),
   time VARCHAR(50),
   users_Id SERIAL NOT NULL,
