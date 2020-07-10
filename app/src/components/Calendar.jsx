@@ -9,7 +9,7 @@ const localizer = momentLocalizer(moment);
 const mySessionsList = [{
   'title': 'DTS STARTS',
   'start': new Date(2020, 7, 13, 0, 0, 0),
-  'end': new Date(2020, 7, 20, 0, 0, 0),
+  'end': new Date(2020, 7, 13, 0, 0, 0),
 },
 {
   'title': 'DTS ENDS',
@@ -18,8 +18,8 @@ const mySessionsList = [{
 },
 {
   'title': 'Conference',
-  'start': new Date(2021, 3, 11),
-  'end': new Date(2021, 3, 13),
+  'start': new Date(2020, 8, 11),
+  'end': new Date(2020, 8, 11),
   'desc': 'Big conference for important people',
 },
 {
