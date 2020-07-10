@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require('express');
 const {
   createUser, getAllUser, createTopic, createEvent, getUser,
@@ -10,16 +9,10 @@ const passportSetup = require('./config/passport-setup');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
-=======
-const { app } = require('./app');
-
-const http = require('http');
->>>>>>> 74d964153d946be085bec4a7d8598dadd313e140
 
 const server = http.createServer(app);
 const socket = require('socket.io');
 
-<<<<<<< HEAD
 //
 app.use(cookieSession({
   // cookie will last for one day
@@ -43,9 +36,6 @@ app.post('/test', async(req, res) => {
     console.log('problem', err);
   }
 });
-=======
-const io = socket(server);
->>>>>>> 74d964153d946be085bec4a7d8598dadd313e140
 
 
 // start express server
