@@ -15,6 +15,7 @@ const createUser = async(req, res) => {
   }
 };
 
+// method that gets  particular users info
 const getUser = async(req, res) => {
   try{
    let user = await db.one(`SELECT * FROM user WHERE id = ${req.params.id}`);
@@ -33,7 +34,6 @@ const getAllUser = async(req, res) => {
   }
 }
 
-// method that gets  particular users info
 
 /*
 Events
@@ -41,6 +41,7 @@ Events
 // method that insert into event
 const createEvent = async(req, res) => {
   try{
+    // not working yet
      await db.query("INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_Id}, ${classLimit})", req.body);
     res.send({message: 'event added'})
   } catch(err){
@@ -54,7 +55,6 @@ Topic
  */
 // method that insert into topic
 const createTopic = async(req,res) => {
-  //let {name} = req.body;
   try{
     await db.query("INSERT INTO topic (name) VALUES (${name})", req.body);
     res.send('it worked')
