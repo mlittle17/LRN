@@ -1,4 +1,5 @@
 const express = require('express');
+const { createUser, getAllUser } = require('./db/methods');
 
 const app = express(); // create express app
 const authRoutes = require('./auth-routes');
@@ -44,6 +45,7 @@ app.get('/test', (req, res) => {
 app.get('/authTest', (req, res) => {
   res.send('Logged In!')
 });
+app.post('/user', createUser)
 
 // start express server on port 5000
 app.listen(8000, () => {
