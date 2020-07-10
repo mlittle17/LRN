@@ -1,8 +1,7 @@
-import  React from 'react';
+import React from 'react';
 // import axios from 'axios';
 
 function Profile() {
-
   return (
     <div className="Profile">
       <div>Profile</div>
