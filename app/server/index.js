@@ -2,8 +2,24 @@ const express = require("express");
 const app = express(); // create express app
 const authRoutes = require('./auth-routes');
 const passportSetup = require('./config/passport-setup');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+const keys = require('./config/keys');
 
 app.use(express.json());
+
+// 
+app.use(cookieSession({
+  // cookie will last for one day
+  maxAge: 24 * 60 * 60 * 1000,
+  // being stored in keys.js
+  keys: [keys.session.cookieKey]
+}));
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // auth route
 app.use('/auth', authRoutes);
 
