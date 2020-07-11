@@ -13,13 +13,13 @@ router.get('/logout', (req, res) => {
 
 // auth with google
 router.get('/google', passport.authenticate('google', {
-  scope: ['profile']
+  scope: ['profile'],
 }));
 
 // callback route for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  req.user
-  res.send('you reached')
-})
+  req.user;
+  res.send('you reached');
+});
 
 module.exports = router;
