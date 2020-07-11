@@ -36,7 +36,12 @@ const videoConstraints = {
   width: window.innerWidth / 2,
 };
 
-
+const Room = (props) => {
+  const [peers, setPeers] = useState([]);
+  const socketRef = useRef();
+  const userVideo = useRef();
+  const peersRef = useRef([]);
+  const { roomID } = props.match.params;
 
 
 
