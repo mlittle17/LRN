@@ -22,21 +22,21 @@ passport.use(new GoogleStrategy({
   clientSecret: keys.google.clientSecret,
 }, (accessToken, refreshToken, profile, done) => {
   // passport callback function
-  const { given_name } = profile;
 
-  const user = {};
-  user.username = given_name;
-  
+  const answer = getUser('me@jerry.com');
+
+  console.log(answer, 'here is the answer')
+
   // check if user already exists in database
-  if (false) {
-    // console.log(currentUser, 'already here');
-    // done(null, currentUser);
-  } else {
+
+  // if (false) {
+  //   // console.log(currentUser, 'already here');
+  //   // done(null, currentUser);
+  // } else {
     // need to call add method here to save profile
-    console.log('user is added to DB');
-    createUser(user);
+    //createUser(profile);
 
     // calling done once done with new user record
-    // done(null, newUser);
+    //done(null, newUser);
   }
-}));
+));
