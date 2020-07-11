@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../styles/App.css';
 
 import Navbar from './Navbar.jsx';
-import Home from './Home.jsx';
+// import Home from './Home.jsx';
 
 function App() {
   useEffect(() => {
@@ -23,6 +23,7 @@ function App() {
       <Router>
         <div className="App" />
       </Router>
+      {/* <Home /> */}
     </div>
   );
 }
