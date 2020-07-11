@@ -108,3 +108,16 @@ const Room = (props) => {
     return peer;
   }
 
+  return (
+    <Container>
+      <StyledVideo muted ref={userVideo} autoPlay playsInline />
+      {peers.map((peer, index) => {
+        return (
+          <Video key={index} peer={peer} />
+        );
+      })}
+    </Container>
+  );
+};
+
+export default Room;
