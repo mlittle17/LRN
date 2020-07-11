@@ -1,8 +1,7 @@
 const passport = require('passport');
-// const User = require();
-const User = null;
-
 const GoogleStrategy = require('passport-google-oauth2');
+const { getUser, createUser } = require('../db/methods');
+
 const keys = require('./keys');
 
 passport.serializeUser((user, done) => {
@@ -20,23 +19,24 @@ passport.use(new GoogleStrategy({
   // options for the google strategy
   callbackURL: '/auth/google/redirect',
   clientID: keys.google.clientID,
-  clientSecret: keys.google.clientSecret
+  clientSecret: keys.google.clientSecret,
 }, (accessToken, refreshToken, profile, done) => {
   // passport callback function
-  console.log('passport cb fired');
-  console.log(profile);
+  const { given_name } = profile;
+
+  const user = {};
+  user.username = given_name;
+  
   // check if user already exists in database
-  if(currentUser) {
-    console.log(currentUser, 'already here');
-    //done(null, currentUser);
+  if (false) {
+    // console.log(currentUser, 'already here');
+    // done(null, currentUser);
   } else {
     // need to call add method here to save profile
-    console.log('user is added to DB')
+    console.log('user is added to DB');
+    createUser(user);
 
     // calling done once done with new user record
-    //done(null, newUser);
+    // done(null, newUser);
   }
-
-
-})
-);
+}));
