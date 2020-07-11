@@ -92,4 +92,19 @@ const Room = (props) => {
     return peer;
   }
 
+  function addPeer(incomingSignal, callerID, stream) {
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream,
+    });
+
+    peer.on('signal', signal => {
+      socketRef.current.emit('returning signal', { signal, callerID });
+    });
+
+    peer.signal(incomingSignal);
+
+    return peer;
+  }
 
