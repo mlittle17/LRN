@@ -32,7 +32,7 @@ const ProfileCard = () => {
       <CardContent>
         <CardActionArea>
 
-          <Avatar alt="Sally Name" src={user.avatar} className={classes.large}/>
+          <Avatar alt="Sally Name" src={user.avatar} className={classes.large} />
 
           <br />
           <Typography gutterBottom variant="h5" component="h4">
@@ -55,11 +55,13 @@ const ProfileCard = () => {
         <div>
           <Typography gutterBottom variant="h7" component="h7">
             Subjects
-            </Typography>
+          </Typography>
           {user.subjects.map((sub) => {
-            return (<Typography variant="body2" color="textSecondary" component="p">
-              {sub}
-            </Typography>)
+            return (
+              <Typography variant="body2" color="textSecondary" component="p">
+                {sub}
+              </Typography>
+            );
           })}
         </div>
       </CardContent>
@@ -67,8 +69,8 @@ const ProfileCard = () => {
 
       </CardActions> */}
 
-    </Card >
+    </Card>
   );
-}
+};
 
 export default ProfileCard;
