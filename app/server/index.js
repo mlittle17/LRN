@@ -6,7 +6,8 @@ const io = socket(server);
 // start express server
 // Creating your own HTTP server to allow us the ability to reuse the server
 // Useful for running socket.io in the same server instance
-server.listen(8000, () => console.log('server is running on port 8000'));
+const port = 8080;
+server.listen(port, () => console.log(`server is running on port ${port}`));
 // room id from uuid as the key
 // an array of socket ids will be the value
 const rooms = {};
