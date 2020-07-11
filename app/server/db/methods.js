@@ -6,24 +6,43 @@ Users
  */
 
 // method for inserting user info
-const createUser = async(req, res) => {
-  try {
-    await db.query('INSERT INTO users (username, namefirst, namelast, email, imageurl, zip) VALUES ( ${user}, ${firstName}, ${lastName}, ${emails}, ${image}, ${zipcode})', req.body);
-    res.send({ message: 'user added' });
-  } catch (err) {
-    console.log('nah bruh', err);
-  }
+// const createUser = async(req, res) => {
+//   try {
+//     await db.query('INSERT INTO users (username, namefirst, namelast, email, imageurl, zip) VALUES ( ${user}, ${firstName}, ${lastName}, ${emails}, ${image}, ${zipcode})', req.body);
+//     res.send({ message: 'user added' });
+//   } catch (err) {
+//     console.log('nah bruh', err);
+//   }
+// };
+
+const createUser = (user) => {
+  const { username, lastname } = user;
+  const emails = 'me@me.com';
+  db.query(`INSERT INTO users (googleID, username, namefirst, namelast, email, imageurl, zip) VALUES ('${emails}', 'macmon', 'mac', 'little', 'mac@jerry.com', 'me.jpeg', '30041')`)
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+  // db.query(`INSERT INTO users (googleid, username, namefirst, namelast, email, imageurl, zip) VALUES ('1234', 'macmon', 'mac', 'little', 'mac@mac.com', 'me.jpeg', '30041')`);
+  // console.log('added to DB');
+};
+
+const getUser = (id) => {
+  db.query(`SELECT * FROM users WHERE googleid = '${id}'`)
+    .then(res => {
+      console.log(res);
+      return res;
+    })
+    .catch(err => console.log(err));
 };
 
 // method that gets  particular users info
-const getUser = async(req, res) => {
-  try {
-    const user = await db.one(`SELECT * FROM user WHERE id = ${req.params.id}`);
-    res.send(user);
-  } catch (err) {
-    console.log(`no user, ${err}`);
-  }
-};
+// const getUser = async(req, res) => {
+//   try {
+//     const user = await db.one(`SELECT * FROM user WHERE id = ${req.params.id}`);
+//     res.send(user);
+//   } catch (err) {
+//     console.log(`no user, ${err}`);
+//   }
+// };
 // method that gets all the users info
 const getAllUser = async(req, res) => {
   try {
