@@ -1,52 +1,15 @@
-const express = require('express');
-const {
-  createUser, getAllUser, createTopic, createEvent, getUser,
-} = require('./db/methods');
-
-const app = express(); // create express app
-const authRoutes = require('./auth-routes');
-const passportSetup = require('./config/passport-setup');
-const cookieSession = require('cookie-session');
-const passport = require('passport');
-const keys = require('./config/keys');
-
+const { app } = require('./app');
+const http = require('http');
 const server = http.createServer(app);
 const socket = require('socket.io');
-
-//
-app.use(cookieSession({
-  // cookie will last for one day
-  maxAge: 24 * 60 * 60 * 1000,
-  // being stored in keys.js
-  keys: [keys.session.cookieKey],
-}));
-
-// initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-// auth route
-app.use('/auth', authRoutes);
-
-app.post('/test', async(req, res) => {
-  try {
-    console.log('i am hitting post test');
-    res.send('This is from test route');
-  } catch (err) {
-    console.log('problem', err);
-  }
-});
-
-
+const io = socket(server);
 // start express server
 // Creating your own HTTP server to allow us the ability to reuse the server
 // Useful for running socket.io in the same server instance
 server.listen(8000, () => console.log('server is running on port 8000'));
-
 // room id from uuid as the key
 // an array of socket ids will be the value
 const rooms = {};
-
 // user connects - this connection event will fire
 // then generate a unique socket object for this individual person
 io.on('connection', socket => {
@@ -73,21 +36,16 @@ io.on('connection', socket => {
       // you can see how this plays out more on the front end.
     }
   });
-
   // Now let us create a 'handshake'
-
   // when offer gets fired
   socket.on('offer', payload => {
     io.to(payload.target).emit('offer', payload);
   });
-
   // the payload contains who we are as a user and the 'offer' object.
-
   // listen for the answer event
   socket.on('answer', payload => {
     io.to(payload.target).emit('answer', payload);
   });
-
   // what is ice canidate?
   // each peer will come up with an 'ice server'
   socket.on('ice-candidate', incoming => {
