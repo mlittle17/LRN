@@ -16,22 +16,14 @@ Users
 // };
 
 const createUser = (user) => {
-  const { username, lastname } = user;
-  const emails = 'me@me.com';
-  db.query(`INSERT INTO users (googleID, username, namefirst, namelast, email, imageurl, zip) VALUES ('${emails}', 'macmon', 'mac', 'little', 'mac@jerry.com', 'me.jpeg', '30041')`)
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
-  // db.query(`INSERT INTO users (googleid, username, namefirst, namelast, email, imageurl, zip) VALUES ('1234', 'macmon', 'mac', 'little', 'mac@mac.com', 'me.jpeg', '30041')`);
-  // console.log('added to DB');
+  // const { username, lastname } = user;
+  const {
+    googleId, username, firstName, lastName, photo,
+  } = user;
+  db.query(`INSERT INTO users (googleID, username, nameFirst, nameLast, imageUrl) VALUES ('${googleId}', '${username}', '${firstName}', '${lastName}', '${photo}')`);
 };
-
 const getUser = (id) => {
   return db.query(`SELECT * FROM users WHERE googleid = '${id}'`);
-    // .then(res => {
-    //   console.log(res);
-    //   return res;
-    // })
-    // .catch(err => console.log(err));
 };
 
 // method that gets  particular users info
