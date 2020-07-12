@@ -26,12 +26,12 @@ const createUser = (user) => {
 };
 
 const getUser = (id) => {
-  db.query(`SELECT * FROM users WHERE googleid = '${id}'`)
-    .then(res => {
-      console.log(res);
-      return res;
-    })
-    .catch(err => console.log(err));
+  return db.query(`SELECT * FROM users WHERE googleid = '${id}'`);
+    // .then(res => {
+    //   console.log(res);
+    //   return res;
+    // })
+    // .catch(err => console.log(err));
 };
 
 // method that gets  particular users info
