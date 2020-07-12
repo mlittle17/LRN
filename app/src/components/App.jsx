@@ -6,7 +6,6 @@ import '../styles/App.css';
 import Navbar from './Navbar';
 
 function App() {
-
   useEffect(() => {
     axios.post('/test')
       .then(response => {
@@ -15,14 +14,13 @@ function App() {
       .catch(error => {
         console.log(error);
       });
-  })
+  });
 
   return (
     <div>
       <Navbar />
       <Router>
-        <div className="App">
-        </div>
+        <div className="App" />
       </Router>
     </div>
   );
