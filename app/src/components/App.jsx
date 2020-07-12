@@ -3,9 +3,10 @@ import { HashRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/App.css';
 
-import Navbar from './Navbar.jsx';
+import Navbar from './Navbar';
 
-function App(props) {
+function App() {
+
   useEffect(() => {
     axios.post('/test')
       .then(response => {

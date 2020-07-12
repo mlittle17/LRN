@@ -24,9 +24,10 @@ const mySessionsList = [{
 },
 {
   title: 'Meeting',
-  start: new Date(2021, 3, 12, 10, 30, 0, 0),
-  end: new Date(2021, 3, 12, 12, 30, 0, 0),
+  start: new Date(2021, 5, 12, 10, 30, 0, 0),
+  end: new Date(2021, 5, 12, 10, 30, 0, 0),
   desc: 'Pre-meeting meeting, to prepare for the meeting',
+
 }];
 
 const SessionCalendar = ({
@@ -35,33 +36,35 @@ const SessionCalendar = ({
 }) => {
   const [SessionsList, setSessionsList] = useState(mySessionsList);
 
-  // useEffect(() => {
-  //   const sessionsColl = [];
+  useEffect(() => {
+    const sessionsColl = [];
 
-  //   sessions.forEach((sessionObj) => {
-  //     const {
-  //       name, startDate, endDate, category, description, time, location, rsvpCount, id,
-  //     } = sessionObj;
-  //     // console.log('eventId', id);
-  //     // console.log('userId', user.id);
+    sessions.forEach((sessionObj) => {
+      const {
+        topic, date, time, id, users_id,
+      } = sessionObj;
+      // console.log('eventId', id);
+      // console.log('userId', user.id);
+      // console.log(sessionObj);
 
-  //     sessionsColl.push({
-  //       "title": name,
-  //       "start": startDate,
-  //       "end": endDate,
-  //       "desc": description,
-  //       "other": {
-  //         category,
-  //         time,
-  //         location,
-  //         rsvpCount,
-  //         eventId: id,
-  //         userId: user.id,
-  //       },
-  //     });
-  //   });
-  //   setSessionsList(sessionsColl);
-  // }, []);
+      sessionsColl.push({
+        title: topic,
+        start: date,
+        end: date,
+        // "desc": description,
+        other: {
+          // category,
+          time,
+          // location,
+          // rsvpCount,
+          eventId: id,
+          userId: users_id,
+        },
+      });
+    });
+    console.log(sessionsColl);
+    // setSessionsList(sessionsColl);
+  }, []);
 
   return (
     <div>
