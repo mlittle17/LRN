@@ -6,6 +6,7 @@ import '../styles/App.css';
 import Navbar from './Navbar';
 
 function App() {
+
   useEffect(() => {
     axios.post('/test')
       .then(response => {

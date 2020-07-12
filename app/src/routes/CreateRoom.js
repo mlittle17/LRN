@@ -1,18 +1,17 @@
-import React from "react";
-import { v1 as uuid } from "uuid";
-
+import React from 'react';
+import { v1 as uuid } from 'uuid';
 
 const CreateRoom = (props) => {
-    function create() {
-        // currently create room will use the uuid package to generate 
-            // a unique id.
-        const id = uuid();
-        props.history.push(`/room/${id}`);
-    }
+  function create() {
+    // currently create room will use the uuid package to generate
+    // a unique id.
+    const id = uuid();
+    props.history.push(`/room/${id}`);
+  }
 
-    return (
-        <button onClick={create}>Create Room</button>
-    );
-}
+  return (
+    <button onClick={create}>Create Room</button>
+  );
+};
 
 export default CreateRoom;
