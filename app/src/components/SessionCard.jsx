@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Card, CardContent, CardActionArea, CardActions, Grid, Typography, IconButton, Avatar, Collapse, CardHeader } from '@material-ui/core';
+import {
+  Button, Card, CardContent, CardActionArea, CardActions, Grid, Typography, IconButton,
+  Avatar, Collapse, CardHeader,
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 
@@ -35,9 +38,9 @@ const SessionCard = () => {
       <CardActionArea>
         <CardContent>
 
-        <CardHeader
-        title="Session Info"
-        />
+          <CardHeader
+            title="Session Info"
+          />
           {/* <Typography gutterBottom variant="h4" component="h1">
             Session Info
           </Typography> */}
@@ -114,25 +117,24 @@ const SessionCard = () => {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          Description:
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+          <Typography gutterBottom variant="h5" component="h2">
+            Description:
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
             This description is long enough to demonstrate the average length of a description, but also
             it is not a character more.
-        </Typography>
+          </Typography>
 
-
-        <Typography gutterBottom variant="h5" component="h2">
-          Est. Duration:
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          1hr 45min
-        </Typography>
+          <Typography gutterBottom variant="h5" component="h2">
+            Est. Duration:
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            1hr 45min
+          </Typography>
         </CardContent>
       </Collapse>
     </Card>
   );
-}
+};
 
 export default SessionCard;
