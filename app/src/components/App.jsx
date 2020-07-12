@@ -6,7 +6,6 @@ import '../styles/App.css';
 import Navbar from './Navbar';
 
 function App() {
-
   useEffect(() => {
     axios.post('/test')
       .then(response => {
@@ -15,7 +14,7 @@ function App() {
       .catch(error => {
         console.log(error);
       });
-  })
+  });
 
   function googleLogin() {
     axios.get('/auth/google')
@@ -33,8 +32,7 @@ function App() {
       <div>LRN</div>
       <button onClick={googleLogin}>Log In</button>
       <Router>
-        <div className="App">
-        </div>
+        <div className="App" />
       </Router>
     </div>
   );
