@@ -121,8 +121,8 @@ const SessionCard = () => {
             Description:
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            This description is long enough to demonstrate the average length of a description, but also
-            it is not a character more.
+            This description is long enough to demonstrate the average length of a description, but
+            also it is not a character more.
           </Typography>
 
           <Typography gutterBottom variant="h5" component="h2">
