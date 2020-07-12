@@ -7,7 +7,7 @@ CREATE TABLE users (
   username VARCHAR(50) NOT NULL,
   nameFirst VARCHAR(80),
   nameLast VARCHAR(80),
-  email VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(50),
   imageUrl VARCHAR(160),
   zip VARCHAR(160)
 );
