@@ -23,9 +23,8 @@ passport.use(new GoogleStrategy({
 }, (accessToken, refreshToken, profile, done) => {
   // passport callback function
 
-  const answer = getUser('me@jerry.com');
-
-  console.log(answer, 'here is the answer')
+  getUser('me@me.com')
+    .then(res => console.log(res));
 
   // check if user already exists in database
 
