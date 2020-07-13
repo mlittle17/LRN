@@ -43,7 +43,8 @@ const CreateSession = () => {
   const [sessionTime, setSessionTime] = useState('');
   const [capacity, setCapacity] = useState(1);
   const [zip, setZip] = useState(0);
-  const user_id = 1;
+  const [subject, setSubject] = useState('');
+  const user_Id = 1;
 
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
@@ -52,25 +53,21 @@ const CreateSession = () => {
   const onSessionTimeChange = (e) => {
     setSessionTime(e.target.rawValue);
   };
+  
+  const onSessionSubjectChange = (e, result) => {
+    const { value } = result;
+    setSubject(value);
+  };
 
-  useEffect(() => {
-    axios.post('/event')
+  const addEvent = () => {
+    axios.post('/event', { user_Id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity })
       .then(response => {
         console.log(response);
       })
       .catch(error => {
         console.log(error);
       });
-  });
-  // const addEvent = () => {
-  //   axios.get('/event')
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
+  };
 
   // const onZipChange = (e) => {
   //   setZip(e.target.rawValue);
@@ -91,6 +88,8 @@ const CreateSession = () => {
                   label="Subject"
                   options={subOptions}
                   placeholder="Subject"
+                  onChange={onSessionSubjectChange}
+                  value={subject}
                 />
 
                 {/* session date */}
@@ -148,7 +147,7 @@ const CreateSession = () => {
                 </Form.Field> */}
 
               </Form> <br />
-              <Button type="submit">Submit</Button>
+              <Button type="submit" onClick={addEvent}>Submit</Button>
             </CardContent>
           </Card>
         </Grid>
