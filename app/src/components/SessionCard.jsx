@@ -125,7 +125,6 @@ const SessionCard = () => {
             it is not a character more.
           </Typography>
 
-
           <Typography gutterBottom variant="h5" component="h2">
             Est. Duration:
           </Typography>
@@ -136,6 +135,6 @@ const SessionCard = () => {
       </Collapse>
     </Card>
   );
-}
+};
 
 export default SessionCard;

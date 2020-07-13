@@ -3,11 +3,14 @@ import {
   Link, Switch, Route,
 } from 'react-router-dom';
 import { Menu, Image } from 'semantic-ui-react';
+import { v1 as uuid } from 'uuid';
 
 import Home from './Home.jsx';
 import Profile from './Profile.jsx';
 import Sessions from './Sessions.jsx';
 import Logout from './Logout.jsx';
+import CreateRoom from '../routes/CreateRoom';
+import Room from './Room.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
@@ -16,6 +19,8 @@ const Navbar = () => {
   const [activeItem, setActiveItem] = useState('home');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
+
+  const id = uuid();
 
   return (
     <div>
@@ -64,6 +69,7 @@ const Navbar = () => {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
+          <Route path="/room/:roomID" component={Room} />
         </Switch>
       </div>
     </div>

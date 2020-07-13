@@ -1,18 +1,27 @@
-import  React from 'react';
-// import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
+import { Grid } from '@material-ui/core';
 import Calendar from './Calendar.jsx';
 import SessionCard from './SessionCard.jsx';
 
-import { Grid } from '@material-ui/core';
-
 function Sessions() {
+  const [sessionObj, setSessionObj] = useState([]);
+  useEffect(() => {
+    axios.get('/event')
+      .then(response => {
+        setSessionObj(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  });
 
   return (
     <div className="Sessions">
       <div>Sessions</div>
       <Grid container justify="space-around">
-        <Calendar />
+        <Calendar sessions={sessionObj} />
         <SessionCard />
       </Grid>
     </div>

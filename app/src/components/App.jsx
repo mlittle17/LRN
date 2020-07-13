@@ -17,9 +17,21 @@ function App() {
       });
   });
 
+  function googleLogin() {
+    axios.get('/auth/google')
+      .then(res => {
+        console.log(res, 'inside of googleLogin')
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   return (
     <div>
       <Navbar />
+      <div>LRN</div>
+      <button onClick={googleLogin}>Log In</button>
       <Router>
         <div className="App" />
       </Router>
