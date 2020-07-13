@@ -9,6 +9,7 @@ import Home from './Home.jsx';
 import Profile from './Profile.jsx';
 import Sessions from './Sessions.jsx';
 import Logout from './Logout.jsx';
+import CreateSession from './CreateSession.jsx';
 import CreateRoom from '../routes/CreateRoom';
 import Room from './Room.jsx';
 
@@ -69,6 +70,8 @@ const Navbar = () => {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
+          <Route exact path="/create" component={CreateSession} />
+          <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" component={Room} />
         </Switch>
       </div>
