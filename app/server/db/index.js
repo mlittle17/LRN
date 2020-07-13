@@ -12,7 +12,7 @@ const db = pgp({
   password: DB_PASS,
   //host: 'localhost',
   host: `/cloud/${process.env.DB_INSTANCE}`,
-  port: 5432,
+  //port: 5432,
   database: DB_NAME,
 
 });
