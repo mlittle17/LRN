@@ -12,7 +12,6 @@ import Logout from './Logout.jsx';
 import CreateSession from './CreateSession.jsx';
 import CreateRoom from '../routes/CreateRoom';
 import Room from './Room.jsx';
-import CreateSession from './CreateSession.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
