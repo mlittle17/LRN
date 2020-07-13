@@ -3,10 +3,11 @@ Create Database lrn;
 
 CREATE TABLE users (
   Id SERIAL PRIMARY KEY NOT NULL,
+  googleID VARCHAR(50) UNIQUE NOT NULL,
   username VARCHAR(50) NOT NULL,
   nameFirst VARCHAR(80),
   nameLast VARCHAR(80),
-  email VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(50),
   imageUrl VARCHAR(160),
   zip VARCHAR(160)
 );
