@@ -9,6 +9,7 @@ import ProfileCard from './ProfileCard.jsx';
 import CreateSession from './CreateSession.jsx';
 import FindSessions from './FindSessions.jsx';
 import Sessions from './Sessions.jsx';
+import UpcomingSessions from './UpcomingSessions.jsx';
 
 const Home = () => {
   return (
@@ -28,6 +29,7 @@ const Home = () => {
               <Button as={Link} to="/registered">View Joined</Button>
             </Button.Group>
           </>
+          <UpcomingSessions />
         </div>
       </Grid>
 
