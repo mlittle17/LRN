@@ -24,7 +24,7 @@ const sessions = [
 ];
 const settings = {
   arrows: true,
-  className: 'slider',
+  className: 'slides',
   dots: true,
   infinite: true,
   speed: 500,
@@ -39,7 +39,7 @@ const UpcomingSessions = () => {
   return (
     <div>
       <Typography gutterBottom variant="h6" component="h6"><b>UPCOMING</b></Typography>
-      <Slider {...settings}>
+      <Slider {...settings} style={{ width: '400px', height: '150px', backgroundColor: '#e0e1e2' }}>
         {sessions.map((page) => {
           return (
             <div>
