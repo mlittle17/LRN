@@ -20,7 +20,7 @@ const sessions = [
     time: '7:25 pm',
   },
   {
-    name: 'Traveling Light',
+    name: 'Traveling Light: Your Trip to Europe',
     creator: 'Greg Sanzen',
     date: '08/10/2020',
     time: '11:00 am',
@@ -32,7 +32,7 @@ const sessions = [
     time: '6:00 pm',
   },
   {
-    name: 'Basics of Astronomy: Stars',
+    name: 'A Healthy Home: Hygiene to Keep Up',
     creator: 'Rita Teller',
     date: '09/17/2020',
     time: '8:00 pm',
