@@ -1,31 +1,54 @@
 import React, { useState, useEffect } from 'react';
 
+import { Typography } from '@material-ui/core';
 import Slider from 'react-slick';
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import '../styles/Upcoming.css';
 
+const sessions = [
+  {
+    creator: 'fdfdff',
+    date: '09/34/7899',
+    time: '05:34 pm',
+  },
+  {
+    creator: 'ryknnl',
+    date: '05/67/1253',
+    time: '12:25 am',
+  },
+  {
+    creator: 'dsdf',
+    date: "14/04/4565",
+    time: '56:54 pm pm',
+  },
+];
+const settings = {
+  arrows: true,
+  className: 'slider',
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 const UpcomingSessions = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  // useEffect(() => {
+
+  // }, []);
 
   return (
-    <Slider {...settings}>
-      <div>
-        <h3>1</h3>
-      </div>
-      <div>
-        <h3>2</h3>
-      </div>
-      <div>
-        <h3>3</h3>
-      </div>
-    </Slider>
+    <div>
+      <Typography gutterBottom variant="h6" component="h6"><b>UPCOMING</b></Typography>
+      <Slider {...settings}>
+        {sessions.map((page) => {
+          return (
+            <div>
+              {page.creator}
+            </div>
+          );
+        })}
+      </Slider>
+    </div>
   );
 };
 
