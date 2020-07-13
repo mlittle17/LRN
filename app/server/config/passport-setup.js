@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2');
 const { getUser, createUser } = require('../db/methods');
+require('dotenv').config();
 
 const keys = require('./keys');
 
@@ -23,8 +24,8 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
   // options for the google strategy
   callbackURL: '/auth/google/redirect',
-  clientID: keys.google.clientID,
-  clientSecret: keys.google.clientSecret,
+  clientID: process.env.GOOGLECLIENTID,
+  clientSecret: process.env.GOOGLECLIENTSECRET,
 }, (accessToken, refreshToken, profile, done) => {
   // passport callback function
   const {
@@ -39,10 +40,12 @@ passport.use(new GoogleStrategy({
     photo,
 
   };
-
+  const testVarTwo = process.env.PASSPORT || "test2 didnt work"
+  console.log(`${testVarTwo}`);
   getUser(googleId)
     .then(currentUser => {
       currentUser;
+
       // if the response includes a user object from our databse
       if (currentUser.length) {
         console.log('hello');
