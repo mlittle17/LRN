@@ -4,7 +4,6 @@ import axios from 'axios';
 import '../styles/App.css';
 
 import Navbar from './Navbar.jsx';
-// import Home from './Home.jsx';
 
 function App() {
   useEffect(() => {
@@ -30,12 +29,10 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div>LRN</div>
       <button onClick={googleLogin}>Log In</button>
       <Router>
         <div className="App" />
       </Router>
-      {/* <Home /> */}
     </div>
   );
 }

@@ -95,7 +95,7 @@ const Binder = () => {
 
       </CardActions> */}
 
-      </Card>;
+      </Card>
 
       {/* <TableContainer component={Paper}>
           <Table style={{ position: 'absolute', top: 5, right: 5 }} className={classes.table} aria-label="simple table">
@@ -120,6 +120,6 @@ const Binder = () => {
         </TableContainer> */}
     </div>
   );
-}
+};
 
 export default Binder;
