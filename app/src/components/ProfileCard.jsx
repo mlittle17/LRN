@@ -21,7 +21,8 @@ const ProfileCard = () => {
   const classes = useStyles();
   const [user, setUser] = useState({
     name: 'Sally Name',
-    avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTaUPxz9QpJvEvbLP1nX4jGz6yyiWthbrEn-g&usqp=CAU',
+    avatar: 'https://ca.slack-edge.com/T02P3HQD6-URYEC04TS-1d8e4abade33-512',
+    // avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTaUPxz9QpJvEvbLP1nX4jGz6yyiWthbrEn-g&usqp=CAU',
     email: 'sallyName@gmail.com',
     zip: 77777,
     subjects: ['Music', 'Math', 'History', 'Food'],
@@ -36,17 +37,17 @@ const ProfileCard = () => {
 
           <br />
           <Typography gutterBottom variant="h5" component="h4">
-            SALLY NAME
+            JERRY MCDONALD
           </Typography>
 
           <br />
           <div>
             <Typography gutterBottom variant="h7" component="h7">
-              <EmailIcon /> sallyName@gmail.com
+              <EmailIcon /> jerryMcDonald@gmail.com
             </Typography>
             <br /><br />
             <Typography gutterBottom variant="h7" component="h7">
-              <PersonPinCircleIcon /> 77777
+              <PersonPinCircleIcon /> 70810
             </Typography>
           </div>
 

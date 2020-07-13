@@ -44,14 +44,23 @@ const SessionCard = () => {
             Session Info
           </Typography> */}
 
-          <br />
+          {/* <br /> */}
+          <div>
+            <Typography gutterBottom variant="h6" component="h3">
+              History of the Aztec
+            </Typography>
+            {/* Possibly add an avatar here with instructor name */}
+            {/* <Typography variant="body2" color="textSecondary" component="p">
+              History of the Aztec
+            </Typography> */}
+          </div>
           <div>
             <Typography gutterBottom variant="h5" component="h2">
               Instructor
             </Typography>
             {/* Possibly add an avatar here with instructor name */}
             <Typography variant="body2" color="textSecondary" component="p">
-              Sally Name
+              Prof. Alan Thicke
             </Typography>
           </div>
           <br />
@@ -61,7 +70,7 @@ const SessionCard = () => {
                 Subject
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                Maths
+                History
               </Typography>
             </div>
             <div>
@@ -69,7 +78,7 @@ const SessionCard = () => {
                 Capacity
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                3/60
+                12/25
               </Typography>
             </div>
           </Grid>
@@ -80,7 +89,7 @@ const SessionCard = () => {
                 Date
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                09/ 28 / 2020
+                07/ 26 / 2020
               </Typography>
             </div>
             <div>
@@ -88,7 +97,7 @@ const SessionCard = () => {
                 Time
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                6 pm
+                5:30 pm
               </Typography>
             </div>
           </Grid>
@@ -121,8 +130,9 @@ const SessionCard = () => {
             Description:
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            This description is long enough to demonstrate the average length of a description, but also
-            it is not a character more.
+            What was the class structure of the Aztecs? What language did the Aztec speak?
+            What can we learn from the Aztecs? Find out the answers to these questions and
+            more in this comprehensive session pulled straight from my course curriculum at Tulane.
           </Typography>
 
           <Typography gutterBottom variant="h5" component="h2">
