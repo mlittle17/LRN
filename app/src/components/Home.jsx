@@ -9,6 +9,7 @@ import ProfileCard from './ProfileCard.jsx';
 import CreateSession from './CreateSession.jsx';
 import FindSessions from './FindSessions.jsx';
 import Sessions from './Sessions.jsx';
+import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
 const Home = () => {
@@ -32,6 +33,7 @@ const Home = () => {
           <UpcomingSessions />
         </div>
       </Grid>
+      <Binder />
 
       <div>
         <Switch>
