@@ -9,6 +9,21 @@ import {
 
 import axios from 'axios';
 
+const documents = [
+  {
+    type: 'Word Document',
+    name: 'Lasagna Recipe',
+    creator: 'Rya Sicily',
+    dateSaved: '08/03/2020',
+  },
+  {
+    type: 'Word Document',
+    name: 'Packing Ess. List',
+    creator: 'Greg Sanzen',
+    dateSaved: '08/10/2020',
+  },
+];
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -29,8 +44,8 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles(() => ({
   table: {
-    maxWidth: 500,
-    minWidth: 500,
+    maxWidth: 700,
+    minWidth: 700,
     maxHeight: 200,
   },
 }));
@@ -41,29 +56,32 @@ const Binder = () => {
   return (
     <div className="Binder">
       {/* <h1 style={{ color: 'red' }}>My Binder</h1> */}
-      <Typography gutterBottom variant="h6" component="h6"><b>MY BINDER</b></Typography>
+      <Typography gutterBottom variant="h6" component="h6" style={{ marginLeft: '35px' }}><b>MY BINDER</b></Typography>
 
-      <Card align="center" className={classes.root}>
-        <CardContent>
+      <Card align="left" className={classes.root}>
+        <CardContent style={{ marginLeft: '20px' }}>
           <CardActionArea>
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
+              <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <TableCell size="small" align="right">Type</TableCell>
-                    <TableCell align="right">Name</TableCell>
-                    <TableCell align="right">Creator</TableCell>
-                    <TableCell align="right">Created Date</TableCell>
+                    <StyledTableCell>Type</StyledTableCell>
+                    <StyledTableCell align="right">Name</StyledTableCell>
+                    <StyledTableCell align="right">Creator</StyledTableCell>
+                    <StyledTableCell align="right">Saved Date</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell component="th" scope="row" />
-                    <TableCell align="right">will be data</TableCell>
-                    <TableCell align="right">will be data</TableCell>
-                    <TableCell align="right">will be data</TableCell>
-                    <TableCell align="right">will be data</TableCell>
-                  </TableRow>
+                  {documents.map((document) => (
+                    <StyledTableRow key={document.name}>
+                      <StyledTableCell component="th" scope="row">
+                        {document.type}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">{document.name}</StyledTableCell>
+                      <StyledTableCell align="right">{document.creator}</StyledTableCell>
+                      <StyledTableCell align="right">{document.dateSaved}</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
