@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cleave from 'cleave.js/react';
 import CounterInput from 'react-counter-input';
-// import axios from 'axios';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
@@ -43,6 +43,7 @@ const CreateSession = () => {
   const [sessionTime, setSessionTime] = useState('');
   const [capacity, setCapacity] = useState(1);
   const [zip, setZip] = useState(0);
+  const user_id = 1;
 
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
@@ -51,6 +52,25 @@ const CreateSession = () => {
   const onSessionTimeChange = (e) => {
     setSessionTime(e.target.rawValue);
   };
+
+  useEffect(() => {
+    axios.post('/event')
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  });
+  // const addEvent = () => {
+  //   axios.get('/event')
+  //     .then(response => {
+  //       console.log(response);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
 
   // const onZipChange = (e) => {
   //   setZip(e.target.rawValue);

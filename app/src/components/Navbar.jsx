@@ -11,6 +11,7 @@ import Sessions from './Sessions.jsx';
 import Logout from './Logout.jsx';
 import CreateRoom from '../routes/CreateRoom';
 import Room from './Room.jsx';
+import CreateSession from './CreateSession.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
@@ -70,6 +71,7 @@ const Navbar = () => {
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
           <Route path="/room/:roomID" component={Room} />
+          <Route exact path="/create" component={CreateSession} />
         </Switch>
       </div>
     </div>
