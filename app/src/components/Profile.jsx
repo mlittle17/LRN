@@ -1,10 +1,13 @@
 import React from 'react';
+import ProfileCard from './ProfileCard';
+import Binder from './Binder';
 // import axios from 'axios';
 
 function Profile() {
   return (
     <div className="Profile">
-      <div>Profile</div>
+      <ProfileCard />
+      <Binder />
     </div>
   );
 }
