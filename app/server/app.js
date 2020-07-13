@@ -32,14 +32,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 // auth route
 app.use('/auth', authRoutes);
-app.post('/test', async(req, res) => {
-  try {
-    console.log('i am hitting post test');
-    res.send('This is from test route');
-  } catch (err) {
-    console.log('problem', err);
-  }
-});
 
 app.get('*', (req, res) => {
   res.sendFile(`${path.resolve('./')}/build/index.html`);
