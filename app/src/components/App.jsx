@@ -18,7 +18,7 @@ function App() {
   });
 
   function googleLogin() {
-    axios.get('/auth/google')
+    axios.get('/auth/exist')
       .then(res => {
         console.log(res, 'inside of googleLogin')
       })
