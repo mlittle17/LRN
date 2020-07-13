@@ -3,10 +3,10 @@ import { HashRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/App.css';
 
-import Navbar from './Navbar';
+import Navbar from './Navbar.jsx';
+// import Home from './Home.jsx';
 
 function App() {
-
   useEffect(() => {
     axios.post('/test')
       .then(response => {
@@ -24,7 +24,7 @@ function App() {
       })
       .catch(error => {
         console.log(error);
-      })
+      });
   }
 
   return (
@@ -35,6 +35,7 @@ function App() {
       <Router>
         <div className="App" />
       </Router>
+      {/* <Home /> */}
     </div>
   );
 }
