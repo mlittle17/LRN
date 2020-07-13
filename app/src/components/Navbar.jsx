@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { NavLink, Switch, Route } from 'react-router-dom';
+import {
+  Link, Switch, Route,
+} from 'react-router-dom';
 import { Menu, Image } from 'semantic-ui-react';
 import { v1 as uuid } from 'uuid';
 
@@ -29,9 +31,9 @@ const Navbar = () => {
           active={activeItem === 'home'}
           onClick={handleItemClick}
         >
-          <NavLink to="/">
+          <Link to="/">
             <Image src={logo} size="mini" alt="LRN logo" />
-          </NavLink>
+          </Link>
         </Menu.Item>
 
         <Menu.Item
@@ -39,7 +41,7 @@ const Navbar = () => {
           active={activeItem === 'sessions'}
           onClick={handleItemClick}
         >
-          <NavLink to="/profile" class="item">Profile</NavLink>
+          <Link to="/profile" class="item">Profile</Link>
         </Menu.Item>
 
         <Menu.Item
@@ -47,15 +49,7 @@ const Navbar = () => {
           active={activeItem === 'profile'}
           onClick={handleItemClick}
         >
-          <NavLink to="/sessions" class="item">Sessions</NavLink>
-        </Menu.Item>
-
-        <Menu.Item
-          name="room"
-          active={activeItem === 'room'}
-          onClick={handleItemClick}
-        >
-          <NavLink to={`/room/${id}`} class="item">Room</NavLink>
+          <Link to="/sessions" class="item">Sessions</Link>
         </Menu.Item>
 
         <Menu.Menu position="right" class="right menu">
@@ -64,7 +58,7 @@ const Navbar = () => {
             active={activeItem === 'logout'}
             onClick={handleItemClick}
           >
-            <NavLink to="/logout" class="item">Logout</NavLink>
+            <Link to="/logout" class="item">Logout</Link>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
