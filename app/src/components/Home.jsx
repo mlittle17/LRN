@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div className="Home">
       <div>Home</div>
-      <Grid container justify="space-evenly">
+      <Grid container justify="space-evenly" style={{ marginBottom: '30px' }}>
         <ProfileCard />
         <div>
           <>
