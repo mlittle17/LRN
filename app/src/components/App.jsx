@@ -20,7 +20,7 @@ function App() {
   function googleLogin() {
     axios.get('/auth/exist')
       .then(res => {
-        console.log(res, 'inside of googleLogin')
+        console.log(res.body, 'inside of googleLogin')
       })
       .catch(error => {
         console.log(error);
