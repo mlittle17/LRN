@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cleave from 'cleave.js/react';
 import CounterInput from 'react-counter-input';
-// import axios from 'axios';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
@@ -43,6 +43,10 @@ const CreateSession = () => {
   const [sessionTime, setSessionTime] = useState('');
   const [capacity, setCapacity] = useState(1);
   const [zip, setZip] = useState(0);
+  const [subject, setSubject] = useState('');
+
+  // for now hardcoded user
+  const user_Id = 1;
 
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
@@ -50,6 +54,20 @@ const CreateSession = () => {
 
   const onSessionTimeChange = (e) => {
     setSessionTime(e.target.rawValue);
+  };
+  const onSessionSubjectChange = (e, result) => {
+    const { value } = result;
+    setSubject(value);
+  };
+
+  const addEvent = () => {
+    axios.post('/event', { user_Id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   // const onZipChange = (e) => {
@@ -71,6 +89,8 @@ const CreateSession = () => {
                   label="Subject"
                   options={subOptions}
                   placeholder="Subject"
+                  onChange={onSessionSubjectChange}
+                  value={subject}
                 />
 
                 {/* session date */}
@@ -128,7 +148,7 @@ const CreateSession = () => {
                 </Form.Field> */}
 
               </Form> <br />
-              <Button type="submit">Submit</Button>
+              <Button type="submit" onClick={addEvent}>Submit</Button>
             </CardContent>
           </Card>
         </Grid>
