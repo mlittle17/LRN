@@ -9,6 +9,8 @@ const passport = require('passport');
 const keys = require('./config/keys');
 const app = express();
 const path = require('path');
+require('dotenv').config();
+
 app.use(express.json());
 
 
@@ -25,7 +27,7 @@ app.use(cookieSession({
   // cookie will last for one day
   maxAge: 24 * 60 * 60 * 1000,
   // being stored in keys.js
-  keys: [keys.session.cookieKey],
+  keys: [process.env.COOKIEKEY],
 }));
 // initialize passport
 app.use(passport.initialize());
