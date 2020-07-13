@@ -53,7 +53,6 @@ const CreateSession = () => {
   const onSessionTimeChange = (e) => {
     setSessionTime(e.target.rawValue);
   };
-  
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
     setSubject(value);
