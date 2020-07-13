@@ -6,24 +6,35 @@ Users
  */
 
 // method for inserting user info
-const createUser = async(req, res) => {
-  try {
-    await db.query('INSERT INTO users (username, namefirst, namelast, email, imageurl, zip) VALUES ( ${user}, ${firstName}, ${lastName}, ${emails}, ${image}, ${zipcode})', req.body);
-    res.send({ message: 'user added' });
-  } catch (err) {
-    console.log('nah bruh', err);
-  }
+// const createUser = async(req, res) => {
+//   try {
+//     await db.query('INSERT INTO users (username, namefirst, namelast, email, imageurl, zip) VALUES ( ${user}, ${firstName}, ${lastName}, ${emails}, ${image}, ${zipcode})', req.body);
+//     res.send({ message: 'user added' });
+//   } catch (err) {
+//     console.log('nah bruh', err);
+//   }
+// };
+
+const createUser = (user) => {
+  // const { username, lastname } = user;
+  const {
+    googleId, username, firstName, lastName, photo,
+  } = user;
+  db.query(`INSERT INTO users (googleID, username, nameFirst, nameLast, imageUrl) VALUES ('${googleId}', '${username}', '${firstName}', '${lastName}', '${photo}')`);
+};
+const getUser = (id) => {
+  return db.query(`SELECT * FROM users WHERE googleid = '${id}'`);
 };
 
 // method that gets  particular users info
-const getUser = async(req, res) => {
-  try {
-    const user = await db.one(`SELECT * FROM user WHERE id = ${req.params.id}`);
-    res.send(user);
-  } catch (err) {
-    console.log(`no user, ${err}`);
-  }
-};
+// const getUser = async(req, res) => {
+//   try {
+//     const user = await db.one(`SELECT * FROM user WHERE id = ${req.params.id}`);
+//     res.send(user);
+//   } catch (err) {
+//     console.log(`no user, ${err}`);
+//   }
+// };
 // method that gets all the users info
 const getAllUser = async(req, res) => {
   try {
