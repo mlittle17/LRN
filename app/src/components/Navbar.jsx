@@ -52,6 +52,14 @@ const Navbar = () => {
           <Link to="/sessions" class="item">Sessions</Link>
         </Menu.Item>
 
+        <Menu.Item
+          name="room"
+          active={activeItem === 'room'}
+          onClick={handleItemClick}
+        >
+          <Link to={`/room/${id}`} class="item">Room</Link>
+        </Menu.Item>
+
         <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="logout"
