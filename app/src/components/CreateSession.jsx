@@ -44,6 +44,8 @@ const CreateSession = () => {
   const [capacity, setCapacity] = useState(1);
   const [zip, setZip] = useState(0);
   const [subject, setSubject] = useState('');
+
+  // for now hardcoded user
   const user_Id = 1;
 
   const onSessionDateChange = (e) => {
