@@ -1,0 +1,16 @@
+.slides .slick-prev:before {
+  left: 5% !important;
+  color: #b3995c;
+  z-index: 1;
+}
+.slides .slick-next:before {
+  right: 5% !important;
+  color: #b3995c;
+  z-index: 1;
+}
+
+/* .slides {
+  width: '400px';
+  height: '150px';
+  background-color: '#e0e1e2';
+} */

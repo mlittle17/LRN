@@ -1,15 +1,17 @@
 import React from 'react';
-import ProfileCard from './ProfileCard';
-import Binder from './Binder';
-import {Grid} from '@material-ui/core';
+
+import { Grid } from '@material-ui/core';
+
+import ProfileCard from './ProfileCard.jsx';
+import Binder from './Binder.jsx';
 // import axios from 'axios';
 
 function Profile() {
   return (
     <div className="Profile">
-      <Grid container justify="space-around">
-      <ProfileCard />
-      <Binder />
+      <Grid container justify="space-evenly">
+        <ProfileCard />
+        <Binder />
       </Grid>
     </div>
   );

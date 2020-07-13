@@ -7,20 +7,44 @@ import SessionCard from './SessionCard.jsx';
 const localizer = momentLocalizer(moment);
 
 const mySessionsList = [{
-  'title': 'DTS STARTS',
-  'start': new Date(2020, 7, 13, 0, 0, 0),
-  'end': new Date(2020, 7, 13, 0, 0, 0),
+  'title': 'History of the Aztec',
+  'start': new Date(2020, 6, 26, 0, 0, 0),
+  'end': new Date(2020, 6, 26, 0, 0, 0),
 },
 {
-  'title': 'Conference',
-  'start': new Date(2020, 8, 11),
-  'end': new Date(2020, 8, 11),
+  'title': 'Love and Marriage: Basic Tenants of a Loving Couple',
+  'start': new Date(2020, 6, 30),
+  'end': new Date(2020, 6, 30),
   'desc': 'Big conference for important people',
 },
 {
-  'title': 'Meeting',
-  'start': new Date(2020, 11, 12, 10, 30, 0, 0),
-  'end': new Date(2020, 11, 12, 10, 30, 0, 0),
+  'title': 'Homestyle Lasagna: The True Italian Way',
+  'start': new Date(2020, 7, 3),
+  'end': new Date(2020, 7, 3),
+  'desc': 'Pre-meeting meeting, to prepare for the meeting',
+},
+{
+  'title': 'Traveling Light: Your Trip to Europe',
+  'start': new Date(2020, 7, 10),
+  'end': new Date(2020, 7, 10),
+  'desc': 'Pre-meeting meeting, to prepare for the meeting',
+},
+{
+  'title': 'Your Utility Bill Fees Explained',
+  'start': new Date(2020, 7, 27),
+  'end': new Date(2020, 7, 27),
+  'desc': 'Pre-meeting meeting, to prepare for the meeting',
+},
+{
+  'title': 'One, Two, Rhythm For Beginners',
+  'start': new Date(2020, 8, 15),
+  'end': new Date(2020, 8, 15),
+  'desc': 'Pre-meeting meeting, to prepare for the meeting',
+},
+{
+  'title': 'Visual Learning Techniques',
+  'start': new Date(2020, 8, 20),
+  'end': new Date(2020, 8, 20),
   'desc': 'Pre-meeting meeting, to prepare for the meeting',
 }];
 
