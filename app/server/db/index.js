@@ -1,23 +1,19 @@
 const pgp = require('pg-promise')({});
+require('dotenv').config();
 
-// const DB_USER = process.env.DB_USER;
-// const DB_PASS = process.env.DB_USER;
-// const DB_HOST = process.env.DB_HOST;
+const DB_USER = process.env.DB_USER;
+const DB_PASS = process.env.DB_PASS;
+const DB_NAME = process.env.DB_NAME;
 
 
 
 const db = pgp({
-  user: 'maclittle',
-  password: 'password',
-  host: 'localhost',
+  user: DB_USER,
+  password: DB_PASS,
+  //host: 'localhost',
+  host: `/cloud/${process.env.DB_INSTANCE}`,
   port: 5432,
-  database: 'lrn',
-
-  // user: DB_USER,
-  // password: DB_PASS,
-  // host: 'localhost',
-  // port: 5432,
-  // database: 'lrn',
+  database: DB_NAME,
 
 });
 
