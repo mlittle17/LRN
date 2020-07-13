@@ -44,7 +44,16 @@ const SessionCard = () => {
             Session Info
           </Typography> */}
 
-          <br />
+          {/* <br /> */}
+          <div>
+            <Typography gutterBottom variant="h6" component="h3">
+              History of the Aztec
+            </Typography>
+            {/* Possibly add an avatar here with instructor name */}
+            {/* <Typography variant="body2" color="textSecondary" component="p">
+              History of the Aztec
+            </Typography> */}
+          </div>
           <div>
             <Typography gutterBottom variant="h5" component="h2">
               Instructor
