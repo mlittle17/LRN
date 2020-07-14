@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
-  Table, TableBody, TableRow, TableCell,
-  TableContainer, TableHead, Card, CardContent,
-  CardActionArea, CardActions, Grid, Typography,
-  IconButton, CardHeader, Paper,
+  Paper, Table, TableBody, TableRow, TableCell,
+  TableContainer, TableHead, Typography,
 } from '@material-ui/core';
-
-import axios from 'axios';
 
 const documents = [
   {
@@ -64,66 +62,32 @@ const Binder = () => {
     <div className="Binder">
       <Typography gutterBottom variant="h4" component="h6" style={{ marginLeft: '35px', color: '#2d2e2e' }}><b>MY BINDER</b></Typography>
 
-      <Card align="left" className={classes.root}>
-        <CardContent style={{ marginLeft: '20px' }}>
-          <CardActionArea>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell className={classes.colLabel}>Type</StyledTableCell>
-                    <StyledTableCell align="right" className={classes.colLabel}>Name</StyledTableCell>
-                    <StyledTableCell align="right" className={classes.colLabel}>Creator</StyledTableCell>
-                    <StyledTableCell align="right" className={classes.colLabel}>Saved Date</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {documents.map((document) => (
-                    <StyledTableRow key={document.name}>
-                      <StyledTableCell component="th" scope="row" className={classes.rowText}>
-                        {document.type}
-                      </StyledTableCell>
-                      <StyledTableCell align="right" className={classes.rowText}>{document.name}</StyledTableCell>
-                      <StyledTableCell align="right" className={classes.rowText}>{document.creator}</StyledTableCell>
-                      <StyledTableCell align="right" className={classes.rowText}>{document.dateSaved}</StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            <br />
-            <div />
-
-          </CardActionArea>
-        </CardContent>
-        {/* <CardActions>
-
-      </CardActions> */}
-
-      </Card>
-
-      {/* <TableContainer component={Paper}>
-          <Table style={{ position: 'absolute', top: 5, right: 5 }} className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell size="small" align="right">Type</TableCell>
-                <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Creator</TableCell>
-                <TableCell align="right">Created Date</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell component="th" scope="row" />
-                <TableCell align="right">will be data</TableCell>
-                <TableCell align="right">will be data</TableCell>
-                <TableCell align="right">will be data</TableCell>
-                <TableCell align="right">will be data</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer> */}
+      <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell className={classes.colLabel}>Type</StyledTableCell>
+              <StyledTableCell align="right" className={classes.colLabel}>Name</StyledTableCell>
+              <StyledTableCell align="right" className={classes.colLabel}>Creator</StyledTableCell>
+              <StyledTableCell align="right" className={classes.colLabel}>Saved Date</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {documents.map((document) => (
+              <StyledTableRow key={document.name}>
+                <StyledTableCell component="th" scope="row" className={classes.rowText}>
+                  {document.type}
+                </StyledTableCell>
+                <StyledTableCell align="right" className={classes.rowText}>{document.name}</StyledTableCell>
+                <StyledTableCell align="right" className={classes.rowText}>{document.creator}</StyledTableCell>
+                <StyledTableCell align="right" className={classes.rowText}>{document.dateSaved}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <br />
+      <div />
     </div>
   );
 };
