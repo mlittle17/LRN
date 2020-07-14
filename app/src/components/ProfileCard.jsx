@@ -48,7 +48,7 @@ const ProfileCard = ({ userInfo }) => {
         <Avatar alt="Sally Name" src={user.avatar} className={classes.large} />
 
         <br />
-        <Typography gutterBottom variant="h4" component="h4" style={{ color: '#474337', marginLeft: '40px' }}>
+        <Typography gutterBottom variant="h4" component="h4" align="center" style={{ color: '#474337' }}>
           <b>Jerry McDonald</b>
         </Typography>
         <br />
