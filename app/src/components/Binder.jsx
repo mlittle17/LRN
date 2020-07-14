@@ -26,7 +26,7 @@ const documents = [
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: '#a58e57',
     color: theme.palette.common.white,
   },
   body: {
@@ -36,6 +36,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
+    maxWidth: 750,
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
@@ -44,8 +45,8 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles(() => ({
   table: {
-    maxWidth: 700,
-    minWidth: 700,
+    // maxWidth: 700,
+    // minWidth: 700,
     maxHeight: 200,
   },
 }));
@@ -55,7 +56,6 @@ const Binder = () => {
 
   return (
     <div className="Binder">
-      {/* <h1 style={{ color: 'red' }}>My Binder</h1> */}
       <Typography gutterBottom variant="h6" component="h6" style={{ marginLeft: '35px' }}><b>MY BINDER</b></Typography>
 
       <Card align="left" className={classes.root}>
