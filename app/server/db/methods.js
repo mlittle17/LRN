@@ -118,19 +118,19 @@ Document
 
 const addDocument = async(req, res) => {
   try {
-    await db.any('SELECT * FROM document');
-    res.send('we got the documents');
+    await db.query('INSERT INTO document (documentType, linkTo) VALUES (${type} ${link})', req.body);
+    res.send('we added a document');
   } catch (err) {
-    console.log('No documents', err);
+    console.log('got documents', err);
   }
 };
 
 const getAllDocument = async(req, res) => {
   try {
-    await db.query('INSERT INTO document (documentType, linkTo) VALUES (${type} ${link})', req.body);
-    res.send('we added a document');
+    await db.any('SELECT * FROM document');
+    res.send('we got the documents');
   } catch (err) {
-    console.log('No document added', err);
+    console.log('No document', err);
   }
 };
 
