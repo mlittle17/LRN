@@ -49,6 +49,12 @@ const useStyles = makeStyles(() => ({
     // minWidth: 700,
     maxHeight: 200,
   },
+  colLabel: {
+    color: '#2d2e2e',
+  },
+  rowText: {
+    color: '#474a2c',
+  },
 }));
 
 const Binder = () => {
@@ -56,7 +62,7 @@ const Binder = () => {
 
   return (
     <div className="Binder">
-      <Typography gutterBottom variant="h6" component="h6" style={{ marginLeft: '35px' }}><b>MY BINDER</b></Typography>
+      <Typography gutterBottom variant="h4" component="h6" style={{ marginLeft: '35px', color: '#2d2e2e' }}><b>MY BINDER</b></Typography>
 
       <Card align="left" className={classes.root}>
         <CardContent style={{ marginLeft: '20px' }}>
@@ -65,21 +71,21 @@ const Binder = () => {
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell>Type</StyledTableCell>
-                    <StyledTableCell align="right">Name</StyledTableCell>
-                    <StyledTableCell align="right">Creator</StyledTableCell>
-                    <StyledTableCell align="right">Saved Date</StyledTableCell>
+                    <StyledTableCell className={classes.colLabel}>Type</StyledTableCell>
+                    <StyledTableCell align="right" className={classes.colLabel}>Name</StyledTableCell>
+                    <StyledTableCell align="right" className={classes.colLabel}>Creator</StyledTableCell>
+                    <StyledTableCell align="right" className={classes.colLabel}>Saved Date</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {documents.map((document) => (
                     <StyledTableRow key={document.name}>
-                      <StyledTableCell component="th" scope="row">
+                      <StyledTableCell component="th" scope="row" className={classes.rowText}>
                         {document.type}
                       </StyledTableCell>
-                      <StyledTableCell align="right">{document.name}</StyledTableCell>
-                      <StyledTableCell align="right">{document.creator}</StyledTableCell>
-                      <StyledTableCell align="right">{document.dateSaved}</StyledTableCell>
+                      <StyledTableCell align="right" className={classes.rowText}>{document.name}</StyledTableCell>
+                      <StyledTableCell align="right" className={classes.rowText}>{document.creator}</StyledTableCell>
+                      <StyledTableCell align="right" className={classes.rowText}>{document.dateSaved}</StyledTableCell>
                     </StyledTableRow>
                   ))}
                 </TableBody>
