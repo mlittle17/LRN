@@ -61,9 +61,6 @@ const SessionCalendar = ({
       const {
         topic, date, time, id, users_id,
       } = sessionObj;
-      // console.log('eventId', id);
-      // console.log('userId', user.id);
-      // console.log(sessionObj);
 
       sessionsColl.push({
         title: topic,
@@ -92,7 +89,7 @@ const SessionCalendar = ({
         views={['month', 'agenda']}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 350, width: 600 }}
+        style={{ height: 500, width: 720 }}
         components={{
           event: SessionCard,
         }}
