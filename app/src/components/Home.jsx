@@ -6,15 +6,16 @@ import { Grid, Typography } from '@material-ui/core';
 import { Button } from 'semantic-ui-react';
 
 import ProfileCard from './ProfileCard.jsx';
-import CreateSession from './CreateSession.jsx';
+// import CreateSession from './CreateSession.jsx';
 import FindSessions from './FindSessions.jsx';
-import Sessions from './Sessions.jsx';
+// import Sessions from './Sessions.jsx';
+import Binder from './Binder.jsx';
+import UpcomingSessions from './UpcomingSessions.jsx';
 
 const Home = () => {
   return (
     <div className="Home">
-      <div>Home</div>
-      <Grid container justify="space-evenly">
+      <Grid container justify="space-evenly" style={{ marginBottom: '30px' }}>
         <ProfileCard />
         <div>
           <>
@@ -28,14 +29,16 @@ const Home = () => {
               <Button as={Link} to="/registered">View Joined</Button>
             </Button.Group>
           </>
+          <UpcomingSessions />
         </div>
       </Grid>
+      <Binder />
 
       <div>
         <Switch>
-          <Route exact path="/create" component={CreateSession} />
+          {/* <Route exact path="/create" component={CreateSession} /> */}
           <Route exact path="/find" component={FindSessions} />
-          <Route exact path="/registered" component={Sessions} />
+          {/* <Route exact path="/registered" component={Sessions} /> */}
         </Switch>
       </div>
     </div>

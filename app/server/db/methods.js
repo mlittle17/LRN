@@ -18,9 +18,9 @@ Users
 const createUser = (user) => {
   // const { username, lastname } = user;
   const {
-    googleId, username, firstName, lastName, photo,
+    googleId, username, firstName, lastName, photo, email,
   } = user;
-  db.query(`INSERT INTO users (googleID, username, nameFirst, nameLast, imageUrl) VALUES ('${googleId}', '${username}', '${firstName}', '${lastName}', '${photo}')`);
+  db.query(`INSERT INTO users (googleID, username, nameFirst, nameLast, email, imageUrl) VALUES ('${googleId}', '${username}', '${firstName}', '${lastName}', '${email}', '${photo}')`);
 };
 const getUser = (id) => {
   return db.query(`SELECT * FROM users WHERE googleid = '${id}'`);
@@ -52,7 +52,7 @@ Events
 const createEvent = async(req, res) => {
   try {
     // not working yet
-    await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_Id}, ${classLimit})', req.body);
+    await db.query('INSERT INTO event (topic, date, time, users_Id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_Id}, ${classLimit})', req.body);
     res.send({ message: 'event added' });
   } catch (err) {
     console.log('nah bruh', err);

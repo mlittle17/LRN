@@ -29,7 +29,7 @@ passport.use(new GoogleStrategy({
 }, (accessToken, refreshToken, profile, done) => {
   // passport callback function
   const {
-    id: googleId, displayName: username, given_name: firstName, family_name: lastName, picture: photo,
+    id: googleId, displayName: username, given_name: firstName, family_name: lastName, picture: photo, email: email,
   } = profile;
 
   const user = {
@@ -38,7 +38,7 @@ passport.use(new GoogleStrategy({
     firstName,
     lastName,
     photo,
-
+    email,
   };
   const testVarTwo = process.env.PASSPORT || "test2 didnt work"
   console.log(`${testVarTwo}`);
