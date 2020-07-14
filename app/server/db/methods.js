@@ -18,9 +18,9 @@ Users
 const createUser = (user) => {
   // const { username, lastname } = user;
   const {
-    googleId, username, firstName, lastName, photo,
+    googleId, username, firstName, lastName, photo, email,
   } = user;
-  db.query(`INSERT INTO users (googleID, username, nameFirst, nameLast, imageUrl) VALUES ('${googleId}', '${username}', '${firstName}', '${lastName}', '${photo}')`);
+  db.query(`INSERT INTO users (googleID, username, nameFirst, nameLast, email, imageUrl) VALUES ('${googleId}', '${username}', '${firstName}', '${lastName}', '${email}', '${photo}')`);
 };
 const getUser = (id) => {
   return db.query(`SELECT * FROM users WHERE googleid = '${id}'`);
