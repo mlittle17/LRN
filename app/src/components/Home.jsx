@@ -10,8 +10,6 @@ import FindSessions from './FindSessions.jsx';
 import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
-import '../styles/Home.css';
-
 const Home = () => {
   return (
     <div className="Home">
