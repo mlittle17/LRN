@@ -26,42 +26,46 @@ const Navbar = ({ user, googleLogin }) => {
   return (
     <div>
 
-      <Menu pointing secondary style={{ backgroundColor: '#2d2e2e' }}>
+      <Menu pointing secondary size="massive" style={{ backgroundColor: '#2d2e2e' }}>
         <Menu.Item
           name="home"
           active={activeItem === 'home'}
           onClick={handleItemClick}
         >
           <Link to="/">
-            <Image src={logo} size="mini" alt="LRN logo" />
+            <Image src={logo} size="tiny" alt="LRN logo" />
           </Link>
         </Menu.Item>
 
-        <Menu.Item
-          name="sessions"
-          active={activeItem === 'sessions'}
-          onClick={handleItemClick}
-        >
-          <Link to="/profile" class="item" style={{ color: '#a58e57' }}>Profile</Link>
-        </Menu.Item>
-
-        <Menu.Item
-          name="profile"
-          active={activeItem === 'profile'}
-          onClick={handleItemClick}
-        >
-          <Link to="/sessions" class="item" style={{ color: '#a58e57' }}>Sessions</Link>
-        </Menu.Item>
-
-        <Menu.Item
-          name="room"
-          active={activeItem === 'room'}
-          onClick={handleItemClick}
-        >
-          <Link to={`/room/${id}`} class="item" style={{ color: '#a58e57' }}>Room</Link>
-        </Menu.Item>
+        {user ? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div>}
 
         <Menu.Menu position="right" class="right menu">
+
+          <Menu.Item
+            name="room"
+            active={activeItem === 'room'}
+            onClick={handleItemClick}
+          >
+            <Link to={`/room/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Room</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            name="profile"
+            active={activeItem === 'profile'}
+            onClick={handleItemClick}
+          >
+            <Link to="/sessions" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Sessions</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            name="sessions"
+            active={activeItem === 'sessions'}
+            onClick={handleItemClick}
+          >
+            <Link to="/profile" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Profile</Link>
+          </Menu.Item>
+
+          {/* <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="login"
             active={activeItem === 'logout'}
@@ -69,15 +73,14 @@ const Navbar = ({ user, googleLogin }) => {
           >
             <Link class="item" style={{ color: '#a58e57' }}>Login</Link>
           </Menu.Item>
-        </Menu.Menu>
-        {user ? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div> }
-        <Menu.Menu position="right" class="right menu">
+        </Menu.Menu> */}
+
           <Menu.Item
             name="logout"
             active={activeItem === 'logout'}
             onClick={handleItemClick}
           >
-            <Link to="/logout" class="item" style={{ color: '#a58e57' }}>Logout</Link>
+            <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Logout</Link>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
