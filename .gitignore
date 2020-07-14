@@ -1,2 +1,4 @@
 package-lock.json
 app/.vscode/launch.json
+app/.env
+.gitignore

@@ -13,6 +13,7 @@
     "cleave.js": "^1.6.0",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "moment": "^2.27.0",
     "nodemon": "^2.0.4",
@@ -39,9 +40,9 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "dev-server": "react-scripts start",
-    "dev": "nodemon server/index.js & npm run dev-server",
-    "server": "nodemon server/index.js",
+    "dev-front": "react-scripts start",
+    "dev-server": "nodemon server/index.js",
+    "dev": "nodemon server/index.js & npm run dev-front",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

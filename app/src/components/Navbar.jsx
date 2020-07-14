@@ -16,7 +16,7 @@ import Room from './Room.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
-const Navbar = () => {
+const Navbar = ({ user, googleLogin }) => {
   const [activeItem, setActiveItem] = useState('home');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
@@ -53,6 +53,24 @@ const Navbar = () => {
           <Link to="/sessions" class="item">Sessions</Link>
         </Menu.Item>
 
+        <Menu.Item
+          name="room"
+          active={activeItem === 'room'}
+          onClick={handleItemClick}
+        >
+          <Link to={`/room/${id}`} class="item">Room</Link>
+        </Menu.Item>
+
+        <Menu.Menu position="right" class="right menu">
+          <Menu.Item
+            name="login"
+            active={activeItem === 'logout'}
+            onClick={googleLogin}
+          >
+            <Link class="item">Login</Link>
+          </Menu.Item>
+        </Menu.Menu>
+  {user? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div> }
         <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="logout"
@@ -67,7 +85,7 @@ const Navbar = () => {
       <div>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/profile" render={() => (<Profile user={user} />)} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/create" component={CreateSession} />
