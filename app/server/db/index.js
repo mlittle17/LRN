@@ -15,6 +15,6 @@ const db = pgp({
   port: 5432,
   database: DB_NAME,
 
-}).catch(err => console.log(err));
+});
 
 module.exports = db;
