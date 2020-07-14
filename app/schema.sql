@@ -1,6 +1,3 @@
--- Drop Database If Exists lrn;
--- Create Database lrn;
-
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
   googleID VARCHAR(50) UNIQUE NOT NULL,
@@ -18,7 +15,7 @@ CREATE TABLE event (
   date VARCHAR(50),
   time VARCHAR(20),
   mTime Varchar(20),
-  users_id SERIAL NOT NULL,
+  users_id Integer NOT NULL,
   classLimit INT NOT NULL,
   privacy Varchar(10)
 );
@@ -31,32 +28,28 @@ CREATE TABLE topic (
 CREATE TABLE document (
   id SERIAL PRIMARY KEY NOT NULL,
   documentType VARCHAR(50),
-  linkTo VARCHAR(50)
+  linkTo VARCHAR(50),
+  users_id Integer NOT NULL,
+  event_id Integer NOT NULL
 );
 
 CREATE TABLE binder (
   id SERIAL PRIMARY KEY NOT NULL,
-  users_id SERIAL NOT NULL,
-  document_id SERIAL NOT NULL
-);
-
-CREATE TABLE event_Document (
-  id SERIAL PRIMARY KEY NOT NULL,
-  event_id SERIAL NOT NULL,
-  document_id SERIAL NOT NULL
+  users_id Integer NOT NULL,
+  document_id Integer NOT NULL
 );
 
 CREATE TABLE FlashCard (
   id SERIAL PRIMARY KEY NOT NULL,
   question VARCHAR(50),
   answer VARCHAR(50),
-  flashCardPack_id SERIAL NOT NULL
+  flashCardPack_id Integer NOT NULL
 );
 
 CREATE TABLE flashCardPack (
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(50),
-  users_id SERIAL NOT NULL
+  users_id Integer NOT NULL
 );
 
 /* to pass in ths schema
@@ -81,9 +74,9 @@ ALTER TABLE binder ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
 ALTER TABLE binder ADD FOREIGN KEY (document_id) REFERENCES document (id);
 
-ALTER TABLE event_Document ADD FOREIGN KEY (event_id) REFERENCES event (id);
+ALTER TABLE document ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
-ALTER TABLE event_Document ADD FOREIGN KEY (document_id) REFERENCES document (id);
+ALTER TABLE document ADD FOREIGN KEY (event_id) REFERENCES event (id);
 
 ALTER TABLE flashCardPack ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
