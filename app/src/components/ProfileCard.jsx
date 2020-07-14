@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileCard = () => {
+const ProfileCard = ({ userInfo }) => {
   const classes = useStyles();
   const [user, setUser] = useState({
     name: 'Sally Name',
