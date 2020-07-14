@@ -70,7 +70,7 @@ const Navbar = ({ user, googleLogin }) => {
             <Link class="item">Login</Link>
           </Menu.Item>
         </Menu.Menu>
-  {user? <a>logged in</a> : <div><a>If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div> }
+  {user? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div> }
         <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="logout"
