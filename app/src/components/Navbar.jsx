@@ -91,6 +91,7 @@ const Navbar = ({ user, googleLogin }) => {
           <Route exact path="/create" component={CreateSession} />
           <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" component={Room} />
+          <Route exact path="/create" component={CreateSession} />
         </Switch>
       </div>
     </div>
