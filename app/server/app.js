@@ -23,14 +23,17 @@ app.use('/', routes);
 app.get('/', (req, res) => {
   res.send('This is from express.js');
 });
+//using cookie session
 app.use(cookieSession({
   // cookie will last for one day
+  // age of the cookie
   maxAge: 24 * 60 * 60 * 1000,
-  // being stored in keys.js
+  // encrypts the user id
   keys: [process.env.COOKIEKEY],
 }));
-// initialize passport
+// initialize passport to be used
 app.use(passport.initialize());
+// using session cookies
 app.use(passport.session());
 // auth route
 app.use('/auth', authRoutes);
