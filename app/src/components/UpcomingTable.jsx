@@ -54,7 +54,7 @@ const UpcomingTable = ({
 
   // const rows = sessions.chunk(3);
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
