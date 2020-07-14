@@ -46,7 +46,7 @@ const CreateSession = () => {
   const [subject, setSubject] = useState('');
 
   // for now hardcoded user
-  const user_Id = 1;
+  const user_id = 1;
 
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
@@ -61,7 +61,7 @@ const CreateSession = () => {
   };
 
   const addEvent = () => {
-    axios.post('/event', { user_Id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity })
+    axios.post('/event', { user_id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity })
       .then(response => {
         console.log(response);
       })
