@@ -52,7 +52,7 @@ Events
 const createEvent = async(req, res) => {
   try {
     // not working yet
-    await db.query('INSERT INTO event (topic, date, time, users_Id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_Id}, ${classLimit})', req.body);
+    await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit})', req.body);
     res.send({ message: 'event added' });
   } catch (err) {
     console.log('nah bruh', err);
@@ -73,7 +73,7 @@ const getAllEvents = async(req, res) => {
 
 const getEventbyUser = async(req, res) => {
   try {
-    const userEvents = await db.any(`SELECT * FROM event where users_Id = ${req.params.id}`);
+    const userEvents = await db.any(`SELECT * FROM event where users_id = ${req.params.id}`);
     res.send(userEvents);
   } catch (err) {
     console.log(`this user is boring, ${err}`);
@@ -112,15 +112,38 @@ const getTopicByUser = async(req, res) => {
 
 /*
 Document
- */
 // method that insert into Document
 // method that get from Document
+*/
+
+const addDocument = async(req, res) => {
+  try {
+    await db.any('SELECT * FROM document');
+    res.send('we got the documents');
+  } catch (err) {
+    console.log('No documents', err);
+  }
+};
+
+const getAllDocument = async(req, res) => {
+  try {
+    await db.query('INSERT INTO document (documentType, linkTo) VALUES (${type} ${link})', req.body);
+    res.send('we added a document');
+  } catch (err) {
+    console.log('No document added', err);
+  }
+};
+
+const addEventDocument = async(req, res) => {
+
+};
 
 /*
 Binder
- */
+
 // method that insert into Binder
 // method that get from Binder
+*/
 
 /*
 Event_Documents
@@ -150,4 +173,6 @@ module.exports = {
   getTopic,
   getTopicByUser,
   getEventbyUser,
+  addDocument,
+  getAllDocument
 };
