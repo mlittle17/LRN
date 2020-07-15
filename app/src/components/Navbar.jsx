@@ -54,7 +54,6 @@ const Navbar = ({ user, googleLogin }) => {
         >
           <Link to="/sessions" class="item">Sessions</Link>
         </Menu.Item>
-
         <Menu.Item
           name="room"
           active={activeItem === 'room'}

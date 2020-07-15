@@ -20,17 +20,18 @@ function App() {
   });
 
   const googleLogin = () => {
-    axios.get('/auth/exist')
-      .then(res => {
-        console.log(res.data, 'inside of googleLogin');
-        setUser(res.data);
-        if (!res.data) {
-          console.log('I am not logged in');
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    window.location.replace('http://localhost:8080/auth/login');
+    // axios.get('/auth/google/redirect')
+    //   .then(res => {
+    //     console.log(res, 'inside of googleLogin');
+    //     setUser(res.data);
+    //     if (!res.data) {
+    //       console.log('I am not logged in');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   return (
