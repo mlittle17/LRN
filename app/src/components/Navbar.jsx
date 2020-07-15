@@ -12,6 +12,8 @@ import Logout from './Logout.jsx';
 import CreateSession from './CreateSession.jsx';
 import CreateRoom from '../routes/CreateRoom';
 import Room from './Room.jsx';
+import Board from './Board.jsx';
+import Canvas from './Canvas.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
@@ -66,6 +68,38 @@ const Navbar = ({ user, googleLogin }) => {
           </Menu.Item>
 
           {/* <Menu.Menu position="right" class="right menu">
+        <Menu.Item
+          name="profile"
+          active={activeItem === 'profile'}
+          onClick={handleItemClick}
+        >
+          <Link to="/sessions" class="item">Sessions</Link>
+        </Menu.Item>
+        <Menu.Item
+          name="room"
+          active={activeItem === 'room'}
+          onClick={handleItemClick}
+        >
+          <Link to={`/room/${id}`} class="item">Room</Link>
+        </Menu.Item>
+
+        <Menu.Item
+          name="board"
+          active={activeItem === 'board'}
+          onClick={handleItemClick}
+        >
+          <Link to="/board" class="item">Whiteboard</Link>
+        </Menu.Item>
+
+        <Menu.Item
+          name="canvas"
+          active={activeItem === 'canvas'}
+          onClick={handleItemClick}
+        >
+          <Link to="/canvas" class="item">Canvas</Link>
+        </Menu.Item>
+
+        <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="login"
             active={activeItem === 'logout'}
@@ -94,6 +128,8 @@ const Navbar = ({ user, googleLogin }) => {
           <Route exact path="/create" component={CreateSession} />
           <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" component={Room} />
+          <Route exact path="/board" component={Board} />
+          <Route exact path="/canvas" component={Canvas} />
           <Route exact path="/create" component={CreateSession} />
         </Switch>
       </div>

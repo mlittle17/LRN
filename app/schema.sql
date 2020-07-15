@@ -1,60 +1,56 @@
-Drop Database If Exists lrn;
-Create Database lrn;
-
 CREATE TABLE users (
-  Id SERIAL PRIMARY KEY NOT NULL,
+  id SERIAL PRIMARY KEY NOT NULL,
   googleID VARCHAR(50) UNIQUE NOT NULL,
   username VARCHAR(50) NOT NULL,
-  nameFirst VARCHAR(80),
-  nameLast VARCHAR(80),
+  nameFirst VARCHAR(20),
+  nameLast VARCHAR(20),
   email VARCHAR(50),
-  imageUrl VARCHAR(160),
-  zip VARCHAR(160)
+  imageUrl VARCHAR(200),
+  zip VARCHAR(10)
 );
 
 CREATE TABLE event (
-  Id SERIAL PRIMARY KEY NOT NULL,
+  id SERIAL PRIMARY KEY NOT NULL,
   topic VARCHAR NOT NULL,
   date VARCHAR(50),
-  time VARCHAR(50),
-  users_Id SERIAL NOT NULL,
-  classLimit INT NOT NULL
+  time VARCHAR(20),
+  mTime Varchar(20),
+  users_id Integer NOT NULL,
+  classLimit INT NOT NULL,
+  privacy Varchar(10)
 );
 
 CREATE TABLE topic (
-  Id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(50)
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(50),
+  users_id Integer NOT NULL
 );
 
 CREATE TABLE document (
-  Id SERIAL PRIMARY KEY NOT NULL,
+  id SERIAL PRIMARY KEY NOT NULL,
   documentType VARCHAR(50),
-  linkTo VARCHAR(50)
+  linkTo VARCHAR(200),
+  users_id Integer NOT NULL,
+  event_id Integer NOT NULL
 );
 
 CREATE TABLE binder (
-  Id SERIAL PRIMARY KEY NOT NULL,
-  users_Id SERIAL NOT NULL,
-  document_ID SERIAL NOT NULL
-);
-
-CREATE TABLE event_Document (
-  Id SERIAL PRIMARY KEY NOT NULL,
-  event_ID SERIAL NOT NULL,
-  document_ID SERIAL NOT NULL
+  id SERIAL PRIMARY KEY NOT NULL,
+  users_id Integer NOT NULL,
+  document_id Integer NOT NULL
 );
 
 CREATE TABLE FlashCard (
-  Id SERIAL PRIMARY KEY NOT NULL,
-  question VARCHAR(50),
-  answer VARCHAR(50),
-  flashCardPack_Id SERIAL NOT NULL
+  id SERIAL PRIMARY KEY NOT NULL,
+  question VARCHAR(100),
+  answer VARCHAR(100),
+  flashCardPack_id Integer NOT NULL
 );
 
 CREATE TABLE flashCardPack (
-  Id SERIAL PRIMARY KEY NOT NULL,
+  id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(50),
-  users_Id SERIAL NOT NULL
+  users_id Integer NOT NULL
 );
 
 /* to pass in ths schema
@@ -65,25 +61,20 @@ First start the postgresql server sudo -u postgres psql
 # \i schema.sql   // this command runs the schema
 */
 
--- ALTER TABLE user ADD FOREIGN KEY (Id) REFERENCES event ("Instructor");
 
--- ALTER TABLE document ADD FOREIGN KEY (Id) REFERENCES user (Id);
+ALTER TABLE event ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
--- ALTER TABLE "User" ADD FOREIGN KEY ("Id") REFERENCES "Binder" ("User_Id");
+ALTER TABLE binder ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
--- ALTER TABLE "Document" ADD FOREIGN KEY ("Id") REFERENCES "Event_Documents" ("Document_ID");
+ALTER TABLE binder ADD FOREIGN KEY (document_id) REFERENCES document (id);
 
-ALTER TABLE event ADD FOREIGN KEY (users_Id) REFERENCES users (Id);
+ALTER TABLE document ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
-ALTER TABLE binder ADD FOREIGN KEY (users_Id) REFERENCES users (Id);
+ALTER TABLE document ADD FOREIGN KEY (event_id) REFERENCES event (id);
 
-ALTER TABLE binder ADD FOREIGN KEY (document_Id) REFERENCES document (Id);
+ALTER TABLE flashCardPack ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
-ALTER TABLE event_Document ADD FOREIGN KEY (event_Id) REFERENCES event (Id);
+ALTER TABLE flashCard ADD FOREIGN KEY (flashCardPack_id) REFERENCES flashCardPack (id);
 
-ALTER TABLE event_Document ADD FOREIGN KEY (document_Id) REFERENCES document (Id);
-
-ALTER TABLE flashCardPack ADD FOREIGN KEY (users_Id) REFERENCES users (Id);
-
-ALTER TABLE flashCard ADD FOREIGN KEY (flashCardPack_Id) REFERENCES flashCardPack (Id);
+ALTER TABLE topic ADD FOREIGN KEY (users_id) REFERENCES users (id);
 

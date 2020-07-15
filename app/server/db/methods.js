@@ -7,8 +7,9 @@ Users
 
 // method for inserting user info
 // const createUser = async(req, res) => {
+//   const {googleID, user, firstName, lastName, emails, image, zipcode } = req.body;
 //   try {
-//     await db.query('INSERT INTO users (username, namefirst, namelast, email, imageurl, zip) VALUES ( ${user}, ${firstName}, ${lastName}, ${emails}, ${image}, ${zipcode})', req.body);
+//     await db.query(`INSERT INTO users (googleID, username, namefirst, namelast, email, imageurl, zip) VALUES ('${googleID}', '${user}', '${firstName}', '${lastName}', '${emails}', '${image}', '${zipcode}')`);
 //     res.send({ message: 'user added' });
 //   } catch (err) {
 //     console.log('nah bruh', err);
@@ -48,17 +49,15 @@ const getAllUser = async(req, res) => {
 /*
 Events
  */
-// method that insert into event
+
 const createEvent = async(req, res) => {
   try {
-    // not working yet
-    await db.query('INSERT INTO event (topic, date, time, users_Id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_Id}, ${classLimit})', req.body);
+    await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit})', req.body);
     res.send({ message: 'event added' });
   } catch (err) {
     console.log('nah bruh', err);
   }
 };
-// method that get from event
 
 const getAllEvents = async(req, res) => {
   try {
@@ -69,11 +68,9 @@ const getAllEvents = async(req, res) => {
   }
 };
 
-// get events of a particular user
-
 const getEventbyUser = async(req, res) => {
   try {
-    const userEvents = await db.any(`SELECT * FROM event where users_Id = ${req.params.id}`);
+    const userEvents = await db.any(`SELECT * FROM event where users_id = ${req.params.id}`);
     res.send(userEvents);
   } catch (err) {
     console.log(`this user is boring, ${err}`);
@@ -83,7 +80,7 @@ const getEventbyUser = async(req, res) => {
 /*
 Topic
  */
-// method that insert into topic
+
 const createTopic = async(req, res) => {
   try {
     await db.query('INSERT INTO topic (name) VALUES (${name})', req.body);
@@ -95,7 +92,8 @@ const createTopic = async(req, res) => {
 // method that get from topic
 const getTopic = async(req, res) => {
   try {
-    await db.any('SELECT * FROM topic');
+    const topic = await db.any(`SELECT * FROM topic WHERE users_id = ${req.param.id} `);
+    res.send(topic);
   } catch (err) {
     console.log(`they not ready for this knowledge, ${err}`);
   }
@@ -104,7 +102,8 @@ const getTopic = async(req, res) => {
 // get topics a user likes
 const getTopicByUser = async(req, res) => {
   try {
-    await db.any(`SELECT * FROM topic WHERE user_id = ${req.params.id}`);
+    const userTopics = await db.any(`SELECT * FROM topic WHERE user_id = ${req.params.id}`);
+    res.send(userTopics);
   } catch (err) {
     console.log(`no user topics, ${err}`);
   }
@@ -112,21 +111,57 @@ const getTopicByUser = async(req, res) => {
 
 /*
 Document
- */
-// method that insert into Document
-// method that get from Document
+*/
+
+const addDocument = async(req, res) => {
+  try {
+    await db.query('INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES (${type} ${link} ${user_id} ${event_id})', req.body);
+    res.send('we added a document');
+  } catch (err) {
+    console.log('got documents', err);
+  }
+};
+
+const getAllDocument = async(req, res) => {
+  try {
+    const documents = await db.any('SELECT * FROM document');
+    res.send(documents);
+  } catch (err) {
+    console.log('No document', err);
+  }
+};
+
+const getEventDocument = async(req, res) => {
+  try {
+   // may need an inner join to also get the username in the users table where users_id = in the event table
+    const eventDocuments = await db.any(`SELECT * FROM event WHERE event_id =${req.params.id}`);
+    res.send(eventDocuments);
+  } catch (err) {
+    console.log(`No Docsr, ${err}`);
+  }
+};
 
 /*
 Binder
- */
-// method that insert into Binder
-// method that get from Binder
+*/
 
-/*
-Event_Documents
- */
-// method that insert into Event_Documents
-// method that get from Event_Documents
+const addToBinder = async(req, res) => {
+  try {
+    await db.query('INSERT INTO binder (user_id, document_id) (${user_id}, ${document_id})', req.body);
+    res.send('it worked');
+  } catch (err) {
+    console.log('nah', err);
+  }
+};
+// method that get from topic
+const getUserBinder = async(req, res) => {
+  try {
+    const userBinder = await db.any(`SELECT * FROM binder WHERE users_id =${req.params.id}`);
+    res.send(userBinder);
+  } catch (err) {
+    console.log(`No Binder, ${err}`);
+  }
+};
 
 /*
 Flash_Cards
@@ -150,4 +185,9 @@ module.exports = {
   getTopic,
   getTopicByUser,
   getEventbyUser,
+  addDocument,
+  getAllDocument,
+  addToBinder,
+  getUserBinder,
+  getEventDocument,
 };

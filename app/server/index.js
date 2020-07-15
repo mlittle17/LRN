@@ -37,6 +37,9 @@ io.on('connection', socket => {
   socket.on('returning signal', payload => {
     io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
   });
+
+  socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+
   socket.on('disconnect', () => {
     const roomID = socketToRoom[socket.id];
     let room = users[roomID];
