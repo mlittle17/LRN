@@ -7,9 +7,9 @@ Users
 
 // method for inserting user info
 // const createUser = async(req, res) => {
-//   const {googleID, user, firsName, lastName, emails, image, zipcode } = req.body;
+//   const {googleID, user, firstName, lastName, emails, image, zipcode } = req.body;
 //   try {
-//     await db.query(`INSERT INTO users (googleID, username, namefirst, namelast, email, imageurl, zip) VALUES ('${googleID}', '${user}', '${firsName}', '${lastName}', '${emails}', '${image}', '${zipcode}')`);
+//     await db.query(`INSERT INTO users (googleID, username, namefirst, namelast, email, imageurl, zip) VALUES ('${googleID}', '${user}', '${firstName}', '${lastName}', '${emails}', '${image}', '${zipcode}')`);
 //     res.send({ message: 'user added' });
 //   } catch (err) {
 //     console.log('nah bruh', err);
