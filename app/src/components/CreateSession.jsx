@@ -47,7 +47,7 @@ const CreateSession = () => {
   const [document, setDocument] = useState('');
 
   // for now hardcoded user
-  const users_id = 1;
+  const users_id = 4;
 
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
