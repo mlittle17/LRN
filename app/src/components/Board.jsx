@@ -13,7 +13,27 @@ const Board = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
+    // ----------------------- Colors
+    const colors = document.getElementsByClassName('color');
+    console.log(colors, 'the colors');
 
+    // set the current color
+    const current = {
+      color: 'black',
+    };
+
+    // helper that will update the current color
+    const onColorUpdate = (e) => {
+      current.color = e.target.className.split(' ')[1];
+    };
+
+    // loop through the color elements and add the click event listeners
+    for (let i = 0; i < colors.length; i++) {
+      colors[i].addEventListener('click', onColorUpdate, false);
+    }
+
+    // ------------------------------
+    let drawing = false;
 
 
 
