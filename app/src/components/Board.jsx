@@ -110,7 +110,11 @@ const Board = () => {
     window.addEventListener('resize', onResize, false);
     onResize();
 
-
+    function onDrawingEvent(data) {
+      const w = canvas.width;
+      const h = canvas.height;
+      drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
+    }
 
 
   });
