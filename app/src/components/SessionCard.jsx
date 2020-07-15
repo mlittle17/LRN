@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 300,
     borderColor: '#474a2c',
   },
+  actionArea: {
+    backgroundColor: '#a58e57',
+  },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -39,13 +42,12 @@ const SessionCard = () => {
   return (
     <Card className={classes.root} variant="outlined">
 
-      <CardActionArea>
-        <CardHeader
-          title="History of the Aztec"
-        />
-        {/* <Typography gutterBottom variant="h4" component="h1">
-            Session Info
-          </Typography> */}
+      <CardActionArea className={classes.actionArea}>
+        <div style={{ marginTop: '10px' }}>
+          <Typography gutterBottom variant="h4" component="h1" align="center">
+            History of the Aztec
+          </Typography>
+        </div>
         <br />
       </CardActionArea>
       <CardContent>
