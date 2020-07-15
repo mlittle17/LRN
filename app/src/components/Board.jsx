@@ -89,7 +89,6 @@ const Board = () => {
       };
     };
 
-
     canvas.addEventListener('mousedown', onMouseDown, false);
     canvas.addEventListener('mouseup', onMouseUp, false);
     canvas.addEventListener('mouseout', onMouseUp, false);
@@ -116,7 +115,9 @@ const Board = () => {
       drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
     }
 
-
+    // Socket.io
+    socketRef.current = io.connect('/');
+    socketRef.current.on('drawing', onDrawingEvent);
   });
 
   // The Canvas and color elements
