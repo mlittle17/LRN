@@ -101,7 +101,14 @@ const Board = () => {
     canvas.addEventListener('touchcancel', onMouseUp, false);
     canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
 
+    // make the canvas fill its parent
+    const onResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
 
+    window.addEventListener('resize', onResize, false);
+    onResize();
 
 
 
