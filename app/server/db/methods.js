@@ -52,7 +52,7 @@ Events
 
 const createEvent = async(req, res) => {
   try {
-    await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit})', req.body);
+    await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${users_id}, ${classLimit})', req.body);
     res.send({ message: 'event added' });
   } catch (err) {
     console.log('nah bruh', err);
@@ -114,8 +114,9 @@ Document
 */
 
 const addDocument = async(req, res) => {
+  const {type, link, user_id, event_id} = req.body;
   try {
-    await db.query('INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES (${type} ${link} ${user_id} ${event_id})', req.body);
+    await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}')`);
     res.send('we added a document');
   } catch (err) {
     console.log('got documents', err);
