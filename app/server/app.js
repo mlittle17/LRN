@@ -2,6 +2,7 @@ const express = require('express');
 // const cors = require('cors');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const cors = require('cors');
 const { routes } = require('./routes');
 const authRoutes = require('./auth-routes');
 const passportSetup = require('./config/passport-setup');
@@ -12,7 +13,7 @@ const path = require('path');
 require('dotenv').config();
 
 app.use(express.json());
-
+app.use(cors());
 // this will tell the server to use your build files
 app.use(express.static(`${path.resolve('./')}/build`));
 // // this will serve files from the build when you refresh on endpoints from react router
