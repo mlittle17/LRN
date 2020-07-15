@@ -22,4 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-./server/config/keys
+
+
+.env
+app.yaml
+server/config/keys.js
