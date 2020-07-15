@@ -69,7 +69,12 @@ const Board = () => {
       drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
     };
 
-
+    const onMouseMove = (e) => {
+      if (!drawing) { return; }
+      drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
+      current.x = e.clientX || e.touches[0].clientX;
+      current.y = e.clientY || e.touches[0].clientY;
+    };
 
 
 
