@@ -20,18 +20,18 @@ function App() {
   });
 
   const googleLogin = () => {
-    //window.location.href = 'http://www.localhost:8080/auth.google';
-    axios.get('/auth/login')
-      .then(res => {
-        console.log(res, 'inside of googleLogin');
-        setUser(res.data);
-        if (!res.data) {
-          console.log('I am not logged in');
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    window.location.replace('http://localhost:8080/auth/login');
+    // axios.get('/auth/google/redirect')
+    //   .then(res => {
+    //     console.log(res, 'inside of googleLogin');
+    //     setUser(res.data);
+    //     if (!res.data) {
+    //       console.log('I am not logged in');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   return (
