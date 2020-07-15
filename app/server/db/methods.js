@@ -92,7 +92,7 @@ const createTopic = async(req, res) => {
 // method that get from topic
 const getTopic = async(req, res) => {
   try {
-    const topic = await db.any('SELECT * FROM topic');
+    const topic = await db.any(`SELECT * FROM topic WHERE users_id = ${req.param.id} `);
     res.send(topic);
   } catch (err) {
     console.log(`they not ready for this knowledge, ${err}`);
@@ -133,6 +133,7 @@ const getAllDocument = async(req, res) => {
 
 const getEventDocument = async(req, res) => {
   try {
+   // may need an inner join to also get the username in the users table where users_id = in the event table
     const eventDocuments = await db.any(`SELECT * FROM event WHERE event_id =${req.params.id}`);
     res.send(eventDocuments);
   } catch (err) {
