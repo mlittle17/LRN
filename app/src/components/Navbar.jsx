@@ -24,7 +24,7 @@ const Navbar = ({ user, googleLogin }) => {
   const handleItemClick = (e, { name }) => setActiveItem(name);
 
   const id = uuid();
-
+  // console.log(user.id, 'NAVBAR');
   return (
     <div>
 
@@ -78,17 +78,22 @@ const Navbar = ({ user, googleLogin }) => {
           <Link to="/canvas" class="item">Canvas</Link>
         </Menu.Item>
 
+
+        {user ? <a>You are logged in</a> 
+        :
         <Menu.Menu position="right" class="right menu">
-          <Menu.Item
-            name="login"
-            active={activeItem === 'logout'}
-            onClick={googleLogin}
-          >
-            <Link class="item">Login</Link>
-          </Menu.Item>
-        </Menu.Menu>
-        {user ? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div> }
-        <Menu.Menu position="right" class="right menu">
+        <Menu.Item
+          name="login"
+          active={activeItem === 'logout'}
+          onClick={googleLogin}
+        >
+          <Link class="item">Login</Link>
+        </Menu.Item>
+      </Menu.Menu>
+      }
+
+        {/* LOG OUT NOT FUNCTIONAL */}
+        {/* <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="logout"
             active={activeItem === 'logout'}
@@ -96,7 +101,7 @@ const Navbar = ({ user, googleLogin }) => {
           >
             <Link to="/logout" class="item">Logout</Link>
           </Menu.Item>
-        </Menu.Menu>
+        </Menu.Menu> */}
       </Menu>
 
       <div>
