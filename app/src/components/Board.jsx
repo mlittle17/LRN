@@ -9,7 +9,9 @@ const Board = () => {
   const colorsRef = useRef(null);
   const socketRef = useRef();
 
-
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
 
 
 
