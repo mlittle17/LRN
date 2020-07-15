@@ -8,7 +8,18 @@ import {
 } from '@material-ui/core';
 
 import axios from 'axios';
-
+// const [documents, setDocuments] = useState([])
+/*
+// request to get data
+axios.get('event/documents')
+   .then(response => {
+    console.log(response.data)
+    setDocuments(response.data)
+   })
+   .catch(err => {
+     console.log(err);
+   })
+ */
 const documents = [
   {
     type: 'Word Document',
