@@ -57,7 +57,17 @@ const Board = () => {
       });
     };
 
+    const onMouseDown = (e) => {
+      drawing = true;
+      current.x = e.clientX || e.touches[0].clientX;
+      current.y = e.clientY || e.touches[0].clientY;
+    };
 
+    const onMouseUp = (e) => {
+      if (!drawing) { return; }
+      drawing = false;
+      drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
+    };
 
 
 
