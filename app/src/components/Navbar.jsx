@@ -12,6 +12,8 @@ import Logout from './Logout.jsx';
 import CreateSession from './CreateSession.jsx';
 import CreateRoom from '../routes/CreateRoom';
 import Room from './Room.jsx';
+import Board from './Board.jsx';
+import Canvas from './Canvas.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
@@ -61,6 +63,22 @@ const Navbar = ({ user, googleLogin }) => {
           <Link to={`/room/${id}`} class="item">Room</Link>
         </Menu.Item>
 
+        <Menu.Item
+          name="board"
+          active={activeItem === 'board'}
+          onClick={handleItemClick}
+        >
+          <Link to="/board" class="item">Whiteboard</Link>
+        </Menu.Item>
+
+        <Menu.Item
+          name="canvas"
+          active={activeItem === 'canvas'}
+          onClick={handleItemClick}
+        >
+          <Link to="/canvas" class="item">Canvas</Link>
+        </Menu.Item>
+
         <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="login"
@@ -70,7 +88,7 @@ const Navbar = ({ user, googleLogin }) => {
             <Link class="item">Login</Link>
           </Menu.Item>
         </Menu.Menu>
-  {user? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div> }
+        {user ? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div> }
         <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="logout"
@@ -91,6 +109,8 @@ const Navbar = ({ user, googleLogin }) => {
           <Route exact path="/create" component={CreateSession} />
           <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" component={Room} />
+          <Route exact path="/board" component={Board} />
+          <Route exact path="/canvas" component={Canvas} />
           <Route exact path="/create" component={CreateSession} />
         </Switch>
       </div>
