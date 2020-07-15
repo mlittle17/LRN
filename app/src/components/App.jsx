@@ -20,9 +20,10 @@ function App() {
   });
 
   const googleLogin = () => {
-    axios.get('/auth/exist')
+    //window.location.href = 'http://www.localhost:8080/auth.google';
+    axios.get('/auth/login')
       .then(res => {
-        console.log(res.data, 'inside of googleLogin');
+        console.log(res, 'inside of googleLogin');
         setUser(res.data);
         if (!res.data) {
           console.log('I am not logged in');
