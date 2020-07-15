@@ -47,7 +47,7 @@ const CreateSession = () => {
   const [document, setDocument] = useState('');
 
   // for now hardcoded user
-  const user_id = 1;
+  const users_id = 1;
 
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
@@ -62,7 +62,9 @@ const CreateSession = () => {
   };
 
   const addEvent = () => {
-    axios.post('/event', { user_id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity })
+    axios.post('/event', {
+      users_id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
+    })
       .then(response => {
         console.log(response);
       })
@@ -73,6 +75,19 @@ const CreateSession = () => {
 
   // const onZipChange = (e) => {
   //   setZip(e.target.rawValue);
+  // };
+
+  // const addDocument = () => {
+  //   axios.post('/event/documents', {
+  //     documentType, linkTo, users_id, event_id,
+  //   })
+  //     .then(response => {
+  //       console.log(response);
+  //       // setDocuments(response.data)
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
   // };
 
   const classes = useStyles();
