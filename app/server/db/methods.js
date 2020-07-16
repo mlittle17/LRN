@@ -134,8 +134,7 @@ const getAllDocument = async(req, res) => {
 
 const getEventDocument = async(req, res) => {
   try {
-  // may need an inner join to also get the username in the users table where users_id = in the event table
-    const eventDocuments = await db.any(`SELECT * FROM document WHERE event_id =${req.params.id}`);
+    const eventDocuments = await db.any(`SELECT D.*, U.nameFirst, U.nameLast from document D INNER JOIN event E on E.ID = D.event_id INNER JOIN users U ON U.id = E.users_id WHERE E.id = ${req.params.id}`);
     res.send(eventDocuments);
   } catch (err) {
     console.log(`No Docs, ${err}`);
