@@ -30,10 +30,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const subOptions = [
+  { key: 'fi', text: 'Finance', value: 'finance' },
+  { key: 'fd', text: 'Food', value: 'food' },
+  { key: 'hs', text: 'History', value: 'history' },
+  { key: 'lt', text: 'Literature', value: 'literature' },
+  { key: 'ma', text: 'Math', value: 'math' },
+  { key: 'mu', text: 'Music', value: 'music' },
+  { key: 'sc', text: 'Science', value: 'science' },
+  { key: 'sk', text: 'Skill', value: 'skill' },
+  { key: 'ot', text: 'Other', value: 'other' },
+];
+
 const FindSessions = () => {
   const classes = useStyles();
 
+  const [subject, setSubject] = useState('');
+  const [sessionDate, setSessionDate] = useState('');
   const [zip, setZip] = useState(0);
+
+  const onSessionSubjectChange = (e, result) => {
+    const { value } = result;
+    setSubject(value);
+  };
+
+  const onSessionDateChange = (e) => {
+    setSessionDate(e.target.rawValue);
+  };
 
   const onZipChange = (e) => {
     setZip(e.target.rawValue);
@@ -41,7 +64,7 @@ const FindSessions = () => {
 
   const { ref, map, google } = useGoogleMaps(
     // Use your own API key, you can get one from Google (https://console.cloud.google.com/google/maps-apis/overview)
-    'AIzaSyC4Z5Qz97EWcoCczNn2IcYvaYG0L9pe6Rk',
+    'AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68',
     // NOTE: even if you change options later
     {
       center: { lat: 0, lng: 0 },
@@ -65,22 +88,46 @@ const FindSessions = () => {
               <br />
             </CardActionArea>
             <CardContent>
-              <Form.Field>
-                <Cleave
-                  placeholder="ZIP"
-                  options={{
-                    blocks: [5],
-                    numericOnly: true,
-                  }}
-                  onChange={onZipChange}
-                  className="form-field"
+              <Form>
+                {/* subject select */}
+                <Form.Select
+                  fluid
+                  label="Subject"
+                  options={subOptions}
+                  placeholder="Subject"
+                  onChange={onSessionSubjectChange}
+                  value={subject}
                 />
-              </Form.Field>
+
+                {/* date search */}
+                <Form.Field>
+                  <label>Date</label>
+                  <Cleave
+                    placeholder="MM/DD/YYYY"
+                    options={{ date: true, datePattern: ['m', 'd', 'Y'] }}
+                    onChange={onSessionDateChange}
+                    className="form-field"
+                  />
+                </Form.Field>
+
+                {/* zip search */}
+                <Form.Field>
+                  <label>ZIP</label>
+                  <Cleave
+                    placeholder="*****"
+                    options={{
+                      blocks: [5],
+                      numericOnly: true,
+                    }}
+                    onChange={onZipChange}
+                    className="form-field"
+                  />
+                </Form.Field>
+              </Form>
             </CardContent>
           </Card>
         </div>
         <Card className={classes.mapCard} variant="outlined">
-
           <div ref={ref} style={{ width: 798, height: 498 }} />
         </Card>
       </Grid>
