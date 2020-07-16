@@ -8,7 +8,7 @@ import {
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: '#a58e57',
     color: theme.palette.common.white,
   },
   body: {
@@ -36,6 +36,12 @@ const useStyles = makeStyles({
     minHeight: 300,
     maxHeight: 300,
   },
+  colLabel: {
+    color: '#2d2e2e',
+  },
+  rowText: {
+    color: '#474a2c',
+  },
 });
 
 const UpcomingTable = ({
@@ -48,26 +54,26 @@ const UpcomingTable = ({
 
   // const rows = sessions.chunk(3);
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>NAME</StyledTableCell>
-            <StyledTableCell align="right">CREATOR</StyledTableCell>
-            <StyledTableCell align="right">DATE</StyledTableCell>
-            <StyledTableCell align="right">TIME</StyledTableCell>
+            <StyledTableCell className={classes.colLabel}>NAME</StyledTableCell>
+            <StyledTableCell align="right" className={classes.colLabel}>CREATOR</StyledTableCell>
+            <StyledTableCell align="right" className={classes.colLabel}>DATE</StyledTableCell>
+            <StyledTableCell align="right" className={classes.colLabel}>TIME</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {/* rows.forEach((sessionArray) => { */}
           {sessionPage.map((session) => (
             <StyledTableRow key={session.name}>
-              <StyledTableCell component="th" scope="row">
+              <StyledTableCell component="th" scope="row" className={classes.rowText}>
                 {session.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{session.creator}</StyledTableCell>
-              <StyledTableCell align="right">{session.date}</StyledTableCell>
-              <StyledTableCell align="right">{session.time}</StyledTableCell>
+              <StyledTableCell align="right" className={classes.rowText}>{session.creator}</StyledTableCell>
+              <StyledTableCell align="right" className={classes.rowText}>{session.date}</StyledTableCell>
+              <StyledTableCell align="right" className={classes.rowText}>{session.time}</StyledTableCell>
             </StyledTableRow>
           ))}
           {/* }) */}
