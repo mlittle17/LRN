@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
+
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import SessionCard from './SessionCard.jsx';
+
+import '../styles/Calendar.scss';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
@@ -61,9 +64,6 @@ const SessionCalendar = ({
       const {
         topic, date, time, id, users_id,
       } = sessionObj;
-      // console.log('eventId', id);
-      // console.log('userId', user.id);
-      // console.log(sessionObj);
 
       sessionsColl.push({
         title: topic,
@@ -92,10 +92,12 @@ const SessionCalendar = ({
         views={['month', 'agenda']}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 350, width: 600 }}
-        components={{
-          event: SessionCard,
+        style={{
+          height: 600, width: 940, border: '#474a2c 1px', borderStyle: 'solid',
         }}
+        // components={{
+        //   event: SessionCard,
+        // }}
       />
     </div>
   );
