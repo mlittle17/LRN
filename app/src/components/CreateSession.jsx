@@ -13,6 +13,7 @@ import AddDocuments from './AddDocuments.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: 40,
     maxWidth: 620,
     minWidth: 620,
     minHeight: 340,
@@ -100,7 +101,6 @@ const CreateSession = () => {
   const classes = useStyles();
   return (
     <div className="Create">
-      <div>Create Session</div>
       <div>
         <Grid container justify="space-around">
           <Card className={classes.root}>
