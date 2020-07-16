@@ -9,20 +9,6 @@ import '../styles/App.css';
 function App() {
   const [user, setUser] = useState({});
 
-  useEffect(() => {
-    axios.get('/auth/exist')
-      .then(res => {
-        console.log(res.data, 'user object');
-        setUser(res.data);
-        if (!res.data) {
-          console.log('I am not logged in');
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
   const googleLogin = () => {
     window.location.replace('http://localhost:8080/auth/login');
   };
