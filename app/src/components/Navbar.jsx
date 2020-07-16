@@ -9,6 +9,7 @@ import Home from './Home.jsx';
 import Profile from './Profile.jsx';
 import Sessions from './Sessions.jsx';
 import Logout from './Logout.jsx';
+import FindSessions from './FindSessions.jsx';
 import CreateSession from './CreateSession.jsx';
 import CreateRoom from '../routes/CreateRoom';
 import Room from './Room.jsx';
@@ -126,6 +127,7 @@ const Navbar = ({ user, googleLogin }) => {
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/create" component={CreateSession} />
+          <Route exact path="/find" component={FindSessions} />
           <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" component={Room} />
           <Route exact path="/board" component={Board} />

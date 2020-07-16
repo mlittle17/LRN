@@ -6,7 +6,6 @@ import { Card, CardActionArea, CardContent, Grid, Typography } from '@material-u
 import { Button } from 'semantic-ui-react';
 
 import ProfileCard from './ProfileCard.jsx';
-import FindSessions from './FindSessions.jsx';
 import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
@@ -42,10 +41,7 @@ const Home = () => {
       </div>
 
       <div>
-        <Switch>
-          <Route exact path="/find" component={FindSessions} />
-
-        </Switch>
+        <Switch />
       </div>
     </div>
   );
