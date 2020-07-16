@@ -28,6 +28,7 @@
     "react-big-calendar": "^0.26.0",
     "react-counter-input": "^0.2.1",
     "react-dom": "^16.13.1",
+    "react-hook-google-maps": "0.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-slick": "^0.26.1",
