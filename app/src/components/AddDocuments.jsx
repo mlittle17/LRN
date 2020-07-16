@@ -7,15 +7,11 @@ import {
   Button, Dialog, DialogActions, DialogContent,
   DialogTitle, Slide,
 } from '@material-ui/core';
+import { authorize } from 'passport';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 620,
-    minWidth: 620,
-    minHeight: 340,
-    // maxHeight: 340,
-  },
   docsButton: {
+    margin: 'auto',
     width: 500,
     backgroundColor: '#474a2c',
     color: '#f6fef5',
@@ -42,9 +38,7 @@ const AddDocuments = function AlertDialogSlide() {
   return (
     <div>
       <Button className={classes.docsButton} onClick={handleClickOpen}>Add Documents</Button>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button> */}
+
       <Dialog
         open={open}
         TransitionComponent={Transition}
