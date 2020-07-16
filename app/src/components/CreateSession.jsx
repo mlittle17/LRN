@@ -54,7 +54,7 @@ const CreateSession = () => {
   const [document, setDocument] = useState('');
 
   // for now hardcoded user
-  const users_id = 4;
+  const users_id = 3;
 
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
@@ -84,23 +84,22 @@ const CreateSession = () => {
   //   setZip(e.target.rawValue);
   // };
 
-  // const addDocument = () => {
-  //   axios.post('/event/documents', {
-  //     documentType, linkTo, users_id, event_id,
-  //   })
-  //     .then(response => {
-  //       console.log(response);
-  //       // setDocuments(response.data)
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
+  const addDocument = () => {
+    axios.post('/event/documents', {
+      documentType: 'google docs', linkTo: 'link', users_id, event_id: 3,
+    })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const classes = useStyles();
   return (
     <div className="Create">
-      <div>Create Session</div>
+      {/* <div>Create Session</div> */}
       <div>
         <Grid container justify="space-around">
           <Card className={classes.root}>

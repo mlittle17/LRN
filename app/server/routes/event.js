@@ -3,7 +3,7 @@ const { createEvent, getAllEvents, getEventbyUser, addDocument, getEventDocument
 
 const eventRouter = Router();
 
-eventRouter.post('/', createEvent);
+eventRouter.post('/', createEvent, addDocument);
 eventRouter.get('/', getAllEvents);
 eventRouter.post('/documents', addDocument);
 eventRouter.get('/:id/documents', getEventDocument);
