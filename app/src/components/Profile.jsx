@@ -10,7 +10,7 @@ function Profile({ user }) {
   console.log(user);
   return (
     <div className="Profile">
-      <Grid container justify="space-evenly">
+      <Grid container justify="space-around">
         <ProfileCard userInfo={user} />
         <Binder />
       </Grid>

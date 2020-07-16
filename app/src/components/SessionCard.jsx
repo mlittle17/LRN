@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import clsx from 'clsx';
+
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Avatar, Button, Card, CardContent, CardActionArea, CardActions, CardHeader, Collapse, Grid, Typography, IconButton,
+  Avatar, Button, Card, CardContent, CardActionArea, CardActions,
+  CardHeader, Collapse, Grid, Typography, IconButton,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
     minWidth: 300,
+    borderColor: '#474a2c',
+  },
+  actionArea: {
+    backgroundColor: '#a58e57',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -33,82 +40,72 @@ const SessionCard = () => {
   };
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardContent>
+    <Card className={classes.root} variant="outlined">
 
-          <CardHeader
-            title="Session Info"
-          />
-          {/* <Typography gutterBottom variant="h4" component="h1">
-            Session Info
-          </Typography> */}
-
-          {/* <br /> */}
+      <CardActionArea className={classes.actionArea}>
+        <div style={{ marginTop: '10px' }}>
+          <Typography gutterBottom variant="h4" component="h1" align="center">
+            History of the Aztec
+          </Typography>
+        </div>
+        <br />
+      </CardActionArea>
+      <CardContent>
+        <div>
+          {/* Possibly add an avatar here with instructor name */}
+          <Typography gutterBottom variant="h5" component="h2">
+            Instructor
+          </Typography>
+          {/* Possibly add an avatar here with instructor name */}
+          <Typography variant="body1" color="textSecondary" component="p">
+            Prof. Robin Thicke
+          </Typography>
+        </div>
+        <br />
+        <Grid container justify="space-between">
           <div>
-            <Typography gutterBottom variant="h6" component="h3">
-              History of the Aztec
+            <Typography gutterBottom variant="h5" component="h2">
+              Subject
             </Typography>
-            {/* Possibly add an avatar here with instructor name */}
-            {/* <Typography variant="body2" color="textSecondary" component="p">
-              History of the Aztec
-            </Typography> */}
+            <Typography variant="body1" color="textSecondary" component="p">
+              History
+            </Typography>
           </div>
           <div>
             <Typography gutterBottom variant="h5" component="h2">
-              Instructor
+              Capacity
             </Typography>
-            {/* Possibly add an avatar here with instructor name */}
-            <Typography variant="body2" color="textSecondary" component="p">
-              Prof. Alan Thicke
+            <Typography variant="body1" color="textSecondary" component="p">
+              12/25
             </Typography>
           </div>
-          <br />
-          <Grid container justify="space-between">
-            <div>
-              <Typography gutterBottom variant="h5" component="h2">
-                Subject
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                History
-              </Typography>
-            </div>
-            <div>
-              <Typography gutterBottom variant="h5" component="h2">
-                Capacity
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                12/25
-              </Typography>
-            </div>
-          </Grid>
-          <br />
-          <Grid container justify="space-between">
-            <div>
-              <Typography gutterBottom variant="h5" component="h2">
-                Date
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                07/ 26 / 2020
-              </Typography>
-            </div>
-            <div>
-              <Typography gutterBottom variant="h5" component="h2">
-                Time
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                5:30 pm
-              </Typography>
-            </div>
-          </Grid>
+        </Grid>
+        <br />
+        <Grid container justify="space-between">
+          <div>
+            <Typography gutterBottom variant="h5" component="h2">
+              Date
+            </Typography>
+            <Typography variant="body1" color="textSecondary" component="p">
+              07/ 26 / 2020
+            </Typography>
+          </div>
+          <div>
+            <Typography gutterBottom variant="h5" component="h2">
+              Time
+            </Typography>
+            <Typography variant="body1" color="textSecondary" component="p">
+              5:30 pm
+            </Typography>
+          </div>
+        </Grid>
 
-        </CardContent>
-      </CardActionArea>
+      </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
           Close
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
           Register
         </Button>
 
@@ -129,7 +126,7 @@ const SessionCard = () => {
           <Typography gutterBottom variant="h5" component="h2">
             Description:
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body1" color="textSecondary" component="p">
             What was the class structure of the Aztecs? What language did the Aztec speak?
             What can we learn from the Aztecs? Find out the answers to these questions and
             more in this comprehensive session pulled straight from my course curriculum at Tulane.
@@ -138,7 +135,7 @@ const SessionCard = () => {
           <Typography gutterBottom variant="h5" component="h2">
             Est. Duration:
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body1" color="textSecondary" component="p">
             1hr 45min
           </Typography>
         </CardContent>

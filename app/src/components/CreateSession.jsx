@@ -3,11 +3,13 @@ import Cleave from 'cleave.js/react';
 import CounterInput from 'react-counter-input';
 import axios from 'axios';
 
+import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Card, CardContent, Grid } from '@material-ui/core';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
-import { Card, CardContent, Grid } from '@material-ui/core';
-import { Button, Form } from 'semantic-ui-react';
+
+import AddDocuments from './AddDocuments.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 620,
     minHeight: 340,
     // maxHeight: 340,
+  },
+  docsButton: {
+    width: 500,
+    backgroundColor: '#474a2c',
+    color: '#f6fef5',
   },
   large: {
     width: theme.spacing(7),
@@ -162,7 +169,7 @@ const CreateSession = () => {
                     className="form-field"
                   />
                 </Form.Field> */}
-
+                <AddDocuments />
               </Form> <br />
               <Button type="submit" onClick={addEvent}>Submit</Button>
             </CardContent>
