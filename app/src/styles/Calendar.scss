@@ -1,0 +1,110 @@
+// @use 'variables' as *;
+
+$out-of-range-color: lighten(#333, 40%);
+$out-of-range-bg-color: lighten(#333, 70%);
+
+$calendar-border: #474a2c !important;
+$cell-border: #474a2c;
+
+// .calendarCont .rbc-calendar {
+//   height: 600 !important;
+//   width: 940;
+//   border-radius: 10px;
+//   border: '#474a2c 1px';
+//   border-style: 'solid';
+// }
+
+.rbc-calendar .rbc-month-view {
+  // border: 2px;
+  border-style: solid;
+  border-color: #474a2c;
+}
+
+.rbc-calendar .rbc-toolbar {
+  height: 50px;
+  margin-bottom: 0px;
+  font-size: x-large;;
+  border: 1px;
+  border-style: solid;
+  border-color: #474a2c;
+  background-color: #a58e57;
+}
+
+.rbc-month-header .rbc-header {
+  border: 1px;
+  border-style: solid;
+  border-color: #474a2c;
+  background-color: #a58e57;
+}
+
+.rbc-toolbar .rbc-btn-group button{
+  background-color: #474a2c;
+  font-size: large;
+  border: none;
+  color: #f6fef5;
+}
+
+.rbc-btn-group .rbc-active {
+  background-color: black;
+  color: white;
+}
+
+.rbc-toolbar button:focus {
+  color: #373a3c;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+.rbc-month-view .rbc-day-bg {
+  border: 1px;
+  border-style: solid;
+  border-color: #474a2c;
+}
+
+.rbc-month-view .rbc-off-range-bg {
+  background-color: #2d2e2e;
+}
+
+.rbc-month-view .rbc-today {
+  background-color: #f6fef5;
+}
+
+.rbc-row .rbc-event {
+  background-color: #474a2c;
+}
+
+.rbc-row .rbc-event:focus {
+  outline: 5px auto #a58e57;
+}
+
+.rbc-row-segment .rbc-selected {
+  background-color: #a58e57;
+}
+
+
+$border-color: #474a2c;
+
+$segment-width: percentage(1 / 7);
+
+$time-selection-color: white;
+$time-selection-bg-color: rgba(0,0,0, .50);
+$date-selection-bg-color: rgba(0,0,0, .10);
+
+
+$event-bg: #474a2c;
+$event-border: darken(#3174ad, 10%) !default;
+$event-outline: #474a2c;
+$event-color: #fff;
+$event-border-radius: 5px;
+$event-padding: 2px 5px;
+$event-zindex: 4;
+
+$btn-color: #f7fff6;
+$btn-bg: #474a2c;
+$btn-border: #a58e57;
+
+$current-time-color: #74ad31;
+
+$rbc-css-prefix: rbc-i;
+
+$today-highlight-bg: #f7fff6;

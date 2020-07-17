@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
+import { authorize } from 'passport';
+
+import {
+  Avatar, Button, Card, CardContent, CardActionArea, CardActions,
+  Grid, Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Button, Card, CardContent, CardActionArea, CardActions, Grid, Typography, IconButton, CardHeader } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 320,
-    minWidth: 320,
-    minHeight: 340,
-    maxHeight: 340,
+    maxWidth: 310,
+    minWidth: 310,
+    minHeight: 450,
+    maxHeight: 450,
+    borderColor: '#474a2c',
+  },
+  actionArea: {
+    backgroundColor: '#a58e57',
   },
   large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+    width: theme.spacing(16),
+    height: theme.spacing(16),
+    margin: 'auto',
+  },
+  icon: {
+    color: '#474a2c',
   },
 }));
 
@@ -29,37 +42,36 @@ const ProfileCard = ({ userInfo }) => {
   });
 
   return (
-    <Card className={classes.root}>
+    <Card variant="outlined" className={classes.root}>
+      <CardActionArea className={classes.actionArea}>
+        <br />
+        <Avatar alt="Sally Name" src={user.avatar} className={classes.large} />
+
+        <br />
+        <Typography gutterBottom variant="h4" component="h4" align="center" style={{ color: '#474337' }}>
+          <b>Jerry McDonald</b>
+        </Typography>
+        <br />
+      </CardActionArea>
       <CardContent>
-        <CardActionArea>
-
-          <Avatar alt="Sally Name" src={user.avatar} className={classes.large} />
-
-          <br />
-          <Typography gutterBottom variant="h5" component="h4">
-            JERRY MCDONALD
+        <div>
+          <Typography gutterBottom variant="h6" component="h7" style={{ color: '#a58e57' }}>
+            <EmailIcon className={classes.icon} /> jerryMcDonald@gmail.com
           </Typography>
+          <br /><br />
+          <Typography gutterBottom variant="h6" component="h7" style={{ color: '#a58e57' }}>
+            <PersonPinCircleIcon className={classes.icon} /> 70810
+          </Typography>
+        </div>
 
-          <br />
-          <div>
-            <Typography gutterBottom variant="h7" component="h7">
-              <EmailIcon /> jerryMcDonald@gmail.com
-            </Typography>
-            <br /><br />
-            <Typography gutterBottom variant="h7" component="h7">
-              <PersonPinCircleIcon /> 70810
-            </Typography>
-          </div>
-
-        </CardActionArea>
         <br />
         <div>
-          <Typography gutterBottom variant="h7" component="h7">
+          <Typography gutterBottom variant="h6" component="h7" style={{ color: '#a58e57' }}>
             Subjects
           </Typography>
           {user.subjects.map((sub) => {
             return (
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body1" color="textSecondary" component="p" style={{ color: '#474a2c' }}>
                 {sub}
               </Typography>
             );

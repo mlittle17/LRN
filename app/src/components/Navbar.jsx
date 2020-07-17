@@ -12,6 +12,8 @@ import Logout from './Logout.jsx';
 import CreateSession from './CreateSession.jsx';
 import CreateRoom from '../routes/CreateRoom';
 import Room from './Room.jsx';
+import Board from './Board.jsx';
+import Canvas from './Canvas.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
@@ -26,25 +28,46 @@ const Navbar = ({ user, googleLogin }) => {
   return (
     <div>
 
-      <Menu pointing secondary>
+      <Menu pointing secondary size="massive" style={{ backgroundColor: '#2d2e2e' }}>
         <Menu.Item
           name="home"
           active={activeItem === 'home'}
           onClick={handleItemClick}
         >
           <Link to="/">
-            <Image src={logo} size="mini" alt="LRN logo" />
+            <Image src={logo} size="tiny" alt="LRN logo" />
           </Link>
         </Menu.Item>
 
-        <Menu.Item
-          name="sessions"
-          active={activeItem === 'sessions'}
-          onClick={handleItemClick}
-        >
-          <Link to="/profile" class="item">Profile</Link>
-        </Menu.Item>
+        {user ? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div>}
 
+        <Menu.Menu position="right" class="right menu">
+
+          <Menu.Item
+            name="room"
+            active={activeItem === 'room'}
+            onClick={handleItemClick}
+          >
+            <Link to={`/room/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Room</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            name="profile"
+            active={activeItem === 'profile'}
+            onClick={handleItemClick}
+          >
+            <Link to="/sessions" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Sessions</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            name="sessions"
+            active={activeItem === 'sessions'}
+            onClick={handleItemClick}
+          >
+            <Link to="/profile" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Profile</Link>
+          </Menu.Item>
+
+          {/* <Menu.Menu position="right" class="right menu">
         <Menu.Item
           name="profile"
           active={activeItem === 'profile'}
@@ -60,23 +83,38 @@ const Navbar = ({ user, googleLogin }) => {
           <Link to={`/room/${id}`} class="item">Room</Link>
         </Menu.Item>
 
+        <Menu.Item
+          name="board"
+          active={activeItem === 'board'}
+          onClick={handleItemClick}
+        >
+          <Link to="/board" class="item">Whiteboard</Link>
+        </Menu.Item>
+
+        <Menu.Item
+          name="canvas"
+          active={activeItem === 'canvas'}
+          onClick={handleItemClick}
+        >
+          <Link to="/canvas" class="item">Canvas</Link>
+        </Menu.Item>
+
         <Menu.Menu position="right" class="right menu">
           <Menu.Item
             name="login"
             active={activeItem === 'logout'}
             onClick={googleLogin}
           >
-            <Link class="item">Login</Link>
+            <Link class="item" style={{ color: '#a58e57' }}>Login</Link>
           </Menu.Item>
-        </Menu.Menu>
-  {user? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div> }
-        <Menu.Menu position="right" class="right menu">
+        </Menu.Menu> */}
+
           <Menu.Item
             name="logout"
             active={activeItem === 'logout'}
             onClick={handleItemClick}
           >
-            <Link to="/logout" class="item">Logout</Link>
+            <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Logout</Link>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
@@ -90,6 +128,8 @@ const Navbar = ({ user, googleLogin }) => {
           <Route exact path="/create" component={CreateSession} />
           <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" component={Room} />
+          <Route exact path="/board" component={Board} />
+          <Route exact path="/canvas" component={Canvas} />
           <Route exact path="/create" component={CreateSession} />
         </Switch>
       </div>

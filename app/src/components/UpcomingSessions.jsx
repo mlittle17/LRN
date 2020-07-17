@@ -75,7 +75,7 @@ const UpcomingSessions = () => {
   const rows = sessions.chunk(3);
   return (
     <div>
-      <Typography gutterBottom variant="h6" component="h6"><b>UPCOMING</b></Typography>
+      <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>UPCOMING SESSIONS</b></Typography>
       <Slider {...settings} style={{ width: '600px', height: '300px', backgroundColor: '#e0e1e2' }}>
         {rows.map((sessionPage) => {
           return (

@@ -19,10 +19,12 @@ function Sessions() {
 
   return (
     <div className="Sessions">
-      <div>Sessions</div>
-      <Grid container justify="space-around">
+      <br />
+      <Grid container justify="space-evenly">
         <Calendar sessions={sessionObj} />
-        <SessionCard />
+        <div>
+          <SessionCard />
+        </div>
       </Grid>
     </div>
   );

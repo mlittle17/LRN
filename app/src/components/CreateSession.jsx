@@ -3,11 +3,13 @@ import Cleave from 'cleave.js/react';
 import CounterInput from 'react-counter-input';
 import axios from 'axios';
 
+import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Card, CardContent, Grid } from '@material-ui/core';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
-import { Card, CardContent, Grid } from '@material-ui/core';
-import { Button, Form } from 'semantic-ui-react';
+
+import AddDocuments from './AddDocuments.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 620,
     minHeight: 340,
     // maxHeight: 340,
+  },
+  docsButton: {
+    width: 500,
+    backgroundColor: '#474a2c',
+    color: '#f6fef5',
   },
   large: {
     width: theme.spacing(7),
@@ -44,9 +51,10 @@ const CreateSession = () => {
   const [capacity, setCapacity] = useState(1);
   const [zip, setZip] = useState(0);
   const [subject, setSubject] = useState('');
+  const [document, setDocument] = useState('');
 
   // for now hardcoded user
-  const user_Id = 1;
+  const users_id = 1;
 
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
@@ -61,7 +69,9 @@ const CreateSession = () => {
   };
 
   const addEvent = () => {
-    axios.post('/event', { user_Id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity })
+    axios.post('/event', {
+      users_id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
+    })
       .then(response => {
         console.log(response);
       })
@@ -72,6 +82,19 @@ const CreateSession = () => {
 
   // const onZipChange = (e) => {
   //   setZip(e.target.rawValue);
+  // };
+
+  // const addDocument = () => {
+  //   axios.post('/event/documents', {
+  //     documentType, linkTo, users_id, event_id,
+  //   })
+  //     .then(response => {
+  //       console.log(response);
+  //       // setDocuments(response.data)
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
   // };
 
   const classes = useStyles();
@@ -146,7 +169,7 @@ const CreateSession = () => {
                     className="form-field"
                   />
                 </Form.Field> */}
-
+                <AddDocuments />
               </Form> <br />
               <Button type="submit" onClick={addEvent}>Submit</Button>
             </CardContent>
