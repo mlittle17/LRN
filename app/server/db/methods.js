@@ -27,15 +27,6 @@ const getUser = (id) => {
   return db.query(`SELECT * FROM users WHERE googleid = '${id}'`);
 };
 
-// method that gets  particular users info
-// const getUser = async(req, res) => {
-//   try {
-//     const user = await db.one(`SELECT * FROM user WHERE id = ${req.params.id}`);
-//     res.send(user);
-//   } catch (err) {
-//     console.log(`no user, ${err}`);
-//   }
-// };
 // method that gets all the users info
 const getAllUser = async(req, res) => {
   try {
@@ -62,16 +53,17 @@ const createEvent = async(req, res) => {
 
 const getAllEvents = async(req, res) => {
   try {
-    const events = await db.any('SELECT * FROM event');
+    const events = await db.any('SELECT E.*, U.nameFirst, U.nameLast from event E INNER JOIN users U on U.id = E.users_id');
     res.send(events);
   } catch (err) {
     console.log(`no events, ${err}`);
   }
 };
 
+// this gets users events
 const getEventbyUser = async(req, res) => {
   try {
-    const userEvents = await db.any(`SELECT * FROM event where users_id = ${req.params.id}`);
+    const userEvents = await db.any(`SELECT E.*, U.nameFirst, U.nameLast from event E INNER JOIN users U on U.id = E.users_id WHERE E.users_id= ${req.params.id}`);
     res.send(userEvents);
   } catch (err) {
     console.log(`this user is boring, ${err}`);
