@@ -12,7 +12,7 @@ function Profile({ user }) {
     <div className="Profile">
       <Grid container justify="space-around">
         <ProfileCard userInfo={user} />
-        <Binder />
+        <Binder userInfo={user} />
       </Grid>
     </div>
   );

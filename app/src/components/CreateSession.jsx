@@ -54,8 +54,8 @@ const CreateSession = () => {
   const [document, setDocument] = useState('');
 
   // for now hardcoded user
-  const users_id = 1;
-
+  const user_id = 3;
+  console.log(document);
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
   };
@@ -67,13 +67,22 @@ const CreateSession = () => {
     const { value } = result;
     setSubject(value);
   };
+  
 
   const addEvent = () => {
     axios.post('/event', {
-      users_id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
+      user_id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
     })
-      .then(response => {
-        console.log(response);
+      .then(() => {
+        axios.post('/event/documents', {
+          type: 'google docs', link: document, user_id, event_id: 3,
+        })
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(error => {
         console.log(error);
@@ -84,23 +93,10 @@ const CreateSession = () => {
   //   setZip(e.target.rawValue);
   // };
 
-  // const addDocument = () => {
-  //   axios.post('/event/documents', {
-  //     documentType, linkTo, users_id, event_id,
-  //   })
-  //     .then(response => {
-  //       console.log(response);
-  //       // setDocuments(response.data)
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
-
   const classes = useStyles();
   return (
     <div className="Create">
-      <div>Create Session</div>
+      {/* <div>Create Session</div> */}
       <div>
         <Grid container justify="space-around">
           <Card className={classes.root}>
@@ -169,7 +165,7 @@ const CreateSession = () => {
                     className="form-field"
                   />
                 </Form.Field> */}
-                <AddDocuments />
+                <AddDocuments setDoc={setDocument} />
               </Form> <br />
               <Button type="submit" onClick={addEvent}>Submit</Button>
             </CardContent>

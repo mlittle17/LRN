@@ -53,6 +53,7 @@ Events
 const createEvent = async(req, res) => {
   try {
     await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit})', req.body);
+    console.log(res);
     res.send({ message: 'event added' });
   } catch (err) {
     console.log('nah bruh', err);
@@ -114,8 +115,9 @@ Document
 */
 
 const addDocument = async(req, res) => {
+  const {type, link, user_id, event_id} = req.body;
   try {
-    await db.query('INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES (${type} ${link} ${user_id} ${event_id})', req.body);
+    await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}')`);
     res.send('we added a document');
   } catch (err) {
     console.log('got documents', err);
@@ -133,11 +135,10 @@ const getAllDocument = async(req, res) => {
 
 const getEventDocument = async(req, res) => {
   try {
-   // may need an inner join to also get the username in the users table where users_id = in the event table
-    const eventDocuments = await db.any(`SELECT * FROM event WHERE event_id =${req.params.id}`);
+    const eventDocuments = await db.any(`SELECT D.*, U.nameFirst, U.nameLast from document D INNER JOIN event E on E.ID = D.event_id INNER JOIN users U ON U.id = E.users_id WHERE E.id = ${req.params.id}`);
     res.send(eventDocuments);
   } catch (err) {
-    console.log(`No Docsr, ${err}`);
+    console.log(`No Docs, ${err}`);
   }
 };
 
