@@ -31,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileCard = ({ userInfo }) => {
+  // console.log(userInfo.id, 'ProfileCard');
   const classes = useStyles();
   const [user, setUser] = useState({
-    name: 'Sally Name',
+    name: 'Sally',
     avatar: 'https://ca.slack-edge.com/T02P3HQD6-URYEC04TS-1d8e4abade33-512',
     // avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTaUPxz9QpJvEvbLP1nX4jGz6yyiWthbrEn-g&usqp=CAU',
     email: 'sallyName@gmail.com',

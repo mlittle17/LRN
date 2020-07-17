@@ -7,32 +7,15 @@ import Navbar from './Navbar.jsx';
 import '../styles/App.css';
 
 function App() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    axios.post('/test')
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  });
+  const [user, setUser] = useState({});
 
   const googleLogin = () => {
     window.location.replace('http://localhost:8080/auth/login');
-    // axios.get('/auth/google/redirect')
-    //   .then(res => {
-    //     console.log(res, 'inside of googleLogin');
-    //     setUser(res.data);
-    //     if (!res.data) {
-    //       console.log('I am not logged in');
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
   };
+
+  const googleLogout = () => {
+    // this is not functional yet
+  }
 
   return (
     <div>

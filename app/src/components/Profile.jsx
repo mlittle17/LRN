@@ -7,7 +7,7 @@ import Binder from './Binder.jsx';
 // import axios from 'axios';
 
 function Profile({ user }) {
-  // console.log(user);
+  // console.log(user. namefirst, 'inside profile component');
   return (
     <div className="Profile">
       <Grid container justify="space-around">

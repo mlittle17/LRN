@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import styled from 'styled-components';
+import Board from './Board.jsx';
 
 const Container = styled.div`
     padding: 20px;
@@ -13,8 +14,8 @@ const Container = styled.div`
 `;
 
 const StyledVideo = styled.video`
-    height: 40%;
-    width: 50%;
+    height: 20%;
+    width: 30%;
 `;
 
 const Video = (props) => {
@@ -110,12 +111,14 @@ const Room = (props) => {
 
   return (
     <Container>
+         {/* <Board /> */}
       <StyledVideo muted ref={userVideo} autoPlay playsInline />
       {peers.map((peer, index) => {
         return (
           <Video key={index} peer={peer} />
         );
       })}
+ 
     </Container>
   );
 };
