@@ -19,6 +19,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // may need to change to user documents
     axios.get('event/3/documents')
       .then(response => {
         setDocuments(response.data);
