@@ -2,14 +2,12 @@ import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import '../styles/board.css';
 
-
 const Board = () => {
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
   const socketRef = useRef();
 
   useEffect(() => {
-
     // --------------- getContext() method returns a drawing context on the canvas-----
 
     const canvas = canvasRef.current;
@@ -17,10 +15,6 @@ const Board = () => {
     const context = canvas.getContext('2d');
 
     // ---------------------------------------------------------------------------------
-
-
-
-
 
     // ----------------------- Colors --------------------------------------------------
     const colors = document.getElementsByClassName('color');
@@ -42,12 +36,6 @@ const Board = () => {
     }
     let drawing = false;
     // ---------------------------------------------------------------------------------
-
-
-
-
-
-
 
     // ------------------------------- create the drawline ----------------------------
     const drawLine = (x0, y0, x1, y1, color, emit) => {
@@ -73,12 +61,6 @@ const Board = () => {
     };
     // ----------------------------------------------------------------------------------
 
-
-
-
-
-
-
     // ---------------- mouse movement --------------------------------------
     const onMouseDown = (e) => {
       drawing = true;
@@ -101,11 +83,6 @@ const Board = () => {
 
     // ------------------------------------------------------------------------
 
-
-
-
-
-
     // ----------- limit the number of events per second -----------------------
 
     const throttle = (callback, delay) => {
@@ -122,10 +99,6 @@ const Board = () => {
 
     // -------------------------------------------------------------------------
 
-
-
-
-
     // -----------------add event listeners to our canvas ----------------------
 
     canvas.addEventListener('mousedown', onMouseDown, false);
@@ -140,11 +113,6 @@ const Board = () => {
     canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
     // --------------------------------------------------------------------------
 
-
-
-
-
-
     // -------------- make the canvas fill its parent component -----------------
     const onResize = () => {
       canvas.width = window.innerWidth;
@@ -155,27 +123,17 @@ const Board = () => {
     onResize();
     // -------------------------------------------------------------------------
 
-
-
-
-
-
     // ----------------------- socket.io connection ----------------------------
     const onDrawingEvent = (data) => {
       const w = canvas.width;
       const h = canvas.height;
       drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
-    }
+    };
 
     socketRef.current = io.connect('/');
     socketRef.current.on('drawing', onDrawingEvent);
   }, []);
   // ----------------------------------------------------------------------------
-
-
-
-
-
 
   // ------------- The Canvas and color elements --------------------------
 
