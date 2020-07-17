@@ -16,6 +16,14 @@
  * Canvas
  */
 
+.boardContainer {
+  margin-left: 20px;
+  float: bottom;
+  width: 804px;
+  height: 400px;
+  border: 2px solid #a58e57;
+}
+
 .whiteboard {
   display: block;
   /* height: 100%;
@@ -29,6 +37,8 @@
 
 .colors {
   position: fixed;
+  border: 2px solid #a58e57;
+  background-color: #a58e57;
 }
 
 .color {

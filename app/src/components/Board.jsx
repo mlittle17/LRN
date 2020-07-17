@@ -71,7 +71,6 @@ const Board = () => {
     const onMouseDown = (e) => {
       drawing = true;
 
-
       current.x = parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX);
       current.y = parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY);
     };
@@ -146,7 +145,7 @@ const Board = () => {
   // ------------- The Canvas and color elements --------------------------
 
   return (
-    <div>
+    <div className="boardContainer">
       <canvas ref={canvasRef} className="whiteboard" />
       <div ref={colorsRef} className="colors">
         <div className="color black" />
