@@ -8,6 +8,25 @@ import '../styles/App.css';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [documents, setDocuments] = useState([]);
+  const [sessions, setSessions] = useState([]);
+
+  useEffect(() => {
+    axios.get('/event')
+      .then(response => {
+        setSessions(response.data);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios.get('event/3/documents')
+      .then(response => {
+        setDocuments(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     axios.get('/auth/exist')
@@ -42,7 +61,7 @@ function App() {
 
   return (
     <div>
-      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} />
+      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={documents} sessions={sessions} />
       {/* <button onClick={googleLogin}>Log In</button> */}
       <Router>
         <div className="App" />
