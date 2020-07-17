@@ -1,7 +1,9 @@
+/* eslint-disable radix */
 import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
-import { Container } from 'semantic-ui-react';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import { IconButton } from '@material-ui/core';
 import '../styles/Board.css';
 
 const Board = () => {
@@ -63,9 +65,9 @@ const Board = () => {
     };
     // ----------------------------------------------------------------------------------
     // get the current canvas offsets using getBoundingClientRect
-    let BB = canvas.getBoundingClientRect();
-    let offsetX = BB.left;
-    let offsetY = BB.top;
+    const BB = canvas.getBoundingClientRect();
+    const offsetX = BB.left;
+    const offsetY = BB.top;
 
     // ---------------- mouse movement --------------------------------------
     const onMouseDown = (e) => {
@@ -77,7 +79,7 @@ const Board = () => {
 
     const onMouseMove = (e) => {
       if (!drawing) { return; }
-      drawLine(current.x, current.y, parseInt(e.clientX - offsetX)|| parseInt(e.touches[0].clientX - offsetX), parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY), current.color, true);
+      drawLine(current.x, current.y, parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX), parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY), current.color, true);
       current.x = parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX);
       current.y = parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY);
     };
@@ -104,6 +106,21 @@ const Board = () => {
       };
     };
 
+    // -------------------------------------------------------------------------
+
+    // ----------------------- Clear all canvases ----------------------------
+
+    const clearCanvas = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+    const emitAndCanvas = () => {
+      socketRef.current.emit('clear');
+      clearCanvas();
+    };
+    const clearButton = document.getElementsByClassName('clear');
+
+    clearButton[0].addEventListener('click', emitAndCanvas, false);
     // -------------------------------------------------------------------------
 
     // -----------------add event listeners to our canvas ----------------------
@@ -139,20 +156,26 @@ const Board = () => {
 
     socketRef.current = io.connect('/');
     socketRef.current.on('drawing', onDrawingEvent);
+    socketRef.current.on('clear', clearCanvas);
   }, []);
   // ----------------------------------------------------------------------------
 
   // ------------- The Canvas and color elements --------------------------
 
   return (
-    <div className="boardContainer">
-      <canvas ref={canvasRef} className="whiteboard" />
+    <div>
       <div ref={colorsRef} className="colors">
         <div className="color black" />
         <div className="color red" />
         <div className="color green" />
         <div className="color blue" />
         <div className="color yellow" />
+        <IconButton aria-label="delete" className="clear">
+          <DeleteIcon fontSize="medium" />
+        </IconButton>
+      </div>
+      <div className="boardContainer">
+        <canvas ref={canvasRef} className="whiteboard" />
       </div>
     </div>
   );
