@@ -1,24 +1,40 @@
 import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
+import Slider from 'react-slick';
+
 import styled from 'styled-components';
+import { Grid, Typography } from '@material-ui/core';
+import Board from './Board.jsx';
+
+import '../styles/Upcoming.css';
 
 const Container = styled.div`
     padding: 20px;
-    display: flex;
     height: 100vh;
     width: 90%;
-    margin: auto;
+    // margin: auto;
     flex-wrap: wrap;
 `;
 
 const StyledVideo = styled.video`
-    height: 40%;
-    width: 50%;
+    height: 20%;
+    width: 30%;
 `;
+
+const settings = {
+  arrows: true,
+  className: 'slides',
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 2,
+  slidesToScroll: 2,
+};
 
 const Video = (props) => {
   const ref = useRef();
+  const { key } = props;
 
   useEffect(() => {
     props.peer.on('stream', stream => {
@@ -27,7 +43,10 @@ const Video = (props) => {
   }, []);
 
   return (
-    <StyledVideo playsInline autoPlay ref={ref} />
+    <>
+      <Typography variant="h4" component="h6" style={{ float: 'left', color: '#2d2e2e' }}>{key}</Typography>
+      <StyledVideo playsInline autoPlay ref={ref} style={{ height: 200, width: 350 }} />
+    </>
   );
 };
 
@@ -110,12 +129,32 @@ const Room = (props) => {
 
   return (
     <Container>
-      <StyledVideo muted ref={userVideo} autoPlay playsInline />
-      {peers.map((peer, index) => {
-        return (
-          <Video key={index} peer={peer} />
-        );
-      })}
+      <Grid container justify="space-around" style={{ marginBottom: 15 }}>
+        <StyledVideo muted ref={userVideo} autoPlay playsInline />
+        {peers.length === 1 && (
+          peers.map((peer, index) => {
+            return (
+              <div>
+                <Video key={index} peer={peer} style={{ height: 150, width: 300 }} />
+              </div>
+            );
+          })
+        )}
+        {peers.length > 1 && (
+          <Slider {...settings} style={{ width: '300px', height: '200px', backgroundColor: '#' }}>
+            {peers.map((peer, index) => {
+              return (
+                <div>
+                  {/* <Typography variant="h4" component="h6" style={{ float: 'left', color: '#2d2e2e' }}>{index + 1}</Typography> */}
+                  <Video key={index} peer={peer} />
+                </div>
+              );
+            })}
+          </Slider>
+        )}
+      </Grid>
+      <Board />
+
     </Container>
   );
 };

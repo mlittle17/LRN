@@ -7,33 +7,22 @@ import {
   TableContainer, TableHead, Typography,
 } from '@material-ui/core';
 
-// const [documents, setDocuments] = useState([])
-/*
-// request to get data
-axios.get('event/documents')
-   .then(response => {
-    console.log(response.data)
-    setDocuments(response.data)
-   })
-   .catch(err => {
-     console.log(err);
-   })
- */
+// let documents = [
+//   {
+//     type: 'Word Document',
+//     linkTo: 'Lasagna Recipe',
+//     creator: 'Rya Sicily',
+//     dateSaved: '08/03/2020',
+//   },
+//   {
+//     type: 'Word Document',
+//     linkTo: 'Packing Ess. List',
+//     creator: 'Greg Sanzen',
+//     dateSaved: '08/10/2020',
+//   },
+// ];
 
-const documents = [
-  {
-    type: 'Word Document',
-    name: 'Lasagna Recipe',
-    creator: 'Rya Sicily',
-    dateSaved: '08/03/2020',
-  },
-  {
-    type: 'Word Document',
-    name: 'Packing Ess. List',
-    creator: 'Greg Sanzen',
-    dateSaved: '08/10/2020',
-  },
-];
+// request to get data
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -68,9 +57,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Binder = () => {
+const Binder = ({ userInfo, documents }) => {
   const classes = useStyles();
-
+  
   return (
     <div className="Binder">
       <Typography gutterBottom variant="h4" component="h6" style={{ marginLeft: '35px', color: '#2d2e2e' }}><b>MY BINDER</b></Typography>
@@ -87,12 +76,12 @@ const Binder = () => {
           </TableHead>
           <TableBody>
             {documents.map((document) => (
-              <StyledTableRow key={document.name}>
+              <StyledTableRow key={document.id}>
                 <StyledTableCell component="th" scope="row" className={classes.rowText}>
-                  {document.type}
+                  {document.documenttype}
                 </StyledTableCell>
-                <StyledTableCell align="right" className={classes.rowText}>{document.name}</StyledTableCell>
-                <StyledTableCell align="right" className={classes.rowText}>{document.creator}</StyledTableCell>
+                <StyledTableCell align="right" className={classes.rowText}><a href={document.linkto}> {document.linkto} </a></StyledTableCell>
+                <StyledTableCell align="right" className={classes.rowText}>{`${document.namefirst} ${document.namelast}`}</StyledTableCell>
                 <StyledTableCell align="right" className={classes.rowText}>{document.dateSaved}</StyledTableCell>
               </StyledTableRow>
             ))}

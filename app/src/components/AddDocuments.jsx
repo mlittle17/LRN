@@ -7,15 +7,11 @@ import {
   Button, Dialog, DialogActions, DialogContent,
   DialogTitle, Slide,
 } from '@material-ui/core';
+import { authorize } from 'passport';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 620,
-    minWidth: 620,
-    minHeight: 340,
-    // maxHeight: 340,
-  },
   docsButton: {
+    margin: 'auto',
     width: 500,
     backgroundColor: '#474a2c',
     color: '#f6fef5',
@@ -26,9 +22,11 @@ const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddDocuments = function AlertDialogSlide() {
+const AddDocuments = function AlertDialogSlide(props) {
   const [open, setOpen] = React.useState(false);
+  const [link, setLink] = React.useState('');
 
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -37,14 +35,23 @@ const AddDocuments = function AlertDialogSlide() {
     setOpen(false);
   };
 
+  const onDocumentChange = (e) => {
+    console.log(e);
+    console.log(e.target.value);
+    setLink(e.target.value);
+  };
+  const handleSubmitDocs = () => {
+    props.setDoc(link);
+    console.log(link);
+    handleClose();
+  };
+
   const classes = useStyles();
 
   return (
     <div>
       <Button className={classes.docsButton} onClick={handleClickOpen}>Add Documents</Button>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button> */}
+
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -58,7 +65,8 @@ const AddDocuments = function AlertDialogSlide() {
           <Form>
             <Form.Field>
               <label>Link</label>
-              <input className="input" />
+              <input className="input" onChange={onDocumentChange} />
+
             </Form.Field>
           </Form>
         </DialogContent>
@@ -66,7 +74,7 @@ const AddDocuments = function AlertDialogSlide() {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmitDocs} color="primary">
             Done
           </Button>
         </DialogActions>

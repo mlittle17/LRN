@@ -10,9 +10,11 @@ import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
 
 import AddDocuments from './AddDocuments.jsx';
+import '../styles/Form.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: 40,
     maxWidth: 620,
     minWidth: 620,
     minHeight: 340,
@@ -45,17 +47,19 @@ const timeOptions = [
   { key: 'pm', text: 'PM', value: 'pm' },
 ];
 
-const CreateSession = () => {
+const CreateSession = ({ user }) => {
+ const { id } = user;
+ console.log(user)
+ // console.log(id)
   const [sessionDate, setSessionDate] = useState('');
   const [sessionTime, setSessionTime] = useState('');
   const [capacity, setCapacity] = useState(1);
-  const [zip, setZip] = useState(0);
   const [subject, setSubject] = useState('');
   const [document, setDocument] = useState('');
 
   // for now hardcoded user
-  const users_id = 1;
-
+  // const user_id = '1'
+  console.log(document);
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
   };
@@ -67,40 +71,31 @@ const CreateSession = () => {
     const { value } = result;
     setSubject(value);
   };
+  
 
   const addEvent = () => {
     axios.post('/event', {
-      users_id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
+      user_id: id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
     })
-      .then(response => {
-        console.log(response);
+      .then(() => {
+        axios.post('/event/documents', {
+          type: 'google docs', link: document, user_id: id, event_id: 3,
+        })
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  // const onZipChange = (e) => {
-  //   setZip(e.target.rawValue);
-  // };
-
-  // const addDocument = () => {
-  //   axios.post('/event/documents', {
-  //     documentType, linkTo, users_id, event_id,
-  //   })
-  //     .then(response => {
-  //       console.log(response);
-  //       // setDocuments(response.data)
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
-
   const classes = useStyles();
   return (
     <div className="Create">
-      <div>Create Session</div>
       <div>
         <Grid container justify="space-around">
           <Card className={classes.root}>
@@ -156,20 +151,7 @@ const CreateSession = () => {
                     onCountChange={count => setCapacity(count)}
                   />
                 </Form.Field>
-
-                {/* session zip */}
-                {/* <Form.Field>
-                  <Cleave
-                    placeholder="ZIP"
-                    options={{
-                      blocks: [5],
-                      numericOnly: true,
-                    }}
-                    onChange={onZipChange}
-                    className="form-field"
-                  />
-                </Form.Field> */}
-                <AddDocuments />
+                <AddDocuments setDoc={setDocument} />
               </Form> <br />
               <Button type="submit" onClick={addEvent}>Submit</Button>
             </CardContent>

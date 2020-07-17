@@ -1,0 +1,14 @@
+/* input {
+  color: red;
+  border: 1.5px solid;
+  border-color: '#a58e57';
+  background-color: black;
+} */
+
+.ui.fluid.selection.dropdown {
+  border: 1.5px solid #a58e57;
+}
+
+.form-field.form-field{
+  border: 1.5px solid #a58e57;
+}
