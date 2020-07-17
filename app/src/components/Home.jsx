@@ -11,11 +11,11 @@ import ProfileCard from './ProfileCard.jsx';
 import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
-const Home = () => {
+const Home = ({user}) => {
   return (
     <div className="Home">
       <Grid container justify="space-evenly" style={{ marginBottom: '30px' }}>
-        <ProfileCard />
+        <ProfileCard userInfo={user} />
         <div>
           {/* <Typography gutterBottom variant="h7" component="h7"><b>SESSIONS</b></Typography> */}
           <>

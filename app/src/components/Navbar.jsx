@@ -20,7 +20,7 @@ import Canvas from './Canvas.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
-const Navbar = ({ user, googleLogin }) => {
+const Navbar = ({ user, googleLogin, googleLogout }) => {
   const [activeItem, setActiveItem] = useState('home');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
@@ -41,7 +41,7 @@ const Navbar = ({ user, googleLogin }) => {
           </Link>
         </Menu.Item>
 
-        {user ? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div>}
+        {/* {user ? <a>logged in</a> : <div><a>Not logged in, If login button does not work go to </a> <a href="localhost:8080/auth/google">localhost:8080/auth/google </a></div>} */}
 
         <Menu.Menu position="right" class="right menu">
 
@@ -77,14 +77,34 @@ const Navbar = ({ user, googleLogin }) => {
           <Link to="/board" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Board</Link>
         </Menu.Item>
 
-        {/* <Menu.Item
+{user ? <Menu.Menu position="right" class="right menu">
+          <Menu.Item
+            name="login"
+            active={activeItem === 'logout'}
+            onClick={googleLogout}
+          >
+            <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Logout</Link>
+          </Menu.Item>
+        </Menu.Menu> 
+        :
+        <Menu.Menu position="right" class="right menu">
+          <Menu.Item
+            name="login"
+            active={activeItem === 'login'}
+            onClick={googleLogin}
+          >
+            <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Login</Link>
+          </Menu.Item>
+        </Menu.Menu> 
+        }
+
+{/* <Menu.Item
           name="boardTwo"
           active={activeItem === 'boardTwo'}
           onClick={handleItemClick}
         >
           <Link to="/boardTwo" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>BoardTwo</Link>
         </Menu.Item> */}
-
 
           {/* <Menu.Menu position="right" class="right menu">
         <Menu.Item
@@ -123,19 +143,12 @@ const Navbar = ({ user, googleLogin }) => {
           </Menu.Item>
         </Menu.Menu> */}
 
-          <Menu.Item
-            name="logout"
-            active={activeItem === 'logout'}
-            onClick={handleItemClick}
-          >
-            <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Logout</Link>
-          </Menu.Item>
         </Menu.Menu> */}
       </Menu>
 
       <div>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={() => (<Home user={user} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} />)} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />

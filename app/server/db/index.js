@@ -10,16 +10,9 @@ const db = pgp({
   user: DB_USER,
   password: DB_PASS,
   host: 'localhost',
-  //host: `/cloudsql/${process.env.DB_INSTANCE}`,
+  // host: `/cloudsql/${process.env.DB_INSTANCE}`,
   port: 5432,
   database: DB_NAME,
-
-  // user: DB_USER,
-  // password: DB_PASS,
-  // host: 'localhost',
-  // port: 5432,
-  // database: 'lrn',
-
 });
 
 module.exports = db;

@@ -22,15 +22,28 @@ const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddDocuments = function AlertDialogSlide() {
+const AddDocuments = function AlertDialogSlide(props) {
   const [open, setOpen] = React.useState(false);
+  const [link, setLink] = React.useState('');
 
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onDocumentChange = (e) => {
+    console.log(e);
+    console.log(e.target.value);
+    setLink(e.target.value);
+  };
+  const handleSubmitDocs = () => {
+    props.setDoc(link);
+    console.log(link);
+    handleClose();
   };
 
   const classes = useStyles();
@@ -52,7 +65,8 @@ const AddDocuments = function AlertDialogSlide() {
           <Form>
             <Form.Field>
               <label>Link</label>
-              <input className="input" />
+              <input className="input" onChange={onDocumentChange} />
+
             </Form.Field>
           </Form>
         </DialogContent>
@@ -60,7 +74,7 @@ const AddDocuments = function AlertDialogSlide() {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmitDocs} color="primary">
             Done
           </Button>
         </DialogActions>
