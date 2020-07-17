@@ -67,14 +67,8 @@ Object.defineProperty(Array.prototype, 'chunk', {
   },
 });
 
-const UpcomingSessions = () => {
-  const [sessions, setSessions] = useState([]);
-  axios.get('/event')
-    .then(response => {
-     // console.log(response.data)
-      setSessions(response.data);
-    });
-
+const UpcomingSessions = ({ sessions }) => {
+  
   const rows = sessions.chunk(3);
   return (
     <div>
