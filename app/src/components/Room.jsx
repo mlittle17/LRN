@@ -4,17 +4,16 @@ import Peer from 'simple-peer';
 import Slider from 'react-slick';
 
 import styled from 'styled-components';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import Board from './Board.jsx';
 
 import '../styles/Upcoming.css';
 
 const Container = styled.div`
     padding: 20px;
-    // display: flex;
     height: 100vh;
     width: 90%;
-    margin: auto;
+    // margin: auto;
     flex-wrap: wrap;
 `;
 
@@ -29,12 +28,13 @@ const settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
+  slidesToShow: 2,
+  slidesToScroll: 2,
 };
 
 const Video = (props) => {
   const ref = useRef();
+  const { key } = props;
 
   useEffect(() => {
     props.peer.on('stream', stream => {
@@ -43,7 +43,10 @@ const Video = (props) => {
   }, []);
 
   return (
-    <StyledVideo playsInline autoPlay ref={ref} style={{ height: 200, width: 350 }} />
+    <>
+      <Typography variant="h4" component="h6" style={{ float: 'left', color: '#2d2e2e' }}>{key}</Typography>
+      <StyledVideo playsInline autoPlay ref={ref} style={{ height: 200, width: 350 }} />
+    </>
   );
 };
 
@@ -142,7 +145,7 @@ const Room = (props) => {
             {peers.map((peer, index) => {
               return (
                 <div>
-                  <p>{index}</p>
+                  {/* <Typography variant="h4" component="h6" style={{ float: 'left', color: '#2d2e2e' }}>{index + 1}</Typography> */}
                   <Video key={index} peer={peer} />
                 </div>
               );
