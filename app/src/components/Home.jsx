@@ -2,15 +2,16 @@ import React from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
 // import axios from 'axios';
 
-import { Card, CardActionArea, CardContent, Grid, Typography } from '@material-ui/core';
+import {
+  Card, CardActionArea, CardContent, Grid, Typography
+} from '@material-ui/core';
 import { Button } from 'semantic-ui-react';
 
 import ProfileCard from './ProfileCard.jsx';
-import FindSessions from './FindSessions.jsx';
 import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
-const Home = ({user}) => {
+const Home = ({ user, documents, sessions }) => {
   return (
     <div className="Home">
       <Grid container justify="space-evenly" style={{ marginBottom: '30px' }}>
@@ -26,7 +27,7 @@ const Home = ({user}) => {
             <Button as={Link} to="/create" style={{ backgroundColor: '#474a2c', color: '#f6fef5' }}>Create Session</Button>
           </>
           <div style={{ marginTop: '30px' }}>
-            <UpcomingSessions />
+            <UpcomingSessions sessions={sessions} />
           </div>
         </div>
       </Grid>
@@ -35,17 +36,14 @@ const Home = ({user}) => {
           {/* variant="outlined" style={{ borderColor: '#474a2c' }} */}
           <CardContent style={{ marginLeft: '20px' }}>
             <CardActionArea>
-              <Binder />
+              <Binder documents={documents} />
             </CardActionArea>
           </CardContent>
         </Card>
       </div>
 
       <div>
-        <Switch>
-          <Route exact path="/find" component={FindSessions} />
-
-        </Switch>
+        <Switch />
       </div>
     </div>
   );
