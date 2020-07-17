@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import { Container } from 'semantic-ui-react';
 
-import '../styles/board.css';
+import '../styles/Board.css';
 
 const Board = () => {
   const canvasRef = useRef(null);
