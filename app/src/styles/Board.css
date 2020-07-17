@@ -17,7 +17,7 @@
  */
 
 .boardContainer {
-  margin-left: 20px;
+  margin-left: 10px;
   float: inline-start;
   width: 804px;
   height: 400px;
@@ -26,24 +26,17 @@
 
 .whiteboard {
   display: block;
-  /* height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0; */
 }
 
 .colors {
-  position: fixed;
+  position: absolute;
   background-color: #a58e57;
-  border: 2px solid #a58e57;
+  border: 2px solid #474a2c;
   border-radius: 6px;
 }
 
 .color {
-  display: inline-block;
+  display: block;
   height: 48px;
   width: 48px;
 }
