@@ -10,10 +10,6 @@ const Board = () => {
 
   useEffect(() => {
 
-
-
-
-
     // --------------- getContext() method returns a drawing context on the canvas-----
 
     const canvas = canvasRef.current;
@@ -89,7 +85,7 @@ const Board = () => {
       current.x = e.clientX || e.touches[0].clientX;
       current.y = e.clientY || e.touches[0].clientY;
     };
-    
+
     const onMouseMove = (e) => {
       if (!drawing) { return; }
       drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
@@ -137,11 +133,11 @@ const Board = () => {
     canvas.addEventListener('mouseout', onMouseUp, false);
     canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
 
-        // Touch support for mobile devices
-        canvas.addEventListener('touchstart', onMouseDown, false);
-        canvas.addEventListener('touchend', onMouseUp, false);
-        canvas.addEventListener('touchcancel', onMouseUp, false);
-        canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
+    // Touch support for mobile devices
+    canvas.addEventListener('touchstart', onMouseDown, false);
+    canvas.addEventListener('touchend', onMouseUp, false);
+    canvas.addEventListener('touchcancel', onMouseUp, false);
+    canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
     // --------------------------------------------------------------------------
 
 
@@ -174,7 +170,7 @@ const Board = () => {
     socketRef.current = io.connect('/');
     socketRef.current.on('drawing', onDrawingEvent);
   }, []);
-    // ----------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------
 
 
 
@@ -198,5 +194,5 @@ const Board = () => {
   );
 };
 
-  // -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 export default Board;
