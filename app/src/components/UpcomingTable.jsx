@@ -71,7 +71,7 @@ const UpcomingTable = ({
               <StyledTableCell component="th" scope="row" className={classes.rowText}>
                 {session.topic}
               </StyledTableCell>
-              <StyledTableCell align="right" className={classes.rowText}>{session.creator}</StyledTableCell>
+              <StyledTableCell align="right" className={classes.rowText}>{`${session.namefirst} ${session.namelast}`}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{session.date}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{session.time}</StyledTableCell>
             </StyledTableRow>

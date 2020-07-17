@@ -57,18 +57,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Binder = ({ userInfo }) => {
+const Binder = ({ userInfo, documents }) => {
   const classes = useStyles();
-  const [documents, setDocuments] = useState([]);
-
-  axios.get('event/3/documents')
-    .then(response => {
-      setDocuments(response.data);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-
+  
   return (
     <div className="Binder">
       <Typography gutterBottom variant="h4" component="h6" style={{ marginLeft: '35px', color: '#2d2e2e' }}><b>MY BINDER</b></Typography>
