@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { authorize } from 'passport';
-
 import {
   Avatar, Button, Card, CardContent, CardActionArea, CardActions,
   Grid, Typography,
@@ -8,7 +7,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 310,
@@ -29,41 +27,38 @@ const useStyles = makeStyles((theme) => ({
     color: '#474a2c',
   },
 }));
-
 const ProfileCard = ({ userInfo }) => {
   const classes = useStyles();
   const [user, setUser] = useState({
-    name: 'Sally Name',
+    name: 'Not Logged In',
     avatar: 'https://ca.slack-edge.com/T02P3HQD6-URYEC04TS-1d8e4abade33-512',
     // avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTaUPxz9QpJvEvbLP1nX4jGz6yyiWthbrEn-g&usqp=CAU',
     email: 'sallyName@gmail.com',
     zip: 77777,
     subjects: ['Music', 'Math', 'History', 'Food'],
   });
-
+  console.log(user, 'ProfileCard');
   return (
     <Card variant="outlined" className={classes.root}>
       <CardActionArea className={classes.actionArea}>
         <br />
-        <Avatar alt="Sally Name" src={user.avatar} className={classes.large} />
-
+        <Avatar alt="Sally Name" src={userInfo ? userInfo.imageurl : user.avatar} className={classes.large} />
         <br />
         <Typography gutterBottom variant="h4" component="h4" align="center" style={{ color: '#474337' }}>
-          <b>Jerry McDonald</b>
+          <b>{userInfo ? userInfo.username : user.name}</b>
         </Typography>
         <br />
       </CardActionArea>
       <CardContent>
         <div>
           <Typography gutterBottom variant="h6" component="h7" style={{ color: '#a58e57' }}>
-            <EmailIcon className={classes.icon} /> jerryMcDonald@gmail.com
+            <EmailIcon className={classes.icon} /> {userInfo ? userInfo.email : 'jerryMcDonald@gmail.com'}
           </Typography>
           <br /><br />
           <Typography gutterBottom variant="h6" component="h7" style={{ color: '#a58e57' }}>
             <PersonPinCircleIcon className={classes.icon} /> 70810
           </Typography>
         </div>
-
         <br />
         <div>
           <Typography gutterBottom variant="h6" component="h7" style={{ color: '#a58e57' }}>
@@ -79,11 +74,8 @@ const ProfileCard = ({ userInfo }) => {
         </div>
       </CardContent>
       {/* <CardActions>
-
       </CardActions> */}
-
     </Card>
   );
 };
-
 export default ProfileCard;
