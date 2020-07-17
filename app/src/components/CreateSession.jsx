@@ -10,9 +10,11 @@ import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
 
 import AddDocuments from './AddDocuments.jsx';
+import '../styles/Form.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: 40,
     maxWidth: 620,
     minWidth: 620,
     minHeight: 340,
@@ -52,7 +54,6 @@ const CreateSession = ({ user }) => {
   const [sessionDate, setSessionDate] = useState('');
   const [sessionTime, setSessionTime] = useState('');
   const [capacity, setCapacity] = useState(1);
-  const [zip, setZip] = useState(0);
   const [subject, setSubject] = useState('');
   const [document, setDocument] = useState('');
 
@@ -92,14 +93,9 @@ const CreateSession = ({ user }) => {
       });
   };
 
-  // const onZipChange = (e) => {
-  //   setZip(e.target.rawValue);
-  // };
-
   const classes = useStyles();
   return (
     <div className="Create">
-      {/* <div>Create Session</div> */}
       <div>
         <Grid container justify="space-around">
           <Card className={classes.root}>
@@ -155,19 +151,6 @@ const CreateSession = ({ user }) => {
                     onCountChange={count => setCapacity(count)}
                   />
                 </Form.Field>
-
-                {/* session zip */}
-                {/* <Form.Field>
-                  <Cleave
-                    placeholder="ZIP"
-                    options={{
-                      blocks: [5],
-                      numericOnly: true,
-                    }}
-                    onChange={onZipChange}
-                    className="form-field"
-                  />
-                </Form.Field> */}
                 <AddDocuments setDoc={setDocument} />
               </Form> <br />
               <Button type="submit" onClick={addEvent}>Submit</Button>
