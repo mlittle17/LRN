@@ -2,7 +2,9 @@ import React from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
 // import axios from 'axios';
 
-import { Card, CardActionArea, CardContent, Grid, Typography } from '@material-ui/core';
+import {
+  Card, CardActionArea, CardContent, Grid, Typography
+} from '@material-ui/core';
 import { Button } from 'semantic-ui-react';
 
 import ProfileCard from './ProfileCard.jsx';
