@@ -7,19 +7,42 @@ import Navbar from './Navbar.jsx';
 import '../styles/App.css';
 
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    axios.get('/auth/exist')
+      .then(res => {
+        if (res.data === 'no one here') {
+          console.log('I am not logged in');
+        } else {
+          console.log(res.data.username, 'I am logged in');
+          setUser(res.data);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   const googleLogin = () => {
     window.location.replace('http://localhost:8080/auth/login');
   };
 
   const googleLogout = () => {
-    // this is not functional yet
-  }
+    axios.get('auth/logout')
+      .then(res => {
+        console.log(res, 'in logout function');
+        setUser(null);
+        window.location.reload(false);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
-      <Navbar googleLogin={googleLogin} user={user} />
+      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} />
       {/* <button onClick={googleLogin}>Log In</button> */}
       <Router>
         <div className="App" />
