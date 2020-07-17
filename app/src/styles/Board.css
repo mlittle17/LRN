@@ -18,7 +18,7 @@
 
 .boardContainer {
   margin-left: 20px;
-  float: bottom;
+  float: inline-start;
   width: 804px;
   height: 400px;
   border: 2px solid #a58e57;
@@ -37,8 +37,9 @@
 
 .colors {
   position: fixed;
-  border: 2px solid #a58e57;
   background-color: #a58e57;
+  border: 2px solid #a58e57;
+  border-radius: 6px;
 }
 
 .color {
