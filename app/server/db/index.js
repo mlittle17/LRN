@@ -1,6 +1,5 @@
 const pgp = require('pg-promise')({});
-require('dotenv').config()
-
+require('dotenv').config();
 
 const DB_NAME = process.env.DB_NAME;
 const DB_USER = process.env.DB_USER;
