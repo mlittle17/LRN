@@ -9,6 +9,8 @@ import {
   Card, CardActionArea, CardContent, Grid, Typography,
 } from '@material-ui/core';
 
+import '../styles/Form.css';
+
 const useStyles = makeStyles((theme) => ({
   grid: {
     marginTop: 40,
@@ -100,7 +102,7 @@ const FindSessions = () => {
                 />
 
                 {/* date search */}
-                <Form.Field>
+                <Form.Field className="form-field">
                   <label>Date</label>
                   <Cleave
                     placeholder="MM/DD/YYYY"
