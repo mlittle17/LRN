@@ -1,7 +1,10 @@
+/* eslint-disable radix */
 import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
-import '../styles/board.css';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import { IconButton } from '@material-ui/core';
+import '../styles/Board.css';
 
 const Board = () => {
   const canvasRef = useRef(null);
@@ -9,7 +12,6 @@ const Board = () => {
   const socketRef = useRef();
 
   useEffect(() => {
-
     // --------------- getContext() method returns a drawing context on the canvas-----
 
     const canvas = canvasRef.current;
@@ -17,10 +19,6 @@ const Board = () => {
     const context = canvas.getContext('2d');
 
     // ---------------------------------------------------------------------------------
-
-
-
-
 
     // ----------------------- Colors --------------------------------------------------
     const colors = document.getElementsByClassName('color');
@@ -42,12 +40,6 @@ const Board = () => {
     }
     let drawing = false;
     // ---------------------------------------------------------------------------------
-
-
-
-
-
-
 
     // ------------------------------- create the drawline ----------------------------
     const drawLine = (x0, y0, x1, y1, color, emit) => {
@@ -72,45 +64,39 @@ const Board = () => {
       });
     };
     // ----------------------------------------------------------------------------------
-
-
-
-
-
-
+    // get the current canvas offsets using getBoundingClientRect
+    const BB = canvas.getBoundingClientRect();
+    const offsetX = BB.left;
+    const offsetY = BB.top;
 
     // ---------------- mouse movement --------------------------------------
     const onMouseDown = (e) => {
       drawing = true;
-      current.x = e.clientX || e.touches[0].clientX;
-      current.y = e.clientY || e.touches[0].clientY;
+
+      current.x = parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX);
+      current.y = parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY);
     };
 
     const onMouseMove = (e) => {
       if (!drawing) { return; }
-      drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
-      current.x = e.clientX || e.touches[0].clientX;
-      current.y = e.clientY || e.touches[0].clientY;
+      drawLine(current.x, current.y, parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX), parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY), current.color, true);
+      current.x = parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX);
+      current.y = parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY);
     };
 
     const onMouseUp = (e) => {
       if (!drawing) { return; }
       drawing = false;
-      drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
+      // drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
     };
 
     // ------------------------------------------------------------------------
-
-
-
-
-
 
     // ----------- limit the number of events per second -----------------------
 
     const throttle = (callback, delay) => {
       let previousCall = new Date().getTime();
-      return function() {
+      return function () {
         const time = new Date().getTime();
 
         if ((time - previousCall) >= delay) {
@@ -122,9 +108,20 @@ const Board = () => {
 
     // -------------------------------------------------------------------------
 
+    // ----------------------- Clear all canvases ----------------------------
 
+    const clearCanvas = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    };
 
+    const emitAndCanvas = () => {
+      socketRef.current.emit('clear');
+      clearCanvas();
+    };
+    const clearButton = document.getElementsByClassName('clear');
 
+    clearButton[0].addEventListener('click', emitAndCanvas, false);
+    // -------------------------------------------------------------------------
 
     // -----------------add event listeners to our canvas ----------------------
 
@@ -140,55 +137,45 @@ const Board = () => {
     canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
     // --------------------------------------------------------------------------
 
-
-
-
-
-
     // -------------- make the canvas fill its parent component -----------------
     const onResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth * 0.50;
+      canvas.height = window.innerHeight * 0.50;
     };
 
     window.addEventListener('resize', onResize, false);
     onResize();
     // -------------------------------------------------------------------------
 
-
-
-
-
-
     // ----------------------- socket.io connection ----------------------------
     const onDrawingEvent = (data) => {
       const w = canvas.width;
       const h = canvas.height;
       drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
-    }
+    };
 
     socketRef.current = io.connect('/');
     socketRef.current.on('drawing', onDrawingEvent);
+    socketRef.current.on('clear', clearCanvas);
   }, []);
   // ----------------------------------------------------------------------------
-
-
-
-
-
 
   // ------------- The Canvas and color elements --------------------------
 
   return (
     <div>
-      <canvas ref={canvasRef} className="whiteboard" />
-
       <div ref={colorsRef} className="colors">
         <div className="color black" />
         <div className="color red" />
         <div className="color green" />
         <div className="color blue" />
         <div className="color yellow" />
+        <IconButton aria-label="delete" className="clear">
+          <DeleteIcon fontSize="medium" />
+        </IconButton>
+      </div>
+      <div className="boardContainer">
+        <canvas ref={canvasRef} className="whiteboard" />
       </div>
     </div>
   );
