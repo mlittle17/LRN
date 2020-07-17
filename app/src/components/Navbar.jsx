@@ -147,7 +147,7 @@ const Navbar = ({ user, googleLogin, googleLogout }) => {
 
       <div>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={() => (<Home user={user} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} />)} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
