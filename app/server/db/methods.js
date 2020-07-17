@@ -52,7 +52,8 @@ Events
 
 const createEvent = async(req, res) => {
   try {
-    await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${users_id}, ${classLimit})', req.body);
+    await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit})', req.body);
+    console.log(res);
     res.send({ message: 'event added' });
   } catch (err) {
     console.log('nah bruh', err);
