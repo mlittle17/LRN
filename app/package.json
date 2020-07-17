@@ -26,6 +26,7 @@
     "pg-promise": "^10.5.8",
     "react": "^16.13.1",
     "react-big-calendar": "^0.26.0",
+    "react-canvas-draw": "^1.1.1",
     "react-counter-input": "^0.2.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
