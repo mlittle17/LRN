@@ -10,33 +10,39 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.post('/test')
-      .then(response => {
-        console.log(response);
+    axios.get('/auth/exist')
+      .then(res => {
+        if (res.data === 'no one here') {
+          console.log('I am not logged in');
+        } else {
+          console.log(res.data.username, 'I am logged in');
+          setUser(res.data);
+        }
       })
       .catch(error => {
         console.log(error);
       });
-  });
+  }, []);
 
   const googleLogin = () => {
     window.location.replace('http://localhost:8080/auth/login');
-    // axios.get('/auth/google/redirect')
-    //   .then(res => {
-    //     console.log(res, 'inside of googleLogin');
-    //     setUser(res.data);
-    //     if (!res.data) {
-    //       console.log('I am not logged in');
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+  };
+
+  const googleLogout = () => {
+    axios.get('auth/logout')
+      .then(res => {
+        console.log(res, 'in logout function');
+        setUser(null);
+        window.location.reload(false);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
     <div>
-      <Navbar googleLogin={googleLogin} user={user} />
+      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} />
       {/* <button onClick={googleLogin}>Log In</button> */}
       <Router>
         <div className="App" />
