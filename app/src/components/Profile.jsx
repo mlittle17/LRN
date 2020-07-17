@@ -7,12 +7,12 @@ import Binder from './Binder.jsx';
 // import axios from 'axios';
 
 function Profile({ user }) {
-  console.log(user);
+  // console.log(user);
   return (
     <div className="Profile">
       <Grid container justify="space-around">
         <ProfileCard userInfo={user} />
-        <Binder />
+        <Binder userInfo={user} />
       </Grid>
     </div>
   );
