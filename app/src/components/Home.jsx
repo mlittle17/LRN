@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, Switch } from 'react-router-dom';
-// import axios from 'axios';
 
 import { Grid } from '@material-ui/core';
 import { Button } from 'semantic-ui-react';
@@ -15,7 +14,6 @@ const Home = ({ user, documents, sessions }) => {
       <Grid container justify="space-evenly" style={{ marginBottom: '30px' }}>
         <ProfileCard userInfo={user} />
         <div>
-          {/* <Typography gutterBottom variant="h7" component="h7"><b>SESSIONS</b></Typography> */}
           <>
             {/* <br /> */}
             <Button as={Link} to="/registered" style={{ backgroundColor: '#474a2c', color: '#f6fef5' }}>My Sessions</Button>
