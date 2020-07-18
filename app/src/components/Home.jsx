@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link, Switch } from 'react-router-dom';
 // import axios from 'axios';
 
-import {
-  Card, CardActionArea, CardContent, Grid, Typography
-} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { Button } from 'semantic-ui-react';
 
 import ProfileCard from './ProfileCard.jsx';
@@ -29,19 +27,9 @@ const Home = ({ user, documents, sessions }) => {
           <div style={{ marginTop: '30px' }}>
             <UpcomingSessions sessions={sessions} />
           </div>
+          <Binder documents={documents} />
         </div>
       </Grid>
-      <div>
-        <Card align="left" style={{ minWidth: 750 }}>
-          {/* variant="outlined" style={{ borderColor: '#474a2c' }} */}
-          <CardContent style={{ marginLeft: '20px' }}>
-            <CardActionArea>
-              <Binder documents={documents} />
-            </CardActionArea>
-          </CardContent>
-        </Card>
-      </div>
-
       <div>
         <Switch />
       </div>
