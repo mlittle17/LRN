@@ -5,10 +5,18 @@
   background-color: black;
 } */
 
+.ui.form.fluid.field input{
+  border: 1.5px solid #a58e57;
+}
+
 .ui.fluid.selection.dropdown {
   border: 1.5px solid #a58e57;
 }
 
-.form-field.form-field{
+.ui.focus.input {
   border: 1.5px solid #a58e57;
 }
+
+/* .form-field.form-field{
+  border: 1.5px solid #a58e57;
+} */
