@@ -66,26 +66,29 @@ const Navbar = ({
             <Link to="/profile" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Profile</Link>
           </Menu.Item>
 
-          {user ?
-            <Menu.Menu position="right" class="right menu">
-              <Menu.Item
-                name="login"
-                active={activeItem === 'logout'}
-                onClick={googleLogout}
-              >
-                <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Logout</Link>
-              </Menu.Item>
-            </Menu.Menu>
-            :
-            <Menu.Menu position="right" class="right menu">
-              <Menu.Item
-                name="login"
-                active={activeItem === 'login'}
-                onClick={googleLogin}
-              >
-                <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Login</Link>
-              </Menu.Item>
-            </Menu.Menu>}
+          {user
+            ? (
+              <Menu.Menu position="right" class="right menu">
+                <Menu.Item
+                  name="login"
+                  active={activeItem === 'logout'}
+                  onClick={googleLogout}
+                >
+                  <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Logout</Link>
+                </Menu.Item>
+              </Menu.Menu>
+            )
+            : (
+              <Menu.Menu position="right" class="right menu">
+                <Menu.Item
+                  name="login"
+                  active={activeItem === 'login'}
+                  onClick={googleLogin}
+                >
+                  <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Login</Link>
+                </Menu.Item>
+              </Menu.Menu>
+            )}
 
           {/* <Menu.Menu position="right" class="right menu">
         <Menu.Item
