@@ -60,9 +60,80 @@ function App() {
       });
   };
 
+  const fakeUserInfo = {
+    id: 1,
+    image_url: 'https://ca.slack-edge.com/T02P3HQD6-UQADDLNHW-8dd89119b2b0-512',
+    username: 'jessicaTorres',
+    email: 'fakeEmail2',
+  };
+
+  const userFakeSessions = [
+    {
+      title: 'History of the Aztec',
+      nameFirst: 'Prof. Alan',
+      nameLast: 'Thicke',
+      date: '07/26/2020',
+      time: '5:30 pm',
+    },
+    {
+      title: 'Homestyle Lasagna: The True Italian Way',
+      nameFirst: 'Rya',
+      nameLast: 'Sicily',
+      date: '08/03/2020',
+      time: '7:25 pm',
+    },
+    {
+      title: 'Traveling Light: Your Trip to Europe',
+      nameFirst: 'Greg',
+      nameLast: 'Sanzen',
+      date: '08/10/2020',
+      time: '11:00 am',
+    },
+    {
+      title: 'One, Two, Rhythm For Beginners',
+      nameFirst: 'Sarah',
+      nameLast: 'Courtz',
+      date: '09/15/2020',
+      time: '6:00 pm',
+    },
+    {
+      title: 'A Healthy Home: Hygiene to Keep Up',
+      nameFirst: 'Rita',
+      nameLast: 'Teller',
+      date: '09/17/2020',
+      time: '8:00 pm',
+    },
+    {
+      title: 'Balancing Your Checkbook',
+      nameFirst: 'Yare',
+      nameLast: 'Rewwn',
+      date: '10/10/2020',
+      time: '12:00 pm',
+    },
+  ];
+
+  const userFakeDocuments = [
+    {
+      id: 1,
+      documenttype: 'Word Document',
+      linkto: 'Lasagna Recipe',
+      namefirst: 'Rya',
+      namelast: 'Sicily',
+      dateSaved: '08/03/2020',
+    },
+    {
+      id: 2,
+      documenttype: 'Word Document',
+      linkto: 'Packing Ess. List',
+      namefirst: 'Greg',
+      namelast: 'Sanzen',
+      dateSaved: '08/10/2020',
+    },
+  ];
+
   return (
     <div>
-      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={documents} sessions={sessions} />
+      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={fakeUserInfo} documents={userFakeDocuments} sessions={userFakeSessions} />
       {/* <button onClick={googleLogin}>Log In</button> */}
       <Router>
         <div className="App" />
