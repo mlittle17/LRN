@@ -12,7 +12,7 @@ import { authorize } from 'passport';
 const useStyles = makeStyles((theme) => ({
   docsButton: {
     margin: 'auto',
-    width: 500,
+    width: 586,
     backgroundColor: '#474a2c',
     color: '#f6fef5',
   },
@@ -26,7 +26,7 @@ const AddDocuments = function AlertDialogSlide(props) {
   const [open, setOpen] = React.useState(false);
   const [link, setLink] = React.useState('');
 
-  
+
   const handleClickOpen = () => {
     setOpen(true);
   };
