@@ -54,6 +54,7 @@ const CreateSession = ({ user }) => {
   //  console.log(user);
   // console.log(id)
   const [sessionTitle, setSessionTitle] = useState('');
+  const [sessionDesc, setSessionDesc] = useState('');
   const [subject, setSessionSubject] = useState('');
   const [sessionDate, setSessionDate] = useState('');
   const [sessionTime, setSessionTime] = useState('');
@@ -68,6 +69,9 @@ const CreateSession = ({ user }) => {
 
   const onSessionNameChange = (e) => {
     setSessionTitle(e.target.value);
+  };
+  const onSessionDescChange = (e) => {
+    setSessionDesc(e.target.value);
   };
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
@@ -116,7 +120,7 @@ const CreateSession = ({ user }) => {
         <Grid container justify="space-around" style={{ marginTop: 40 }}>
           <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>CREATE SESSION</b></Typography>
         </Grid>
-        <Grid container justify="space-around">
+        <Grid container justify="space-around" style={{ marginBottom: 40 }}>
           <Card className={classes.root}>
             <CardContent>
               <Form>
@@ -135,6 +139,9 @@ const CreateSession = ({ user }) => {
                   onChange={onSessionSubjectChange}
                   value={subject}
                 />
+
+                {/* session description */}
+                <Form.TextArea label="Description" maxLength="250" onChange={onSessionDescChange} />
 
                 {/* session date */}
                 <Form.Field>
