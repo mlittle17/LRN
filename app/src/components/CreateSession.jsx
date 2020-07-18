@@ -48,9 +48,9 @@ const timeOptions = [
 ];
 
 const CreateSession = ({ user }) => {
- const { id } = user;
- console.log(user)
- // console.log(id)
+//  const { id } = user;
+//  console.log(user);
+// console.log(id)
   const [sessionDate, setSessionDate] = useState('');
   const [sessionTime, setSessionTime] = useState('');
   const [capacity, setCapacity] = useState(1);
@@ -71,15 +71,14 @@ const CreateSession = ({ user }) => {
     const { value } = result;
     setSubject(value);
   };
-  
 
   const addEvent = () => {
     axios.post('/event', {
-      user_id: id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
+      user_id: 1, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
     })
       .then(() => {
         axios.post('/event/documents', {
-          type: 'google docs', link: document, user_id: id, event_id: 3,
+          type: 'google docs', link: document, user_id: 1, event_id: 1,
         })
           .then(response => {
             console.log(response.data);
