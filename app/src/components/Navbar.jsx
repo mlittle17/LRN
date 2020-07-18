@@ -126,6 +126,7 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
           <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" component={Room} />
           <Route exact path="/board" render={() => (<Board />)} />
+          <Route exact path="/find" component={FindSessions} />
         </Switch>
       </div>
     </div>
