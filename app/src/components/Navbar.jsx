@@ -17,7 +17,9 @@ import Board from './Board.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
-const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
+const Navbar = ({
+  user, googleLogin, googleLogout, documents, sessions,
+}) => {
   const [activeItem, setActiveItem] = useState('home');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
@@ -101,7 +103,7 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
           <Link to={`/room/${id}`} class="item">Room</Link>
         </Menu.Item>
 
-        {user ? <a>You are logged in</a> 
+        {user ? <a>You are logged in</a>
         :
         <Menu.Menu position="right" class="right menu">
           <Menu.Item
@@ -118,12 +120,13 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
 
       <div>
         <Switch>
-          <Route exact path="/" render={() => (<Home user={user} documents={documents} sessions={sessions}/>)} />
+          <Route exact path="/" render={() => (<Home user={user} documents={documents} sessions={sessions} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} documents={documents} />)} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
-          <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route exact path="/registered" component={Sessions} />
+          <Route exact path="/find" component={FindSessions} />
+          <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route path="/room/:roomID" component={Room} />
           <Route exact path="/board" render={() => (<Board />)} />
         </Switch>
