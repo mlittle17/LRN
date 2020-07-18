@@ -8,6 +8,7 @@ import SessionCard from './SessionCard.jsx';
 function Sessions() {
   const [sessionObj, setSessionObj] = useState([]);
   useEffect(() => {
+    // adding some pseudocode
     axios.get('/event')
       .then(response => {
         setSessionObj(response.data);
