@@ -40,7 +40,7 @@ const getAllUser = async(req, res) => {
 /*
 Events
  */
-
+// location header - url ends with newly created resource id
 const createEvent = async(req, res) => {
   try {
     await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit})', req.body);
