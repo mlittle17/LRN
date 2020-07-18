@@ -6,44 +6,6 @@ import Slider from 'react-slick';
 import UpcomingTable from './UpcomingTable.jsx';
 import '../styles/Upcoming.css';
 
-// const sessions = [
-//   {
-//     name: 'History of the Aztec',
-//     creator: 'Prof. Alan Thicke',
-//     date: '07/26/2020',
-//     time: '5:30 pm',
-//   },
-//   {
-//     name: 'Homestyle Lasagna: The True Italian Way',
-//     creator: 'Rya Sicily',
-//     date: '08/03/2020',
-//     time: '7:25 pm',
-//   },
-//   {
-//     name: 'Traveling Light: Your Trip to Europe',
-//     creator: 'Greg Sanzen',
-//     date: '08/10/2020',
-//     time: '11:00 am',
-//   },
-//   {
-//     name: 'One, Two, Rhythm For Beginners',
-//     creator: 'Sarah Courtz',
-//     date: '09/15/2020',
-//     time: '6:00 pm',
-//   },
-//   {
-//     name: 'A Healthy Home: Hygiene to Keep Up',
-//     creator: 'Rita Teller',
-//     date: '09/17/2020',
-//     time: '8:00 pm',
-//   },
-//   {
-//     name: 'Balancing Your Checkbook',
-//     creator: 'Yare Rewwn',
-//     date: '10/10/2020',
-//     time: '12:00 pm',
-//   },
-// ];
 const settings = {
   arrows: true,
   className: 'slides',
@@ -68,7 +30,6 @@ Object.defineProperty(Array.prototype, 'chunk', {
 });
 
 const UpcomingSessions = ({ sessions }) => {
-  
   const rows = sessions.chunk(3);
   return (
     <div>
