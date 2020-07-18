@@ -11,7 +11,7 @@ CREATE TABLE users (
 
 CREATE TABLE event (
   id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(100),
   topic VARCHAR NOT NULL,
   description VARCHAR(250),
   duration Integer,
@@ -20,7 +20,7 @@ CREATE TABLE event (
   mTime Varchar(20),
   users_id Integer NOT NULL,
   classLimit INT NOT NULL,
-  capacityCount Integer NOT NULL,
+  capacityCount Integer,
   privacy Varchar(10)
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE users_topic (
 CREATE TABLE document (
   id SERIAL PRIMARY KEY NOT NULL,
   documentType VARCHAR(50),
-  name VARCHAR(50) NOT NULL,
+  name VARCHAR(50),
   linkTo VARCHAR(200),
   users_id Integer NOT NULL,
   event_id Integer NOT NULL
