@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Card, CardContent, Grid, MuiThemeProvider, Switch, Typography,
+  Card, CardContent, FormControlLabel, Grid, Switch, Typography,
 } from '@material-ui/core';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
@@ -201,7 +201,12 @@ const CreateSession = ({ user }) => {
                       btnStyle={{ color: '#a58e57', fontSize: 30 }}
                     />
                   </Form.Field>
-                  <Switch size="medium" color="primary" colorPrimary={{ color: '#a58e57' }} />
+                  <FormControlLabel
+                    control={<Switch size="large" color="primary" />}
+                    // <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                    labelPlacement="end"
+                    label={<b>Private</b>}
+                  />
                 </Grid>
                 <AddDocuments setDoc={setDocument} />
               </Form> <br />
