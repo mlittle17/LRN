@@ -120,6 +120,7 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
           <Route exact path="/board" render={() => (<Board />)} />
           <Route exact path="/flash" component={CreateFlashCards} />
           
+          <Route exact path="/find" component={FindSessions} />
         </Switch>
       </div>
     </div>
