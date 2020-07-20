@@ -14,7 +14,7 @@ CREATE TABLE event (
   name VARCHAR(100),
   topic VARCHAR NOT NULL,
   description VARCHAR(250),
-  duration Integer,
+  duration VARCHAR(20),
   date VARCHAR(50),
   time VARCHAR(20),
   mTime Varchar(20),
