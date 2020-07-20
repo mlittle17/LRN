@@ -147,7 +147,7 @@ const addToBinder = async(req, res) => {
     console.log('nah', err);
   }
 };
-// method that get from topic
+// method that get from topic.
 const getUserBinder = async(req, res) => {
   try {
     const userBinder = await db.any(`SELECT * FROM binder WHERE users_id =${req.params.id}`);
