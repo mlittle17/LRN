@@ -13,6 +13,7 @@ const db = pgp({
   password: DB_PASS,
   host: DB_HOST,
   database: DB_NAME,
+  port: 5432,
 
 });
 
