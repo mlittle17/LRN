@@ -97,7 +97,7 @@ const CreateSession = ({ user }) => {
     setSessionTime(e.target.value);
   };
   const onSessionMeridiemChange = (e, result) => {
-    const { value } = result
+    const { value } = result;
     setSessionMeridiem(value);
   };
 
@@ -107,7 +107,7 @@ const CreateSession = ({ user }) => {
 
   const addEvent = () => {
     return axios.post('/event', {
-      user_id: id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
+      user_id: id, name: sessionTitle, topic: subject, description: sessionDesc, duration: sessionLength, date: sessionDate, time: `${sessionTime} ${sessionMeridiem}`, classLimit: capacity,
     })
       .then(response => {
         return response.data[0].id;
