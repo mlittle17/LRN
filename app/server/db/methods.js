@@ -106,10 +106,12 @@ Document
 */
 
 const addDocument = async(req, res) => {
-  const {type, link, user_id, event_id} = req.body;
+  const {
+    type, link, user_id, event_id,
+  } = req.body;
   try {
-    await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}')`);
-    res.send('document added');
+    const id = await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}') RETURNING id`);
+    res.send(id);
   } catch (err) {
     console.log('got documents', err);
   }
@@ -139,7 +141,7 @@ Binder
 
 const addToBinder = async(req, res) => {
   try {
-    await db.query('INSERT INTO binder (user_id, document_id) (${user_id}, ${document_id})', req.body);
+    await db.query('INSERT INTO binder (users_id, document_id) VALUES(${users_id}, ${document_id})', req.body);
     res.send('it worked');
   } catch (err) {
     console.log('nah', err);
