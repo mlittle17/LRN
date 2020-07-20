@@ -16,9 +16,7 @@ import Room from './Room.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
-const Navbar = ({
-  user, googleLogin, googleLogout, documents, sessions,
-}) => {
+const Navbar = ({ user, googleLogin, googleLogout, binder, sessions }) => {
   const [activeItem, setActiveItem] = useState('home');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
@@ -130,8 +128,8 @@ const Navbar = ({
 
       <div>
         <Switch>
-          <Route exact path="/" render={() => (<Home user={user} documents={documents} sessions={sessions} />)} />
-          <Route exact path="/profile" render={() => (<Profile user={user} documents={documents} />)} />
+          <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} />)} />
+          <Route exact path="/profile" render={() => (<Profile user={user} binder={binder} />)} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />

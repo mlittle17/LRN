@@ -54,7 +54,7 @@ const CreateSession = ({ user }) => {
   const [capacity, setCapacity] = useState(1);
   const [subject, setSubject] = useState('');
   const [document, setDocument] = useState('');
-  //const [eventId, setEventId] = useState(1);
+  // const [eventId, setEventId] = useState(1);
 
   // for now hardcoded user
   // const user_id = '1'
@@ -83,8 +83,15 @@ const CreateSession = ({ user }) => {
         axios.post('/event/documents', {
           type: 'google docs', link: document, user_id: id, event_id: eventId,
         })
-          .catch(err => {
-            console.log(err);
+          .then(response => {
+            console.log(response);
+            return response.data[0].id;
+          })
+          .then(documentId => {
+            console.log(documentId);
+            axios.post(`/users/:${id}/binder`, {
+              users_id: id, document_id: documentId,
+            });
           });
       })
       .catch(error => {

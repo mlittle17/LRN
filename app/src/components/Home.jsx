@@ -11,7 +11,7 @@ import ProfileCard from './ProfileCard.jsx';
 import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
-const Home = ({ user, documents, sessions }) => {
+const Home = ({ user, binder, sessions }) => {
   return (
     <div className="Home">
       <Grid container justify="space-evenly" style={{ marginBottom: '30px' }}>
@@ -36,7 +36,7 @@ const Home = ({ user, documents, sessions }) => {
           {/* variant="outlined" style={{ borderColor: '#474a2c' }} */}
           <CardContent style={{ marginLeft: '20px' }}>
             <CardActionArea>
-              <Binder documents={documents} />
+              <Binder binder={binder} />
             </CardActionArea>
           </CardContent>
         </Card>
