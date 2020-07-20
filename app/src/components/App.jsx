@@ -2,9 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Navbar from './Navbar.jsx';
 
 import '../styles/App.css';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#a58e57',
+    },
+    secondary: {
+      main: '#474a2c',
+    },
+  },
+});
 
 function App() {
   const [user, setUser] = useState(null);
@@ -135,11 +147,13 @@ function App() {
 
   return (
     <div>
-      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={userFakeDocuments} sessions={userFakeSessions} />
-      {/* <button onClick={googleLogin}>Log In</button> */}
-      <Router>
-        <div className="App" />
-      </Router>
+      <MuiThemeProvider theme={theme}>
+        <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={userFakeDocuments} sessions={userFakeSessions} />
+        {/* <button onClick={googleLogin}>Log In</button> */}
+        <Router>
+          <div className="App" />
+        </Router>
+      </MuiThemeProvider>
     </div>
   );
 }

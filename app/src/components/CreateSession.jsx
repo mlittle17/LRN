@@ -4,7 +4,7 @@ import CounterInput from 'react-counter-input';
 import axios from 'axios';
 
 import { Button, Form } from 'semantic-ui-react';
-import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Card, CardContent, Grid, MuiThemeProvider, Switch, Typography,
 } from '@material-ui/core';
@@ -13,17 +13,6 @@ import Brightness3Icon from '@material-ui/icons/Brightness3';
 
 import AddDocuments from './AddDocuments.jsx';
 import '../styles/Form.css';
-
-const muiTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#a58e57',
-    },
-    secondary: {
-      main: '#474a2c',
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -129,107 +118,105 @@ const CreateSession = ({ user }) => {
   const classes = useStyles();
   return (
     <div className="Create">
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
-          <Grid container justify="space-around" style={{ marginTop: 40 }}>
-            <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>CREATE SESSION</b></Typography>
-          </Grid>
-          <Grid container justify="space-around" style={{ marginBottom: 40 }}>
-            <Card className={classes.root}>
-              <CardContent>
-                <Form>
-                  {/* session name */}
-                  <Form.Field>
-                    <label>Name</label>
-                    <input onChange={onSessionNameChange} />
-                  </Form.Field>
+      <div>
+        <Grid container justify="space-around" style={{ marginTop: 40 }}>
+          <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>CREATE SESSION</b></Typography>
+        </Grid>
+        <Grid container justify="space-around" style={{ marginBottom: 40 }}>
+          <Card className={classes.root}>
+            <CardContent>
+              <Form>
+                {/* session name */}
+                <Form.Field>
+                  <label>Name</label>
+                  <input onChange={onSessionNameChange} />
+                </Form.Field>
 
-                  {/* subject select */}
-                  <Form.Select
-                    fluid
-                    label="Subject"
-                    options={subOptions}
-                    placeholder="Subject"
-                    onChange={onSessionSubjectChange}
-                    value={subject}
+                {/* subject select */}
+                <Form.Select
+                  fluid
+                  label="Subject"
+                  options={subOptions}
+                  placeholder="Subject"
+                  onChange={onSessionSubjectChange}
+                  value={subject}
+                />
+
+                {/* session description */}
+                <Form.TextArea label="Description" maxLength="250" onChange={onSessionDescChange} />
+
+                {/* session date */}
+                <Form.Field>
+                  <label>Date</label>
+                  <Cleave
+                    placeholder="MM/DD/YYYY"
+                    options={{ date: true, datePattern: ['m', 'd', 'Y'] }}
+                    onChange={onSessionDateChange}
+                  // className="form-field"
                   />
+                </Form.Field>
 
-                  {/* session description */}
-                  <Form.TextArea label="Description" maxLength="250" onChange={onSessionDescChange} />
-
-                  {/* session date */}
+                {/* session time */}
+                <Form.Group>
                   <Form.Field>
-                    <label>Date</label>
+                    <label>Time</label>
                     <Cleave
-                      placeholder="MM/DD/YYYY"
-                      options={{ date: true, datePattern: ['m', 'd', 'Y'] }}
-                      onChange={onSessionDateChange}
+                      placeholder="HH:MM"
+                      options={{ time: true, timePattern: ['h', 'm'] }}
+                      onChange={onSessionTimeChange}
                     // className="form-field"
                     />
                   </Form.Field>
+                  {/* am / pm */}
+                  <Form.Select
+                    fluid
+                    label={<span><WbSunnyIcon /><Brightness3Icon /></span>}
+                    options={timeOptions}
+                    placeholder="AM"
+                    onChange={onSessionMeridiemChange}
+                  />
 
-                  {/* session time */}
-                  <Form.Group>
-                    <Form.Field>
-                      <label>Time</label>
-                      <Cleave
-                        placeholder="HH:MM"
-                        options={{ time: true, timePattern: ['h', 'm'] }}
-                        onChange={onSessionTimeChange}
-                      // className="form-field"
-                      />
-                    </Form.Field>
-                    {/* am / pm */}
-                    <Form.Select
-                      fluid
-                      label={<span><WbSunnyIcon /><Brightness3Icon /></span>}
-                      options={timeOptions}
-                      placeholder="AM"
-                      onChange={onSessionMeridiemChange}
+                  {/* session length */}
+                  <Form.Field style={{ float: 'right' }}>
+                    <label>Est. Duration</label>
+                    <Cleave
+                      placeholder="H:MM"
+                      options={{ delimiters: [' hr ', ' mins'], blocks: [1, 2, 0] }}
+                      onChange={onSessionLengthChange}
+                    // className="form-field"
                     />
+                  </Form.Field>
+                </Form.Group>
 
-                    {/* session length */}
-                    <Form.Field style={{ float: 'right' }}>
-                      <label>Est. Duration</label>
-                      <Cleave
-                        placeholder="H:MM"
-                        options={{ delimiters: [' hr ', ' mins'], blocks: [1, 2, 0] }}
-                        onChange={onSessionLengthChange}
-                      // className="form-field"
-                      />
-                    </Form.Field>
-                  </Form.Group>
-
-                  <Grid container justify="space-between">
-                    {/* session size limit */}
-                    <Form.Field>
-                      <label>Session Capacity</label>
-                      <CounterInput
-                        count={1}
-                        min={1}
-                        max={25}
-                        onCountChange={count => setCapacity(count)}
-                        inputStyle={{ fontSize: 18 }}
-                        btnStyle={{ color: '#a58e57', fontSize: 30 }}
-                      />
-                    </Form.Field>
-                    <Switch size="medium" color="primary" colorPrimary={{ color: '#a58e57' }} />
-                  </Grid>
-                  <AddDocuments setDoc={setDocument} />
-                </Form> <br />
-                <Button
-                  type="submit"
-                  onClick={addEvent}
-                  style={{
-                    float: 'right', border: 'none', backgroundColor: '#ffffff', color: '#a58e57',
-                  }}
-                >DONE
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        </div>
-      </MuiThemeProvider>
+                <Grid container justify="space-between">
+                  {/* session size limit */}
+                  <Form.Field>
+                    <label>Session Capacity</label>
+                    <CounterInput
+                      count={1}
+                      min={1}
+                      max={25}
+                      onCountChange={count => setCapacity(count)}
+                      inputStyle={{ fontSize: 18 }}
+                      btnStyle={{ color: '#a58e57', fontSize: 30 }}
+                    />
+                  </Form.Field>
+                  <Switch size="medium" color="primary" colorPrimary={{ color: '#a58e57' }} />
+                </Grid>
+                <AddDocuments setDoc={setDocument} />
+              </Form> <br />
+              <Button
+                type="submit"
+                onClick={addEvent}
+                style={{
+                  float: 'right', border: 'none', backgroundColor: '#ffffff', color: '#a58e57',
+                }}
+              >DONE
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      </div>
     </div>
   );
 };
