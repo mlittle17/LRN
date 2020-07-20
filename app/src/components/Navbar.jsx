@@ -12,9 +12,11 @@ import FindSessions from './FindSessions.jsx';
 import CreateSession from './CreateSession.jsx';
 import Room from './Room.jsx';
 import Board from './Board.jsx';
+import CreateFlashCards from './CreateFlashCards.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
+
 
 const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
   const [activeItem, setActiveItem] = useState('home');
@@ -116,6 +118,8 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
           <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" component={Room} />
           <Route exact path="/board" render={() => (<Board />)} />
+          <Route exact path="/flash" component={CreateFlashCards} />
+          
         </Switch>
       </div>
     </div>
