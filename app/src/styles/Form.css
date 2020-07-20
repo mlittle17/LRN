@@ -13,6 +13,10 @@
   border: 1.5px solid #a58e57;
 }
 
+textarea {
+  border: 1.5px solid #a58e57;
+}
+
 .ui.focus.input {
   border: 1.5px solid #a58e57;
 }
