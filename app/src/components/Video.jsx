@@ -26,9 +26,7 @@ const Video = ({ peer, userID}) => {
 
   return (
     <Container>
-      <StyledVideo ref={ref} key={userID} playsInline autoPlay>
-        <track></track>
-      </StyledVideo>
+      <StyledVideo ref={ref} key={userID} playsInline autoPlay />
     </Container>
   );
 };
