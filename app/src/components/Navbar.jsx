@@ -12,7 +12,6 @@ import Logout from './Logout.jsx';
 import FindSessions from './FindSessions.jsx';
 import CreateSession from './CreateSession.jsx';
 import Room from './Room.jsx';
-import Board from './Board.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
@@ -39,6 +38,16 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
         </Menu.Item>
 
         <Menu.Menu position="right" class="right menu">
+
+
+
+        {/* <Menu.Item
+            name="board"
+            active={activeItem === 'board'}
+            onClick={handleItemClick}
+          >
+            <Link to='/board' class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Test Room</Link>
+          </Menu.Item> */}
 
           <Menu.Item
             name="room"
@@ -124,8 +133,7 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route exact path="/registered" component={Sessions} />
-          <Route path="/room/:roomID" component={Room} />
-          <Route exact path="/board" render={() => (<Board />)} />
+          <Route path="/room/:roomID" render={(props) => (<Room {...props} user={user}  />)} />
         </Switch>
       </div>
     </div>
