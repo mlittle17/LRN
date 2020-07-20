@@ -61,7 +61,7 @@ const timeOptions = [
 ];
 
 const CreateSession = ({ user }) => {
-  //  const { id } = user;
+  const { id } = user;
   //  console.log(user);
   // console.log(id)
   const [sessionTitle, setSessionTitle] = useState('');
@@ -73,6 +73,7 @@ const CreateSession = ({ user }) => {
   const [sessionLength, setSessionLength] = useState('');
   const [capacity, setCapacity] = useState(1);
   const [document, setDocument] = useState('');
+  //const [eventId, setEventId] = useState(1);
 
   // for now hardcoded user
   // const user_id = '1'
@@ -105,16 +106,17 @@ const CreateSession = ({ user }) => {
   };
 
   const addEvent = () => {
-    axios.post('/event', {
-      user_id: 1, topic: subject, date: sessionDate, time: `${sessionTime} ${sessionMeridiem}`, classLimit: capacity,
+    return axios.post('/event', {
+      user_id: id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
     })
-      .then(() => {
+      .then(response => {
+        return response.data[0].id;
+      })
+      .then(eventId => {
+        console.log(eventId);
         axios.post('/event/documents', {
-          type: 'google docs', link: document, user_id: 1, event_id: 1,
+          type: 'google docs', link: document, user_id: id, event_id: eventId,
         })
-          .then(response => {
-            console.log(response.data);
-          })
           .catch(err => {
             console.log(err);
           });

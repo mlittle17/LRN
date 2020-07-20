@@ -43,9 +43,8 @@ Events
 // location header - url ends with newly created resource id
 const createEvent = async(req, res) => {
   try {
-    await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit})', req.body);
-    console.log(res);
-    res.send({ message: 'event added' });
+    const id = await db.query('INSERT INTO event (topic, date, time, users_id, classLimit) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit}) RETURNING id', req.body);
+    res.send(id);
   } catch (err) {
     console.log('nah bruh', err);
   }
@@ -110,7 +109,7 @@ const addDocument = async(req, res) => {
   const {type, link, user_id, event_id} = req.body;
   try {
     await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}')`);
-    res.send('we added a document');
+    res.send('document added');
   } catch (err) {
     console.log('got documents', err);
   }
