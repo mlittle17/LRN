@@ -57,7 +57,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Binder = ({ userInfo, documents }) => {
+const Binder = ({ userInfo, binder }) => {
   const classes = useStyles();
   
   return (
@@ -75,7 +75,7 @@ const Binder = ({ userInfo, documents }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {documents.map((document) => (
+            {binder.map((document) => (
               <StyledTableRow key={document.id}>
                 <StyledTableCell component="th" scope="row" className={classes.rowText}>
                   {document.documenttype}

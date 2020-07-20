@@ -8,7 +8,7 @@ import '../styles/App.css';
 
 function App() {
   const [user, setUser] = useState(null);
-  const [documents, setDocuments] = useState([]);
+  const [binder, setBinder] = useState([]);
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
@@ -20,9 +20,9 @@ function App() {
 
   useEffect(() => {
     // may need to change to user documents
-    axios.get('event/3/documents')
+    axios.get(`users/1/binder`)
       .then(response => {
-        setDocuments(response.data);
+        setBinder(response.data);
       })
       .catch(err => {
         console.log(err);
@@ -62,7 +62,7 @@ function App() {
 
   return (
     <div>
-      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={documents} sessions={sessions} />
+      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} binder={binder} sessions={sessions} />
       {/* <button onClick={googleLogin}>Log In</button> */}
       <Router>
         <div className="App" />

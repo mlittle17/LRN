@@ -106,10 +106,12 @@ Document
 */
 
 const addDocument = async(req, res) => {
-  const {type, link, user_id, event_id} = req.body;
+  const {
+    type, link, user_id, event_id,
+  } = req.body;
   try {
-    await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}')`);
-    res.send('document added');
+    const id = await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}') RETURNING id`);
+    res.send(id);
   } catch (err) {
     console.log('got documents', err);
   }
@@ -139,16 +141,16 @@ Binder
 
 const addToBinder = async(req, res) => {
   try {
-    await db.query('INSERT INTO binder (user_id, document_id) (${user_id}, ${document_id})', req.body);
+    await db.query('INSERT INTO binder (users_id, document_id) VALUES(${users_id}, ${document_id})', req.body);
     res.send('it worked');
   } catch (err) {
     console.log('nah', err);
   }
 };
-// method that get from topic
+// method that get from topic.
 const getUserBinder = async(req, res) => {
   try {
-    const userBinder = await db.any(`SELECT * FROM binder WHERE users_id =${req.params.id}`);
+    const userBinder = await db.any(`SELECT B.*, U.nameFirst, U.nameLast, D.linkTo, D.documentType from binder B INNER JOIN document D on D.id = B.document_id INNER JOIN users U on U.id = D.users_id WHERE D.users_id = ${req.params.id}`);
     res.send(userBinder);
   } catch (err) {
     console.log(`No Binder, ${err}`);
