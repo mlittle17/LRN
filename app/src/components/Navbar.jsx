@@ -137,6 +137,7 @@ const Navbar = ({
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route exact path="/registered" component={Sessions} />
           <Route path="/room/:roomID" render={(props) => (<Room {...props} user={user} />)} />
+          <Route exact path="/find" component={FindSessions} />
         </Switch>
       </div>
     </div>

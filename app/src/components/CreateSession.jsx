@@ -48,18 +48,17 @@ const timeOptions = [
 ];
 
 const CreateSession = ({ user }) => {
- const { id } = user;
- console.log(user)
- // console.log(id)
+  const { id } = user;
   const [sessionDate, setSessionDate] = useState('');
   const [sessionTime, setSessionTime] = useState('');
   const [capacity, setCapacity] = useState(1);
   const [subject, setSubject] = useState('');
   const [document, setDocument] = useState('');
+  //const [eventId, setEventId] = useState(1);
 
   // for now hardcoded user
   // const user_id = '1'
-  console.log(document);
+
   const onSessionDateChange = (e) => {
     setSessionDate(e.target.rawValue);
   };
@@ -71,19 +70,19 @@ const CreateSession = ({ user }) => {
     const { value } = result;
     setSubject(value);
   };
-  
 
   const addEvent = () => {
-    axios.post('/event', {
+    return axios.post('/event', {
       user_id: id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
     })
-      .then(() => {
+      .then(response => {
+        return response.data[0].id;
+      })
+      .then(eventId => {
+        console.log(eventId);
         axios.post('/event/documents', {
-          type: 'google docs', link: document, user_id: id, event_id: 3,
+          type: 'google docs', link: document, user_id: id, event_id: eventId,
         })
-          .then(response => {
-            console.log(response.data);
-          })
           .catch(err => {
             console.log(err);
           });
