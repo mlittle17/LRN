@@ -135,7 +135,7 @@ function App() {
 
   return (
     <div>
-      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={fakeUserInfo} documents={userFakeDocuments} sessions={userFakeSessions} />
+      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={userFakeDocuments} sessions={userFakeSessions} />
       {/* <button onClick={googleLogin}>Log In</button> */}
       <Router>
         <div className="App" />
