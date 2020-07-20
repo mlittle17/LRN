@@ -36,13 +36,10 @@ const AddDocuments = function AlertDialogSlide(props) {
   };
 
   const onDocumentChange = (e) => {
-    console.log(e);
-    console.log(e.target.value);
     setLink(e.target.value);
   };
   const handleSubmitDocs = () => {
     props.setDoc(link);
-    console.log(link);
     handleClose();
   };
 
