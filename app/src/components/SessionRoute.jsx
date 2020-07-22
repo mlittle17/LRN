@@ -2,12 +2,11 @@ import React, {
   useState, MouseEvent, KeyboardEvent, useEffect, useRef,
 } from 'react';
 
-import { Redirect, Route } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom';
 
 import Peer from 'simple-peer';
-import socket from './Socket.jsx';
 import styled from 'styled-components';
-
+import socket from './Socket.jsx';
 
 import InstructorSession from './InstructorSession.jsx';
 import StudentSession from './StudentSession.jsx';
@@ -26,8 +25,6 @@ box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 border-radius: 5px;
 width: 300px;
 `;
-
-
 
 const SessionRoute = (props) => {
   const [joinCount, setJoinCount] = useState(0);
@@ -78,11 +75,10 @@ const SessionRoute = (props) => {
       });
     });
 
-    if(peers.length > 0) {
-      setInstructor(false)
+    if (peers.length > 0) {
+      setInstructor(false);
     }
   }, []);
-
 
   function createPeer(userToSignal, callerID, stream) {
     const peer = new Peer({
@@ -114,17 +110,10 @@ const SessionRoute = (props) => {
     return peer;
   }
 
-
-
   return (
     <div>
 
-
-
-{instructor === true && <InstructorSession />}
-
-
-
+      {instructor === true && <InstructorSession />}
 
     </div>
   );
