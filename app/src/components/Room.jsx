@@ -9,6 +9,8 @@ import Container from '@material-ui/core/Container';
 import Board from './Board.jsx';
 // import Video from './Video.jsx';
 import Questions from './Questions.jsx';
+import BulletinBoard from './BulletinBoard.jsx'
+
 import socket from './Socket.jsx';
 
 import '../styles/Upcoming.css';
@@ -160,6 +162,7 @@ const Room = (props) => {
         <div className="column">
           <Board />
           <Questions user={props.user} />
+          <BulletinBoard notes={props.notes} user={props.user}/>
         </div>
 
         <div className="column">
