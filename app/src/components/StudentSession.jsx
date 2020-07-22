@@ -6,7 +6,7 @@ import Peer from 'simple-peer';
 import Slider from 'react-slick';
 import { Grid, Typography, Avatar } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
-import {StyledVideo, StudentInstructorVideo } from '../styles/StyledComponents.jsx';
+import { StyledVideo, StudentInstructorVideo } from '../styles/StyledComponents.jsx';
 import Board from './Board.jsx';
 // import Video from './Video.jsx';
 import Questions from './Questions.jsx';
@@ -29,7 +29,7 @@ const InstructorVideo = ({ peer }) => {
     <>
       {/* <Typography variant="h4" component="h6" style={{ float: 'left', color: '#2d2e2e' }}>{key}</Typography> */}
 
-      <StudentInstructorVideo  playsInline autoPlay ref={ref} />
+      <StudentInstructorVideo playsInline autoPlay ref={ref} />
     </>
   );
 };
@@ -49,7 +49,7 @@ const StudentSession = (props) => {
   const [audioSwitch, setAudioSwitch] = useState(true);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
+    navigator.mediaDevices.getUserMedia({ video: videoConstraints }).then(stream => {
       userVideo.current.srcObject = stream;
       socket.current.emit('join room', roomID);
       socket.current.on('all users', users => {
@@ -141,12 +141,19 @@ const StudentSession = (props) => {
         </div>
         <div className="column">
           <Board />
-          <BulletinBoard notes={props.notes} />
+          {/* <BulletinBoard notes={props.notes} /> */}
         </div>
-        
-          student/user.
-          <StyledVideo muted ref={userVideo} autoPlay playsInline />
-    
+
+        student/user.
+        <StyledVideo muted ref={userVideo} autoPlay playsInline />
+        <button type="button" onClick={pauseVideo} className="ui icon button">
+          <i aria-hidden="true" className="play icon" />
+        </button>
+        {/* audio on/off button */}
+        <button type="button" onClick={mute} className="ui icon button">
+          <i aria-hidden="true" className="microphone icon" />
+        </button>
+
       </div>
     </Container>
   );
