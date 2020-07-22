@@ -314,7 +314,7 @@ const FindSessions = () => {
       addMarker(mapLoc);
     });
   }
-  
+
   return (
     <div className="Find">
       <Grid container justify="space-around" className={classes.grid}>
@@ -365,6 +365,7 @@ const FindSessions = () => {
                   />
                 </Form.Field>
               </Form><br /><br />
+              <Button style={{ backgroundColor: '#474a2c', color: '#f6fef5', float: 'right' }}>Search</Button>
             </CardContent>
           </Card>
         </div>
