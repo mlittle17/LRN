@@ -19,9 +19,7 @@ import StudentSession from './StudentSession.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
-const Navbar = ({
-  user, googleLogin, googleLogout, binder, sessions,
-}) => {
+const Navbar = ({ user, googleLogin, googleLogout, binder, sessions, notes }) => {
   const [activeItem, setActiveItem] = useState('home');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
@@ -149,6 +147,7 @@ const Navbar = ({
           <Route exact path="/registered" component={Sessions} />
           <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} />)} />
           <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} />)} />
+          <Route path="/room/:roomID" render={(props) => (<Room {...props} user={user} notes={notes} />)} />
           <Route exact path="/find" component={FindSessions} />
         </Switch>
       </div>

@@ -10,6 +10,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [binder, setBinder] = useState([]);
   const [sessions, setSessions] = useState([]);
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     axios.get('/event')
@@ -20,7 +21,7 @@ function App() {
 
   useEffect(() => {
     // may need to change to user documents
-    axios.get(`users/1/binder`)
+    axios.get('users/1/binder')
       .then(response => {
         setBinder(response.data);
       })
@@ -44,6 +45,16 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    axios.get('event/3/documents')
+      .then(response => {
+        setNotes(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
   const googleLogin = () => {
     window.location.replace('http://localhost:8080/auth/login');
   };
@@ -62,7 +73,7 @@ function App() {
 
   return (
     <div>
-      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} binder={binder} sessions={sessions} />
+      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} binder={binder} sessions={sessions} notes={notes} />
       {/* <button onClick={googleLogin}>Log In</button> */}
       <Router>
         <div className="App" />
