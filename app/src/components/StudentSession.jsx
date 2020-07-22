@@ -11,6 +11,7 @@ import Board from './Board.jsx';
 // import Video from './Video.jsx';
 import Questions from './Questions.jsx';
 import socket from './Socket.jsx';
+import BulletinBoard from './BulletinBoard.jsx';
 
 import '../styles/Upcoming.css';
 
@@ -140,6 +141,7 @@ const StudentSession = (props) => {
         </div>
         <div className="column">
           <Board />
+          <BulletinBoard notes={props.notes} />
         </div>
         
           student/user.
