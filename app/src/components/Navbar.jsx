@@ -12,11 +12,16 @@ import Logout from './Logout.jsx';
 import FindSessions from './FindSessions.jsx';
 import CreateSession from './CreateSession.jsx';
 import Room from './Room.jsx';
+import SessionRoute from './SessionRoute.jsx';
+import InstructorSession from './InstructorSession.jsx';
+import StudentSession from './StudentSession.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
-const Navbar = ({ user, googleLogin, googleLogout, binder, sessions, notes }) => {
+const Navbar = ({
+  user, googleLogin, googleLogout, binder, sessions, notes,
+}) => {
   const [activeItem, setActiveItem] = useState('home');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
@@ -48,11 +53,19 @@ const Navbar = ({ user, googleLogin, googleLogout, binder, sessions, notes }) =>
           </Menu.Item> */}
 
           <Menu.Item
-            name="room"
-            active={activeItem === 'room'}
+            name="instructor"
+            active={activeItem === 'session'}
             onClick={handleItemClick}
           >
-            <Link to={`/room/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Room</Link>
+            <Link to={`/instructor/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Instructor</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            name="student"
+            active={activeItem === 'student'}
+            onClick={handleItemClick}
+          >
+            <Link to={`/student/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Student</Link>
           </Menu.Item>
 
           <Menu.Item
@@ -134,6 +147,8 @@ const Navbar = ({ user, googleLogin, googleLogout, binder, sessions, notes }) =>
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route exact path="/registered" component={Sessions} />
+          <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} />)} />
+          <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} />)} />
           <Route path="/room/:roomID" render={(props) => (<Room {...props} user={user} notes={notes} />)} />
           <Route exact path="/find" component={FindSessions} />
         </Switch>

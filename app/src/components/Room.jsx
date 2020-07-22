@@ -78,7 +78,7 @@ const Room = (props) => {
   const [audioSwitch, setAudioSwitch] = useState(true);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: videoConstraints }).then(stream => {
+    navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
       userVideo.current.srcObject = stream;
       socket.current.emit('join room', roomID);
       socket.current.on('all users', users => {
@@ -151,7 +151,7 @@ const Room = (props) => {
 
   function mute() {
     if (userVideo.current.srcObject) {
-      userVideo.current.srcObject.getAudioTracks()[0].enabled = !audioSwitch;
+      // userVideo.current.srcObject.getAudioTracks()[0].enabled = !audioSwitch;
       setAudioSwitch(!audioSwitch);
     }
   }

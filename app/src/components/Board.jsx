@@ -85,6 +85,7 @@ const Board = () => {
 
     const onMouseMove = (e) => {
       if (!drawing) { return; }
+      // if (e.touches === undefined) { return; }
       drawLine(current.x, current.y, parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX), parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY), current.color, true);
       current.x = parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX);
       current.y = parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY);
