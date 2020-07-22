@@ -293,9 +293,14 @@ const FindSessions = () => {
   // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
 
   const addMarker = (latLng) => {
+    const url = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595383700/CustomBlackMapMarker.png';
+
     new google.maps.Marker({
       map,
       position: latLng,
+      icon: {
+        url,
+      },
     });
     // store the marker object drawn in global array
     // setCurrMarkers([...currMarkers, marker]);
