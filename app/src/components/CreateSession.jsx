@@ -80,7 +80,7 @@ const CreateSession = ({ user }) => {
     return axios.post('/event', {
       user_id: id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
     })
-      .then(response => { return response.data[0].id; })
+      .then(response => response.data[0].id)
       .then(eventId => {
         axios.post('/event/documents', {
           type: 'google docs',
@@ -88,6 +88,14 @@ const CreateSession = ({ user }) => {
           user_id: id,
           event_id: eventId,
         })
+          .then(response => {
+            return response.data[0].id;
+          })
+          .then(documentId => {
+            axios.post(`/users/:${id}/binder`, {
+              users_id: id, document_id: documentId,
+            });
+          })
           .then(
             axios.post('/event/flashCards', {
               user_id: id,
@@ -98,26 +106,11 @@ const CreateSession = ({ user }) => {
                 axios.post('/event/cards', {
                   packId: res.data[0].id,
                   cards: cards.cards,
-                })
-                  .catch(err => console.log(err))
-                  .catch(err => {
-                    console.log(err);
-                  });
+                });
               }),
-          )
-          .catch(error => {
-            console.log(error);
-          .then(response => {
-            console.log(response);
-            return response.data[0].id;
-          })
-          .then(documentId => {
-            console.log(documentId);
-            axios.post(`/users/:${id}/binder`, {
-              users_id: id, document_id: documentId,
-            });
-          });
-      });
+          );
+      })
+      .catch(err => console.log(err));
   };
 
   const classes = useStyles();
