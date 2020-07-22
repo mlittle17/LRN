@@ -16,6 +16,10 @@ server.listen(port, () => console.log(`server is running on port ${port}`));
 const users = {};
 const socketToRoom = {};
 io.on('connection', socket => {
+  socket.on('chat message', msg => {
+    console.log(msg);
+    io.emit('sending chat message', msg);
+  });
   socket.on('join room', roomID => {
     if (users[roomID]) {
       const { length } = users[roomID];

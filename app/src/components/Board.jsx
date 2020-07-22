@@ -1,15 +1,30 @@
 /* eslint-disable radix */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import { SketchPicker } from 'react-color';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import { IconButton } from '@material-ui/core';
 import '../styles/Board.css';
 
+import socket from './Socket.jsx';
+
+const current = {
+  color: 'black',
+};
+
+// helper that will update the current color
+const onColorUpdate = (e) => {
+  current.color = e.target.className.split(' ')[1];
+  // setCurrent({ color: e.target.className.split(' ')[1]});
+};
+
 const Board = () => {
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
   const socketRef = useRef();
+  // const [ current, setCurrent ] = useState({ color: 'black' });
+  const [currColor, setcurrColor] = useState('#00FFFF');
 
   useEffect(() => {
     // --------------- getContext() method returns a drawing context on the canvas-----
@@ -24,15 +39,6 @@ const Board = () => {
     const colors = document.getElementsByClassName('color');
     console.log(colors, 'the colors');
     console.log(test);
-    // set the current color
-    const current = {
-      color: 'black',
-    };
-
-    // helper that will update the current color
-    const onColorUpdate = (e) => {
-      current.color = e.target.className.split(' ')[1];
-    };
 
     // loop through the color elements and add the click event listeners
     for (let i = 0; i < colors.length; i++) {
@@ -55,7 +61,7 @@ const Board = () => {
       const w = canvas.width;
       const h = canvas.height;
 
-      socketRef.current.emit('drawing', {
+      socket.current.emit('drawing', {
         x0: x0 / w,
         y0: y0 / h,
         x1: x1 / w,
@@ -79,6 +85,7 @@ const Board = () => {
 
     const onMouseMove = (e) => {
       if (!drawing) { return; }
+      // if (e.touches === undefined) { return; }
       drawLine(current.x, current.y, parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX), parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY), current.color, true);
       current.x = parseInt(e.clientX - offsetX) || parseInt(e.touches[0].clientX - offsetX);
       current.y = parseInt(e.clientY - offsetY) || parseInt(e.touches[0].clientY - offsetY);
@@ -96,7 +103,7 @@ const Board = () => {
 
     const throttle = (callback, delay) => {
       let previousCall = new Date().getTime();
-      return function () {
+      return function() {
         const time = new Date().getTime();
 
         if ((time - previousCall) >= delay) {
@@ -115,7 +122,7 @@ const Board = () => {
     };
 
     const emitAndCanvas = () => {
-      socketRef.current.emit('clear');
+      socket.current.emit('clear');
       clearCanvas();
     };
     const clearButton = document.getElementsByClassName('clear');
@@ -154,9 +161,10 @@ const Board = () => {
       drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
     };
 
-    socketRef.current = io.connect('/');
-    socketRef.current.on('drawing', onDrawingEvent);
-    socketRef.current.on('clear', clearCanvas);
+    // socketRef.current = io.connect('/');
+    // console.log(props.socket)
+    socket.current.on('drawing', onDrawingEvent);
+    socket.current.on('clear', clearCanvas);
   }, []);
   // ----------------------------------------------------------------------------
 
@@ -174,9 +182,12 @@ const Board = () => {
           <DeleteIcon fontSize="medium" />
         </IconButton>
       </div>
+
       <div className="boardContainer">
         <canvas ref={canvasRef} className="whiteboard" />
       </div>
+      {/* optional color picker */}
+      {/* <SketchPicker color={currColor} onChangeComplete={color => { current.color = color.hex; setcurrColor(color.hex); }} /> */}
     </div>
   );
 };

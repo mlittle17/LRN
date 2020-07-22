@@ -2,3 +2,6 @@ package-lock.json
 app/.vscode/launch.json
 app/.env
 .gitignore
+app/src/components/holdthis.jsx
+app/src/components/holdThisRoom.jsx
+app/src/components/holdThisQuest.jsx

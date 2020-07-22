@@ -13,12 +13,16 @@ import CreateSession from './CreateSession.jsx';
 import Room from './Room.jsx';
 import Board from './Board.jsx';
 import CreateFlashCards from './CreateFlashCards.jsx';
+import SessionRoute from './SessionRoute.jsx';
+import InstructorSession from './InstructorSession.jsx';
+import StudentSession from './StudentSession.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
-
-const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
+const Navbar = ({
+  user, googleLogin, googleLogout, binder, sessions, notes,
+}) => {
   const [activeItem, setActiveItem] = useState('home');
   const handleItemClick = (e, { name }) => setActiveItem(name);
   const id = uuid();
@@ -36,12 +40,29 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
           </Link>
         </Menu.Item>
         <Menu.Menu position="right" class="right menu">
-          <Menu.Item
-            name="room"
-            active={activeItem === 'room'}
+
+          {/* <Menu.Item
+            name="board"
+            active={activeItem === 'board'}
             onClick={handleItemClick}
           >
-            <Link to={`/room/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Room</Link>
+            <Link to='/board' class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Test Room</Link>
+          </Menu.Item> */}
+
+          <Menu.Item
+            name="instructor"
+            active={activeItem === 'session'}
+            onClick={handleItemClick}
+          >
+            <Link to={`/instructor/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Instructor</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            name="student"
+            active={activeItem === 'student'}
+            onClick={handleItemClick}
+          >
+            <Link to={`/student/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Student</Link>
           </Menu.Item>
           <Menu.Item
             name="profile"
@@ -58,26 +79,29 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
             <Link to="/profile" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Profile</Link>
           </Menu.Item>
 
-          {user ?
-            <Menu.Menu position="right" class="right menu">
-              <Menu.Item
-                name="login"
-                active={activeItem === 'logout'}
-                onClick={googleLogout}
-              >
-                <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Logout</Link>
-              </Menu.Item>
-            </Menu.Menu>
-            :
-            <Menu.Menu position="right" class="right menu">
-              <Menu.Item
-                name="login"
-                active={activeItem === 'login'}
-                onClick={googleLogin}
-              >
-                <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Login</Link>
-              </Menu.Item>
-            </Menu.Menu>}
+          {user
+            ? (
+              <Menu.Menu position="right" class="right menu">
+                <Menu.Item
+                  name="login"
+                  active={activeItem === 'logout'}
+                  onClick={googleLogout}
+                >
+                  <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Logout</Link>
+                </Menu.Item>
+              </Menu.Menu>
+            )
+            : (
+              <Menu.Menu position="right" class="right menu">
+                <Menu.Item
+                  name="login"
+                  active={activeItem === 'login'}
+                  onClick={googleLogin}
+                >
+                  <Link to="/logout" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Login</Link>
+                </Menu.Item>
+              </Menu.Menu>
+            )}
 
           {/* <Menu.Menu position="right" class="right menu">
         <Menu.Item
@@ -94,7 +118,8 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
         >
           <Link to={`/room/${id}`} class="item">Room</Link>
         </Menu.Item>
-        {user ? <a>You are logged in</a> 
+
+        {user ? <a>You are logged in</a>
         :
         <Menu.Menu position="right" class="right menu">
           <Menu.Item
@@ -110,15 +135,14 @@ const Navbar = ({ user, googleLogin, googleLogout, documents, sessions }) => {
       </Menu>
       <div>
         <Switch>
-          <Route exact path="/" render={() => (<Home user={user} documents={documents} sessions={sessions}/>)} />
-          <Route exact path="/profile" render={() => (<Profile user={user} documents={documents} />)} />
+          <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} />)} />
+          <Route exact path="/profile" render={() => (<Profile user={user} binder={binder} />)} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route exact path="/registered" component={Sessions} />
-          <Route path="/room/:roomID" component={Room} />
-          <Route exact path="/board" render={() => (<Board />)} />
-          
+          <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} />)} />
+          <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} notes={notes} />)} />
           <Route exact path="/find" component={FindSessions} />
         </Switch>
       </div>

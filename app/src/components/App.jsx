@@ -7,9 +7,10 @@ import Navbar from './Navbar.jsx';
 import '../styles/App.css';
 
 function App() {
-  const [user, setUser] = useState('');
-  const [documents, setDocuments] = useState([]);
+  const [user, setUser] = useState(null);
+  const [binder, setBinder] = useState([]);
   const [sessions, setSessions] = useState([]);
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     axios.get('/event')
@@ -20,9 +21,9 @@ function App() {
 
   useEffect(() => {
     // may need to change to user documents
-    axios.get('event/3/documents')
+    axios.get('users/1/binder')
       .then(response => {
-        setDocuments(response.data);
+        setBinder(response.data);
       })
       .catch(err => {
         console.log(err);
@@ -44,6 +45,16 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    axios.get('event/3/documents')
+      .then(response => {
+        setNotes(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
   const googleLogin = () => {
     window.location.replace('https://lrn-solid-sun-282620.uc.r.appspot.com/auth/login');
   };
@@ -62,7 +73,7 @@ function App() {
 
   return (
     <div>
-      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={documents} sessions={sessions} />
+      <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} binder={binder} sessions={sessions} notes={notes} />
       {/* <button onClick={googleLogin}>Log In</button> */}
       <Router>
         <div className="App" />
