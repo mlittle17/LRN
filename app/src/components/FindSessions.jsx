@@ -56,7 +56,8 @@ const FindSessions = () => {
   const [zip, setZip] = useState(0);
 
   const [userLoc, setUserLoc] = useState({});
-
+  const [currMapLocs, setCurrMapLocs] = useState([{ lat: 30.35058129999999, lng: -91.0873551 }, { lat: 30.4293497, lng: -91.1686843 }, { lat: 30.4475809, lng: -91.1756636 }]);
+  const [currMarkers, setCurrMarkers] = useState([]);
 
   useEffect(() => {
     // Find the lat and lon to initially center the map over, based on the user's zip
