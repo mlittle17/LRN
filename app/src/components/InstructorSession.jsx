@@ -133,6 +133,7 @@ const InstructorSession = (props) => {
         <div className="column">
           <h1> Event Name </h1>
           <a href={joinLink}>Here is the student join link</a>
+          <a>(open in new tab for testing)</a>
 
           <StyledVideo muted ref={userVideo} autoPlay playsInline />
 
