@@ -3,7 +3,9 @@ import Cleave from 'cleave.js/react';
 import axios from 'axios';
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent, Grid, TableContainer, Table, TableHead, TableRow, TableBody } from '@material-ui/core';
+import {
+  Card, CardContent, Grid, TableContainer, Table, TableHead, TableRow, TableBody,
+} from '@material-ui/core';
 
 import '../styles/Form.css';
 
@@ -26,9 +28,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateFlashCards = () => {
+const CreateFlashCards = ({ setCards }) => {
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
+  const [packName, setPackName] = useState('');
   const [flashCard, setFlashCard] = useState({});
   const [flashCards, setFlashCards] = useState([]);
 
@@ -36,10 +39,14 @@ const CreateFlashCards = () => {
     // this will add to Flash Card to flashCards state
     const card = {
       front,
-      back
+      back,
     };
     setFlashCard(card);
     flashCards.push(card);
+  };
+
+  const addName = (e) => {
+    setPackName(e.target.value);
   };
 
   const addFront = (e) => {
@@ -55,8 +62,17 @@ const CreateFlashCards = () => {
       front,
       back,
     };
-    console.log(card)
     flashCards.push(card);
+  };
+
+  const addCards = () => {
+    const pack = {
+      name: packName,
+      cards: flashCards
+    };
+
+    setCards(pack);
+    console.log(pack);
   };
 
   const classes = useStyles();
@@ -67,6 +83,12 @@ const CreateFlashCards = () => {
         <Grid container justify="space-around">
           <Card className={classes.root}>
             <CardContent>
+              <Form.Input
+                fluid
+                label="Pack Name"
+                placeholder="Pack Name"
+                onChange={addName}
+              />
               <Form>
                 {/* subject select */}
                 <Form.Input
@@ -84,32 +106,30 @@ const CreateFlashCards = () => {
                 />
 
               </Form> <br />
-              <Button type="submit" onClick={addFlashCard}>Submit</Button>
+              <Button type="submit" onClick={addFlashCard}>Create Flash Card</Button>
+              <Button type="submit" onClick={addCards}>Add Cards to Session</Button>
             </CardContent>
           </Card>
         </Grid>
       </div>
       <div>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow />
 
-            </TableRow>
+            </TableHead>
+            <TableBody>
+              {flashCards.map(fc => (
+                <div>{fc.front}</div>
+              ))}
+            </TableBody>
+          </Table>
 
-          </TableHead>
-          <TableBody>
-            {flashCards.map(fc => (
-              <div>{fc.front}</div>
-            ))}
-          </TableBody>
-        </Table>
-
-      </TableContainer>
+        </TableContainer>
 
       </div>
     </div>
-    
 
   );
 };
