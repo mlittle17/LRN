@@ -308,7 +308,11 @@ const FindSessions = () => {
   if (map) {
     // execute when map object is ready
     // new google.maps.Marker({ position: { lat: 30.35058129999999, lng: -91.0873551 }, map });
-    addMarker({ lat: 30.35058129999999, lng: -91.0873551 });
+    // addMarker({ lat: 30.35058129999999, lng: -91.0873551 });
+
+    currMapLocs.forEach((mapLoc) => {
+      addMarker(mapLoc);
+    });
   }
   
   return (
