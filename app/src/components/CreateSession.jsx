@@ -8,8 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Grid } from '@material-ui/core';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
-
 import AddDocuments from './AddDocuments.jsx';
+import CreateFlashCards from './CreateFlashCards.jsx';
 import '../styles/Form.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +54,8 @@ const CreateSession = ({ user }) => {
   const [capacity, setCapacity] = useState(1);
   const [subject, setSubject] = useState('');
   const [document, setDocument] = useState('');
-  //const [eventId, setEventId] = useState(1);
+  const [cards, setCards] = useState('');
+  // const [eventId, setEventId] = useState(1);
 
   // for now hardcoded user
   // const user_id = '1'
@@ -75,20 +76,34 @@ const CreateSession = ({ user }) => {
     return axios.post('/event', {
       user_id: id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity,
     })
-      .then(response => {
-        return response.data[0].id;
-      })
+      .then(response => { return response.data[0].id; })
       .then(eventId => {
-        console.log(eventId);
         axios.post('/event/documents', {
-          type: 'google docs', link: document, user_id: id, event_id: eventId,
+          type: 'google docs',
+          link: document,
+          user_id: id,
+          event_id: eventId,
         })
-          .catch(err => {
-            console.log(err);
+          .then(
+            axios.post('/event/flashCards', {
+              user_id: id,
+              event_id: eventId,
+              packName: cards.name,
+            })
+              .then(res => {
+                axios.post('/event/cards', {
+                  packId: res.data[0].id,
+                  cards: cards.cards,
+                })
+                  .catch(err => console.log(err))
+                  .catch(err => {
+                    console.log(err);
+                  });
+              }),
+          )
+          .catch(error => {
+            console.log(error);
           });
-      })
-      .catch(error => {
-        console.log(error);
       });
   };
 
@@ -151,6 +166,7 @@ const CreateSession = ({ user }) => {
                   />
                 </Form.Field>
                 <AddDocuments setDoc={setDocument} />
+                <CreateFlashCards setCards={setCards} />
               </Form> <br />
               <Button type="submit" onClick={addEvent}>Submit</Button>
             </CardContent>
