@@ -99,6 +99,16 @@ const FindSessions = () => {
     {
       center: { lat: 30.35058129999999, lng: -91.0873551 },
       zoom: 12,
+      zoomControl: false,
+      mapTypeControl: true,
+      // mapTypeControlOptions: {
+      //   style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+      //   mapTypeIds: ['roadmap', 'terrain'],
+      // },
+      scaleControl: false,
+      streetViewControl: false,
+      rotateControl: false,
+      fullscreenControl: true,
     },
   );
   // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
