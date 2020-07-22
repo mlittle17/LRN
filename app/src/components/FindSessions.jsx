@@ -292,6 +292,20 @@ const FindSessions = () => {
   // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
   // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
 
+  const addMarker = (latLng) => {
+    new google.maps.Marker({
+      map,
+      position: latLng,
+    });
+    // store the marker object drawn in global array
+    // setCurrMarkers([...currMarkers, marker]);
+  };
+  if (map) {
+    // execute when map object is ready
+    // new google.maps.Marker({ position: { lat: 30.35058129999999, lng: -91.0873551 }, map });
+    addMarker({ lat: 30.35058129999999, lng: -91.0873551 });
+  }
+  
   return (
     <div className="Find">
       <Grid container justify="space-around" className={classes.grid}>
