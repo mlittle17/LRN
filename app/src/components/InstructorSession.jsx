@@ -2,11 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import Peer from 'simple-peer';
 
 // the video style
-import StyledVideo from '../styles/StyledComponents.js';
 
 import Slider from 'react-slick';
 import { Grid, Typography, Avatar } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
+import { StyledVideo } from '../styles/StyledComponents.jsx';
 import Board from './Board.jsx';
 // import Video from './Video.jsx';
 import Questions from './Questions.jsx';
@@ -15,11 +15,29 @@ import socket from './Socket.jsx';
 import '../styles/Upcoming.css';
 
 
+const Video = (props) => {
+  const ref = useRef();
+  const { key } = props;
+
+  useEffect(() => {
+    props.peer.on('stream', stream => {
+      ref.current.srcObject = stream;
+    });
+  }, []);
+
+  return (
+    <>
+      <Typography variant="h4" component="h6" style={{ float: 'left', color: '#2d2e2e' }}>{key}</Typography>
+
+      <StyledVideo playsInline autoPlay ref={ref} />
+    </>
+  );
+};
+
 const videoConstraints = {
   height: window.innerHeight / 2,
   width: window.innerWidth / 2,
 };
-
 
 const InstructorSession = (props) => {
   const [peers, setPeers] = useState([]);
@@ -29,7 +47,7 @@ const InstructorSession = (props) => {
   const { roomID } = props.match.params;
   const [videoSwitch, setVideoSwitch] = useState(true);
   const [audioSwitch, setAudioSwitch] = useState(true);
-
+  const joinLink = window.location.href.split('instructor').join('student');
 
 
   useEffect(() => {
@@ -78,7 +96,7 @@ const InstructorSession = (props) => {
     });
 
     return peer;
-  }
+  };
 
   const addPeer = (incomingSignal, callerID, stream) => {
     const peer = new Peer({
@@ -94,7 +112,7 @@ const InstructorSession = (props) => {
     peer.signal(incomingSignal);
 
     return peer;
-  }
+  };
 
   const pauseVideo = () => {
     if (userVideo.current.srcObject) {
@@ -102,25 +120,42 @@ const InstructorSession = (props) => {
       userVideo.current.srcObject.getVideoTracks()[0].enabled = !videoSwitch;
       setVideoSwitch(!videoSwitch);
     }
-  }
+  };
 
   const mute = () => {
     if (userVideo.current.srcObject) {
       // userVideo.current.srcObject.getAudioTracks()[0].enabled = !audioSwitch;
       setAudioSwitch(!audioSwitch);
     }
-  }
-
+  };
 
   return (
-    <div>
-      
-      <a>This is the instructors page</a>
-      <h1> Event Name </h1>
-      {props.vid}
-      {/* <StyledVideo playsInline autoPlay ref={ref} /> */}
-      <StyledVideo muted ref={userVideo} autoPlay playsInline />
-    </div>
+    <Container>
+      <div className="ui stackable three column grid">
+        <div className="column">
+          <h1> Event Name </h1>
+          <a href={joinLink}>Here is the student join link</a>
+          
+          <StyledVideo muted ref={userVideo} autoPlay playsInline />
+
+        </div>
+        <div className="column">
+          <Board />
+        </div>
+        <div className="column">
+          students
+          {peers.length >= 1 && (
+            peers.map((peer, index) => {
+              return (
+                <div>
+                  <Video key={index} peer={peer} style={{ height: 150, width: 300 }} />
+                </div>
+              );
+            })
+          )}
+        </div>
+      </div>
+    </Container>
   );
 };
 
