@@ -19,7 +19,9 @@ import StudentSession from './StudentSession.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
-const Navbar = ({ user, googleLogin, googleLogout, binder, sessions, notes }) => {
+const Navbar = ({
+  user, googleLogin, googleLogout, binder, sessions, notes,
+}) => {
   const [activeItem, setActiveItem] = useState('home');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
