@@ -49,7 +49,7 @@ const InstructorSession = (props) => {
   const joinLink = window.location.href.split('instructor').join('student');
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
+    navigator.mediaDevices.getUserMedia({ video: videoConstraints }).then(stream => {
       userVideo.current.srcObject = stream;
       socket.current.emit('join room', roomID);
       socket.current.on('all users', users => {
@@ -136,6 +136,13 @@ const InstructorSession = (props) => {
           <a>(open in new tab for testing)</a>
 
           <StyledVideo muted ref={userVideo} autoPlay playsInline />
+          <button type="button" onClick={pauseVideo} className="ui icon button">
+            <i aria-hidden="true" className="play icon" />
+          </button>
+          {/* audio on/off button */}
+          <button type="button" onClick={mute} className="ui icon button">
+            <i aria-hidden="true" className="microphone icon" />
+          </button>
 
         </div>
         <div className="column">

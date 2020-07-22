@@ -122,7 +122,7 @@ const Board = () => {
     };
 
     const emitAndCanvas = () => {
-      socketRef.current.emit('clear');
+      socket.current.emit('clear');
       clearCanvas();
     };
     const clearButton = document.getElementsByClassName('clear');
