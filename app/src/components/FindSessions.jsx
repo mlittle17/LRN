@@ -56,7 +56,7 @@ const FindSessions = () => {
   const [zip, setZip] = useState(0);
 
   const [userLoc, setUserLoc] = useState({});
-  const [currMapLocs, setCurrMapLocs] = useState([{ lat: 30.35058129999999, lng: -91.0873551 }, { lat: 30.4293497, lng: -91.1686843 }, { lat: 30.4475809, lng: -91.1756636 }]);
+  const [currMapLocs, setCurrMapLocs] = useState([{ lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 }, { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 }, { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 }, { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 }, { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 }]);
   const [currMarkers, setCurrMarkers] = useState([]);
 
   useEffect(() => {
@@ -70,6 +70,11 @@ const FindSessions = () => {
           lat,
           lng,
         });
+        setCurrMapLocs([{
+          lat,
+          lng,
+          zipcode: 70810,
+        }]);
       },
       error => {
         console.error(error);
@@ -292,12 +297,14 @@ const FindSessions = () => {
   // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
   // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
 
-  const addMarker = (latLng) => {
+  const addMarker = (markerObj) => {
     const url = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595383700/CustomBlackMapMarker.png';
+    const { zipcode } = markerObj;
 
-    new google.maps.Marker({
+    return new google.maps.Marker({
       map,
-      position: latLng,
+      position: markerObj,
+      title: zipcode.toString(),
       icon: {
         url,
       },
