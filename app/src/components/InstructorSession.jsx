@@ -9,7 +9,8 @@ import Container from '@material-ui/core/Container';
 import { StyledVideo } from '../styles/StyledComponents.jsx';
 import Board from './Board.jsx';
 // import Video from './Video.jsx';
-import Questions from './Questions.jsx';
+// import Questions from './Questions.jsx';
+import InstructorChatWidget from './InstructorChatWidget.jsx';
 import socket from './Socket.jsx';
 
 import '../styles/Upcoming.css';
@@ -161,6 +162,7 @@ const InstructorSession = (props) => {
           )}
         </div>
       </div>
+      <InstructorChatWidget user={props.user} />
     </Container>
   );
 };
