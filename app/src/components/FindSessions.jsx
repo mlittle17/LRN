@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+/* eslint-disable quote-props */
+import React, { useState, useEffect } from 'react';
 import Cleave from 'cleave.js/react';
+import Geocode from 'react-geocode';
 import { useGoogleMaps } from 'react-hook-google-maps';
-// import axios from 'axios';
 
-import { Form } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Card, CardActionArea, CardContent, Grid, Typography,
@@ -32,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Set up the Geocoding for transforming the zip to lat and lon
+Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
+
 const subOptions = [
   { key: 'fi', text: 'Finance', value: 'finance' },
   { key: 'fd', text: 'Food', value: 'food' },
@@ -51,6 +55,27 @@ const FindSessions = () => {
   const [sessionDate, setSessionDate] = useState('');
   const [zip, setZip] = useState(0);
 
+  const [userLoc, setUserLoc] = useState({});
+
+
+  useEffect(() => {
+    // Find the lat and lon to initially center the map over, based on the user's zip
+    // Get latidude & longitude from address.
+    Geocode.fromAddress('70810').then(
+      response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+        setUserLoc({
+          lat,
+          lng,
+        });
+      },
+      error => {
+        console.error(error);
+      },
+    );
+  }, []);
+
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
     setSubject(value);
@@ -64,17 +89,21 @@ const FindSessions = () => {
     setZip(e.target.rawValue);
   };
 
+  const onMapChange = (e) => {
+
+  };
+
   const { ref, map, google } = useGoogleMaps(
     // Use your own API key, you can get one from Google (https://console.cloud.google.com/google/maps-apis/overview)
     'AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68',
-    // NOTE: even if you change options later
     {
-      center: { lat: 0, lng: 0 },
-      zoom: 3,
+      center: { lat: 30.35058129999999, lng: -91.0873551 },
+      zoom: 12,
     },
   );
-  // console.log(map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
-  // console.log(google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
+  // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
+  // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
+
 
   return (
     <div className="Find">
@@ -125,7 +154,7 @@ const FindSessions = () => {
                     className="form-field"
                   />
                 </Form.Field>
-              </Form>
+              </Form><br /><br />
             </CardContent>
           </Card>
         </div>
