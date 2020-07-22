@@ -20,6 +20,11 @@ io.on('connection', socket => {
     console.log(msg);
     io.emit('sending chat message', msg);
   });
+
+  socket.on('Instructor message', msg => {
+    console.log('instructor just typed', msg);
+  });
+
   socket.on('join room', roomID => {
     if (users[roomID]) {
       const { length } = users[roomID];
