@@ -14,7 +14,6 @@ import socket from './Socket.jsx';
 
 import '../styles/Upcoming.css';
 
-
 const Video = (props) => {
   const ref = useRef();
   const { key } = props;
@@ -48,7 +47,6 @@ const InstructorSession = (props) => {
   const [videoSwitch, setVideoSwitch] = useState(true);
   const [audioSwitch, setAudioSwitch] = useState(true);
   const joinLink = window.location.href.split('instructor').join('student');
-
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true }).then(stream => {
@@ -135,7 +133,7 @@ const InstructorSession = (props) => {
         <div className="column">
           <h1> Event Name </h1>
           <a href={joinLink}>Here is the student join link</a>
-          
+
           <StyledVideo muted ref={userVideo} autoPlay playsInline />
 
         </div>

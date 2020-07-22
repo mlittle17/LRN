@@ -21,5 +21,5 @@ width: 500px;
 
 export {
   StyledVideo,
-  StudentInstructorVideo
-}
+  StudentInstructorVideo,
+};
