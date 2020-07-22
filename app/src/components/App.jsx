@@ -7,7 +7,7 @@ import Navbar from './Navbar.jsx';
 import '../styles/App.css';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
   const [documents, setDocuments] = useState([]);
   const [sessions, setSessions] = useState([]);
 
