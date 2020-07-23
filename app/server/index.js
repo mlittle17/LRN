@@ -21,6 +21,10 @@ io.on('connection', socket => {
     io.emit('sending chat message', msg);
   });
 
+  socket.on('clear', () => {
+    io.emit('clear Canva');
+  })
+  
   socket.on('Instructor message', msg => {
     console.log('instructor just typed', msg);
     io.emit('sending Instructor message', msg);

@@ -76,6 +76,8 @@ const StudentChatWidget = (props) => {
     <div>
       <Widget
         handleNewUserMessage={handleNewUserMessage}
+        title="Questions?"
+        subtitle="Ask them here"
       />
     </div>
 

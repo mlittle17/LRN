@@ -8,10 +8,6 @@ import 'react-chat-widget/lib/styles.css';
 
 import socket from './Socket.jsx';
 
-// const user = {
-//   username: 'Jerry',
-// };
-
 const Questions = ({ user }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -34,7 +30,7 @@ const Questions = ({ user }) => {
       user,
     };
     socket.current.emit('chat message', messageObj);
-    setMessage(''); // clear the input
+    setMessage(''); 
   };
 
   const onKeyPress = (event) => {
@@ -59,31 +55,13 @@ const Questions = ({ user }) => {
       <div>
         <Widget
           handleNewUserMessage={handleNewUserMessage}
+          title="Questions?"
+          subtitle=""
           // profileAvatar={user.imageurl}
         />
       </div>
-      {/* {messages.map((msg) => {
-        const key = msg.messageCount + msg.user.id;
-        return (
-          <div key={key}>
-            <p>
-              {`${msg.user.username}: ${msg.message}`}
-            </p>
-          </div>
-        );
-      })}
-      <br />
-      <input id="chat-input" value={message} onKeyPress={onKeyPress} onChange={(e) => setMessage(e.target.value)} type="text" />
-      <br />
-      <button onClick={(e) => sendChat(e)} type="button">Send</button>
-      <br /> */}
     </div>
   );
 };
 
 export default Questions;
-
-// emit the message the instructor writes
-// grab it in the back and emit an instructor message
-
-// the only thing that I will be rendering from socket on this page is the student messages
