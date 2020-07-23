@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable quote-props */
 import React, { useState, useEffect } from 'react';
 import Cleave from 'cleave.js/react';
@@ -322,6 +323,7 @@ const FindSessions = ({ user, sessions }) => {
   }
 
   useEffect(() => {
+    // Adds a marker for every session, at that session's zip
     sessions.forEach((session) => {
       Geocode.fromAddress(session.zip).then(
         response => {
@@ -333,6 +335,19 @@ const FindSessions = ({ user, sessions }) => {
         },
       );
     });
+
+    // CReate a new collection that has a property of the zip and a value of the collection of sessions objects foundin that zip.
+    // Allows the sessions to be added to the map with only one marker representing a sessions set there
+    const zipsForMarkers = {};
+    sessions.forEach((session) => {
+      if (!zipsForMarkers.hasOwnProperty(session.zip)) {
+        zipsForMarkers[session.zip] = [session];
+      } else {
+        zipsForMarkers[session.zip].push(session);
+      }
+    });
+    console.log('zipsForMarkers:', zipsForMarkers);
+
     console.log('geoSessions:', currMapLocs);
   }, [sessions]);
 
