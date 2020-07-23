@@ -4,8 +4,15 @@ import Peer from 'simple-peer';
 // the video style
 
 import Slider from 'react-slick';
-import { Grid, Typography, Avatar } from '@material-ui/core';
-import Container from '@material-ui/core/Container';
+import {
+  Grid, Typography, Avatar, Paper, Container, IconButton,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import VideocamOffIcon from '@material-ui/icons/VideocamOff';
+import MicNoneOutlinedIcon from '@material-ui/icons/MicNoneOutlined';
+import MicOffOutlinedIcon from '@material-ui/icons/MicOffOutlined';
+
 import { StyledVideo } from '../styles/StyledComponents.jsx';
 import Board from './Board.jsx';
 // import Video from './Video.jsx';
@@ -14,6 +21,22 @@ import InstructorChatWidget from './InstructorChatWidget.jsx';
 import socket from './Socket.jsx';
 
 import '../styles/Upcoming.css';
+
+const useStyles = makeStyles((theme) => ({
+  border: 'none',
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+    flexGrow: 1,
+  },
+  paper: {
+    border: 'none',
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 const Video = (props) => {
   const ref = useRef();
@@ -48,6 +71,7 @@ const InstructorSession = (props) => {
   const [videoSwitch, setVideoSwitch] = useState(true);
   const [audioSwitch, setAudioSwitch] = useState(true);
   const joinLink = window.location.href.split('instructor').join('student');
+  const classes = useStyles();
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: videoConstraints }).then(stream => {
@@ -130,38 +154,66 @@ const InstructorSession = (props) => {
 
   return (
     <Container>
-      <div className="ui stackable three column grid">
-        <div className="column">
-          <h1> Event Name </h1>
-          <a href={joinLink}>Here is the student join link</a>
-          <a>(open in new tab for testing)</a>
+      <div className={classes.root}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>xs=12</Paper>
+          </Grid>
+          <Grid item xs={8} container>
+            <Grid item xs={4}>
+              <Paper className={classes.paper} elevation={0}>
+                <StyledVideo muted ref={userVideo} autoPlay playsInline />
+                {videoSwitch
+                  && (
+                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                      <VideocamIcon />
+                    </IconButton>
+                  )
+                  || (
+                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                      <VideocamOffIcon />
+                    </IconButton>
+                  )}
 
-          <StyledVideo muted ref={userVideo} autoPlay playsInline />
-          <button type="button" onClick={pauseVideo} className="ui icon button">
-            <i aria-hidden="true" className="play icon" />
-          </button>
-          {/* audio on/off button */}
-          <button type="button" onClick={mute} className="ui icon button">
-            <i aria-hidden="true" className="microphone icon" />
-          </button>
+                {audioSwitch
+                  && (
+                    <IconButton aria-label="pause" onClick={mute}>
+                      <MicNoneOutlinedIcon />
+                    </IconButton>
+                  )
+                  || (
+                    <IconButton aria-label="pause" onClick={mute}>
+                      <MicOffOutlinedIcon />
+                    </IconButton>
+                  )}
 
-        </div>
-        <div className="column">
-          <Board />
-        </div>
-        <div className="column">
-          students
-          {peers.length >= 1 && (
-            peers.map((peer, index) => {
-              return (
-                <div>
-                  <Video key={index} peer={peer} style={{ height: 150, width: 300 }} />
-                </div>
-              );
-            })
-          )}
-        </div>
+              </Paper>
+            </Grid>
+            <Grid item xs={8}>
+              <Paper className={classes.paper}>
+                <h1> Event Name </h1>
+                <a href={joinLink}>Here is the student join link</a>
+                <a>(open in new tab for testing)</a>
+              </Paper>
+            </Grid>
+            <Grid item xs={8}>
+              <Board />
+            </Grid>
+          </Grid>
+          <Grid item xs={3}>
+            {peers.length >= 1 && (
+              peers.map((peer, index) => {
+                return (
+                  <Paper className={classes.paper} elevation={0}>
+                    <Video key={index} peer={peer} style={{ height: 150, width: 300 }} />
+                  </Paper>
+                );
+              })
+            )}
+          </Grid>
+        </Grid>
       </div>
+
       <InstructorChatWidget user={props.user} />
     </Container>
   );
