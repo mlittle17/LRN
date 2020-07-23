@@ -61,7 +61,7 @@ const CreateSession = ({ user }) => {
   const [sessionMeridiem, setSessionMeridiem] = useState('');
   const [sessionLength, setSessionLength] = useState('');
   const [capacity, setCapacity] = useState(1);
-  const [document, setDocument] = useState('');
+  const [documents, setDocuments] = useState([]);
   //const [eventId, setEventId] = useState(1);
 
   // for now hardcoded user
@@ -208,7 +208,7 @@ const CreateSession = ({ user }) => {
                     label={<b>Private</b>}
                   />
                 </Grid>
-                <AddDocuments setDoc={setDocument} />
+                <AddDocuments setDocs={setDocuments} />
               </Form> <br />
               <Button
                 type="submit"
