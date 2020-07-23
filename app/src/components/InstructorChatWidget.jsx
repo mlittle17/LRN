@@ -1,9 +1,8 @@
-import React, {
-  useState, MouseEvent, KeyboardEvent, useEffect, useRef,
-} from 'react';
+import React, { useEffect } from 'react';
 import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
 
 import 'react-chat-widget/lib/styles.css';
+import '../styles/Questions.css';
 
 import socket from './Socket.jsx';
 
@@ -28,6 +27,8 @@ const InstructorChatWidget = ({ user }) => {
     <div>
       <Widget
         handleNewUserMessage={handleNewUserMessage}
+        title="Questions"
+        subtitle=""
       />
     </div>
 
