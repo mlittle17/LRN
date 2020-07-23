@@ -332,7 +332,39 @@ const FindSessions = ({ user, sessions }) => {
       }
     }
   }, [user]);
- 
+
+  // When a user searches by zipcode
+  useEffect(() => {
+    // Find the lat and lon to re-center the map over, based on the user's search provided zip
+    Geocode.fromAddress(zip).then(
+      response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log('searched zip:', lat, lng);
+        setUserLoc({
+          lat,
+          lng,
+          zipcode: zip,
+        });
+        map.setOptions({
+          center: {
+            lat,
+            lng,
+          },
+          zoom: 12,
+        });
+        addMarker({
+          lat,
+          lng,
+          zipcode: zip,
+        },
+        centerMarker);
+      },
+      error => {
+        console.error(error);
+      },
+    );
+  }, [zip]);
+
   return (
     <div className="Find">
       <Grid container justify="space-around" className={classes.grid}>
