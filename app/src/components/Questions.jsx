@@ -2,7 +2,7 @@ import React, {
   useState, MouseEvent, KeyboardEvent, useEffect, useRef,
 } from 'react';
 import io from 'socket.io-client';
-import { Widget, addResponseMessage } from 'react-chat-widget';
+import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
 
 import 'react-chat-widget/lib/styles.css';
 
@@ -21,6 +21,8 @@ const Questions = ({ user }) => {
     socket.current.on('sending chat message', (msg) => {
       setMessages((msgs) => [...msgs, msg]);
     });
+
+    handleNewUserMessage('hello');
   }, []);
 
   const sendChat = (event) => {
@@ -39,10 +41,16 @@ const Questions = ({ user }) => {
     if (event.which === 13) sendChat(event);
   };
 
+  const renderAnInstructorMessage = (message) => {
+
+  };
+
   const handleNewUserMessage = (newMessage) => {
     console.log(`New message incoming! ${newMessage}`);
     // Now send the message throught the backend API]
-    addResponseMessage('ok Caryn', 'Rachael');
+    // socket.current.emit('chat message', messageObj);
+
+    addUserMessage('ok Caryn', 'Rachael');
   };
 
   return (
@@ -51,9 +59,10 @@ const Questions = ({ user }) => {
       <div>
         <Widget
           handleNewUserMessage={handleNewUserMessage}
+          // profileAvatar={user.imageurl}
         />
       </div>
-      {messages.map((msg) => {
+      {/* {messages.map((msg) => {
         const key = msg.messageCount + msg.user.id;
         return (
           <div key={key}>
@@ -67,9 +76,14 @@ const Questions = ({ user }) => {
       <input id="chat-input" value={message} onKeyPress={onKeyPress} onChange={(e) => setMessage(e.target.value)} type="text" />
       <br />
       <button onClick={(e) => sendChat(e)} type="button">Send</button>
-      <br />
+      <br /> */}
     </div>
   );
 };
 
 export default Questions;
+
+// emit the message the instructor writes
+// grab it in the back and emit an instructor message
+
+// the only thing that I will be rendering from socket on this page is the student messages
