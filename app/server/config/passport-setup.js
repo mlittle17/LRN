@@ -40,21 +40,17 @@ passport.use(new GoogleStrategy({
     photo,
     email,
   };
-  const testVarTwo = process.env.PASSPORT || "test2 didnt work"
-  console.log(`${testVarTwo}`);
+
   getUser(googleId)
     .then(currentUser => {
       currentUser;
 
       // if the response includes a user object from our databse
       if (currentUser.length) {
-        console.log('hello');
-        console.log(currentUser[0]);
         done(null, currentUser[0]);
       } else {
       // if not, create a new user in the database
         createUser(user);
-        console.log('this is a test');
         getUser(googleId)
           .then(newUser => {
             newUser;

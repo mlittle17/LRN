@@ -162,11 +162,28 @@ Flash_Cards
  */
 // method that insert into Flash Cards
 // method that get from Flach Cards
+const saveCards = async(req, res) => {
+  const { cards, packId } = req.body;
+
+  cards.forEach(card => {
+    const { front, back } = card;
+    db.query(`INSERT INTO flashcard (question, answer, flashCardPack_id) VALUES ('${front}', '${back}', '${packId}')`);
+  });
+};
 
 /*
 Flash card packs
  */
 // method that insert into Flash Card Pack
+const createPack = async(req, res) => {
+  const { packName, user_id, event_id } = req.body;
+  try {
+    const id = await db.query(`INSERT INTO flashCardPack (name, users_id, event_id) VALUES ( '${packName}', '${user_id}', '${event_id}') RETURNING id`);
+    res.send(id);
+  } catch (err) {
+    console.log('nah bruh', err);
+  }
+};
 // method that get from Flash Card Pack
 
 module.exports = {
@@ -184,4 +201,6 @@ module.exports = {
   addToBinder,
   getUserBinder,
   getEventDocument,
+  createPack,
+  saveCards,
 };

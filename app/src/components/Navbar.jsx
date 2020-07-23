@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom';
 import { Menu, Image } from 'semantic-ui-react';
 import { v1 as uuid } from 'uuid';
-
 import Home from './Home.jsx';
 import Profile from './Profile.jsx';
 import Sessions from './Sessions.jsx';
@@ -12,6 +11,8 @@ import Logout from './Logout.jsx';
 import FindSessions from './FindSessions.jsx';
 import CreateSession from './CreateSession.jsx';
 import Room from './Room.jsx';
+import Board from './Board.jsx';
+import CreateFlashCards from './CreateFlashCards.jsx';
 import SessionRoute from './SessionRoute.jsx';
 import InstructorSession from './InstructorSession.jsx';
 import StudentSession from './StudentSession.jsx';
@@ -23,14 +24,11 @@ const Navbar = ({
   user, googleLogin, googleLogout, binder, sessions, notes,
 }) => {
   const [activeItem, setActiveItem] = useState('home');
-
   const handleItemClick = (e, { name }) => setActiveItem(name);
-
   const id = uuid();
   // console.log(user.id, 'NAVBAR');
   return (
     <div>
-
       <Menu pointing secondary size="massive" style={{ backgroundColor: '#2d2e2e' }}>
         <Menu.Item
           name="home"
@@ -41,7 +39,6 @@ const Navbar = ({
             <Image src={logo} size="tiny" alt="LRN logo" />
           </Link>
         </Menu.Item>
-
         <Menu.Menu position="right" class="right menu">
 
           {/* <Menu.Item
@@ -67,7 +64,6 @@ const Navbar = ({
           >
             <Link to={`/student/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Student</Link>
           </Menu.Item>
-
           <Menu.Item
             name="profile"
             active={activeItem === 'profile'}
@@ -75,7 +71,6 @@ const Navbar = ({
           >
             <Link to="/sessions" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Sessions</Link>
           </Menu.Item>
-
           <Menu.Item
             name="sessions"
             active={activeItem === 'sessions'}
@@ -138,7 +133,6 @@ const Navbar = ({
 
         </Menu.Menu>
       </Menu>
-
       <div>
         <Switch>
           <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} />)} />
@@ -155,5 +149,4 @@ const Navbar = ({
     </div>
   );
 };
-
 export default Navbar;
