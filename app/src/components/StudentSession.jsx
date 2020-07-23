@@ -3,7 +3,7 @@ import Peer from 'simple-peer';
 import axios from 'axios';
 
 // the video style
-
+//
 import Slider from 'react-slick';
 import { Grid, Typography, Avatar } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
