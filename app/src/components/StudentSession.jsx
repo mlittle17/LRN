@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Peer from 'simple-peer';
+import axios from 'axios';
 
 // the video style
 
@@ -12,6 +13,7 @@ import Board from './Board.jsx';
 import Questions from './Questions.jsx';
 import socket from './Socket.jsx';
 import BulletinBoard from './BulletinBoard.jsx';
+import StudentChatWidget from './StudentChatWidget.jsx';
 
 import '../styles/Upcoming.css';
 
@@ -41,6 +43,8 @@ const videoConstraints = {
 
 const StudentSession = (props) => {
   const [peers, setPeers] = useState([]);
+  const [user, setUser] = useState({});
+
   // const socket = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
@@ -155,6 +159,7 @@ const StudentSession = (props) => {
         </button>
 
       </div>
+      <StudentChatWidget />
     </Container>
   );
 };
