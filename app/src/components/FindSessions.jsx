@@ -12,6 +12,9 @@ import {
 
 import '../styles/Form.css';
 
+// Set up the Geocoding for transforming the zip to lat and lon
+Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
+
 const useStyles = makeStyles((theme) => ({
   grid: {
     marginTop: 40,
@@ -33,9 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Set up the Geocoding for transforming the zip to lat and lon
-Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
-
 const subOptions = [
   { key: 'fi', text: 'Finance', value: 'finance' },
   { key: 'fd', text: 'Food', value: 'food' },
@@ -48,39 +48,31 @@ const subOptions = [
   { key: 'ot', text: 'Other', value: 'other' },
 ];
 
-const FindSessions = () => {
+const FindSessions = ({ user, sessions }) => {
   const classes = useStyles();
-
+  // Input field states
   const [subject, setSubject] = useState('');
   const [sessionDate, setSessionDate] = useState('');
   const [zip, setZip] = useState(0);
 
-  const [userLoc, setUserLoc] = useState({});
-  const [currMapLocs, setCurrMapLocs] = useState([{ lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 }, { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 }, { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 }, { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 }, { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 }]);
+  // Map and location data states
+  const [userLoc, setUserLoc] = useState(() => {
+    if (user) {
+      console.log(user.location);
+      return user.location;
+    }
+  });
+  const [currMapLocs, setCurrMapLocs] = useState([
+    { lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 },
+    { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 },
+    { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 },
+    { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 },
+    { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 },
+  ]);
   const [currMarkers, setCurrMarkers] = useState([]);
 
-  useEffect(() => {
-    // Find the lat and lon to initially center the map over, based on the user's zip
-    // Get latidude & longitude from address.
-    Geocode.fromAddress('70810').then(
-      response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
-        setUserLoc({
-          lat,
-          lng,
-        });
-        setCurrMapLocs([{
-          lat,
-          lng,
-          zipcode: 70810,
-        }]);
-      },
-      error => {
-        console.error(error);
-      },
-    );
-  }, []);
+  // The custom marker images
+ 
 
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
@@ -95,16 +87,12 @@ const FindSessions = () => {
     setZip(e.target.rawValue);
   };
 
-  const onMapChange = (e) => {
-
-  };
-
   const { ref, map, google } = useGoogleMaps(
     // Use your own API key, you can get one from Google (https://console.cloud.google.com/google/maps-apis/overview)
     'AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68',
     {
-      center: { lat: 30.35058129999999, lng: -91.0873551 },
-      zoom: 12,
+      center: { lat: 39.7837304, lng: -100.4458825 }, // set the map to focus over the us when it loads, so the user experiences the zoom in on their location once the user object becomes available
+      zoom: 4.4,
       zoomControl: false,
       mapTypeControl: true,
       // mapTypeControlOptions: {
@@ -297,28 +285,37 @@ const FindSessions = () => {
   // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
   // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
 
-  const addMarker = (markerObj) => {
-    const url = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595383700/CustomBlackMapMarker.png';
-    const { zipcode } = markerObj;
+  const addMarker = (markerObj, url) => {
+    console.log('add marker, markerObj:', markerObj);
+    if (markerObj.zipcode) {
+      const { zipcode } = markerObj;
+    }
 
     return new google.maps.Marker({
       map,
       position: markerObj,
-      title: zipcode.toString(),
+      // title: zipcode.toString(),
       icon: {
         url,
       },
     });
-    // store the marker object drawn in global array
+    // Store the marker object drawn in global array
     // setCurrMarkers([...currMarkers, marker]);
   };
-  if (map) {
-    // execute when map object is ready
-    // new google.maps.Marker({ position: { lat: 30.35058129999999, lng: -91.0873551 }, map });
-    // addMarker({ lat: 30.35058129999999, lng: -91.0873551 });
 
+  // Execute when map object is ready
+  if (map) {
+    // if (user) {
+    //   const { location } = user;
+    //   map.setOptions({
+    //     center: location,
+    //     zoom: 12,
+    //   });
+    // }
+
+    // Add markers to all appropriate zips
     currMapLocs.forEach((mapLoc) => {
-      addMarker(mapLoc);
+      addMarker(mapLoc, sessionsMarker);
     });
   }
 
