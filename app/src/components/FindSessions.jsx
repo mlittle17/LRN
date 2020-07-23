@@ -357,13 +357,21 @@ const FindSessions = ({ user, sessions }) => {
           lng,
           zipcode: zip,
         },
-        centerMarker);
+          centerMarker);
       },
       error => {
         console.error(error);
       },
     );
   }, [zip]);
+
+  // When the userLoc state value is updated
+  // useEffect(() => {
+  //   // Add a new marker over the center
+  //   /* Does not necessarily mean there are session there but signifies to the user
+  //      that a new zipcode has been focused on */
+  //   addMarker(userLoc, centerMarker);
+  // }, [userLoc]);
 
   return (
     <div className="Find">
