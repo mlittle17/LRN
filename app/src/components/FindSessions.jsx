@@ -72,7 +72,8 @@ const FindSessions = ({ user, sessions }) => {
   const [currMarkers, setCurrMarkers] = useState([]);
 
   // The custom marker images
- 
+  const sessionsMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595383700/CustomBlackMapMarker.png';
+  const centerMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595495976/customWhiteCenterMarker.png';
 
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
