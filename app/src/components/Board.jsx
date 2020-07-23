@@ -165,7 +165,7 @@ const Board = () => {
     // socketRef.current = io.connect('/');
     // console.log(props.socket)
     socket.current.on('drawing', onDrawingEvent);
-    socket.current.on('clear', clearCanvas);
+    socket.current.on('clear Canva', clearCanvas);
   }, []);
   // ----------------------------------------------------------------------------
 
