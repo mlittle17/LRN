@@ -9,8 +9,9 @@ import socket from './Socket.jsx';
 
 const InstructorChatWidget = ({ user }) => {
   useEffect(() => {
-    socket.current.on('', (msg) => {
-      // setMessages((msgs) => [...msgs, msg]);
+    socket.current.on('sending Student message', msgObj => {
+      // console.log(msgObj, 'in student chat widget');
+      addResponseMessage(msgObj.message);
     });
   }, []);
 
@@ -18,8 +19,9 @@ const InstructorChatWidget = ({ user }) => {
     console.log(`New message incoming! ${newMessage}`);
     // Now send the message throught the backend API]
     // socket.current.emit('chat message', messageObj);
+    socket.current.emit('Instructor message', newMessage);
 
-    addUserMessage('ok Caryn', 'Rachael');
+    // addResponseMessage('ok Caryn', 'Rachael');
   };
 
   return (
