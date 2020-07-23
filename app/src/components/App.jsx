@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
+import Geocode from 'react-geocode';
 import axios from 'axios';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -55,6 +56,21 @@ function App() {
         console.log(error);
       });
   }, []);
+
+  if (user) {
+    // Set up the Geocoding for transforming the zip to lat and lon
+    Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
+    console.log('User obj in App.jsx:', user);
+    Geocode.fromAddress('70810').then(
+      response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        user.location = { lat, lng, zipcode: 70810 };
+      },
+      error => {
+        console.error(error);
+      },
+    );
+  }
 
   const googleLogin = () => {
     window.location.replace('http://localhost:8080/auth/login');
@@ -148,7 +164,7 @@ function App() {
   return (
     <div>
       <MuiThemeProvider theme={theme}>
-        <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={userFakeDocuments} sessions={userFakeSessions} />
+        <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={userFakeDocuments} sessions={sessions} />
         {/* <button onClick={googleLogin}>Log In</button> */}
         <Router>
           <div className="App" />
