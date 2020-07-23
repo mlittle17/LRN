@@ -6,6 +6,10 @@ import {
   Paper, Table, TableBody, TableRow, TableCell,
   TableContainer, TableHead, Typography,
 } from '@material-ui/core';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'; // for document
+import SlideshowTwoToneIcon from '@material-ui/icons/SlideshowTwoTone'; // two-toned for pp
+import ViewCarouselTwoToneIcon from '@material-ui/icons/ViewCarouselTwoTone'; // flash cards
+
 
 // let documents = [
 //   {
@@ -59,7 +63,7 @@ const useStyles = makeStyles(() => ({
 
 const Binder = ({ userInfo, binder }) => {
   const classes = useStyles();
-  
+
   return (
     <div className="Binder">
       <Typography gutterBottom variant="h4" component="h6" style={{ marginLeft: '35px', color: '#2d2e2e' }}><b>MY BINDER</b></Typography>
@@ -78,7 +82,15 @@ const Binder = ({ userInfo, binder }) => {
             {binder.map((document) => (
               <StyledTableRow key={document.id}>
                 <StyledTableCell component="th" scope="row" className={classes.rowText}>
-                  {document.documenttype}
+                  {document.documenttype === 'google docs' && (
+                    <InsertDriveFileIcon />
+                  )}
+                  {document.documenttype === 'slides' && (
+                    <SlideshowTwoToneIcon />
+                  )}
+                  {document.documenttype === 'flash cards' && (
+                    <ViewCarouselTwoToneIcon />
+                  )}
                 </StyledTableCell>
                 <StyledTableCell align="right" className={classes.rowText}><a href={document.linkto}> {document.linkto} </a></StyledTableCell>
                 <StyledTableCell align="right" className={classes.rowText}>{`${document.namefirst} ${document.namelast}`}</StyledTableCell>
