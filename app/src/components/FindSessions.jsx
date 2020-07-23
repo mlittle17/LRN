@@ -63,20 +63,21 @@ const FindSessions = ({ user, sessions }) => {
       return user.location;
     }
   });
+  const [sessionColl, setSessionColl] = useState({});
   const [currMapLocs, setCurrMapLocs] = useState([
     { lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 },
-    { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 },
-    { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 },
-    { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 },
-    { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 },
+    // { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 },
+    // { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 },
+    // { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 },
+    // { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 },
   ]);
-  const [currMarkers, setCurrMarkers] = useState([]);
-  
+  const markers = [];
+  // const [currMarkers, setCurrMarkers] = useState([]);
+
   // The custom marker images
   const sessionsMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595383700/CustomBlackMapMarker.png';
   const centerMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595495976/customWhiteCenterMarker.png';
-  
-  console.log('sessions:', sessions);
+
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
     setSubject(value);
@@ -294,7 +295,7 @@ const FindSessions = ({ user, sessions }) => {
       const { zipcode } = markerObj;
     }
 
-    return new google.maps.Marker({
+    const marker = new google.maps.Marker({
       map,
       position: markerObj,
       // title: zipcode.toString(),
@@ -302,8 +303,8 @@ const FindSessions = ({ user, sessions }) => {
         url,
       },
     });
-    // Store the marker object drawn in global array
-    // setCurrMarkers([...currMarkers, marker]);
+    markers.push(marker);
+    return marker;
   };
 
   // Execute when map object is ready
@@ -323,20 +324,7 @@ const FindSessions = ({ user, sessions }) => {
   }
 
   useEffect(() => {
-    // Adds a marker for every session, at that session's zip
-    sessions.forEach((session) => {
-      Geocode.fromAddress(session.zip).then(
-        response => {
-          const { lat, lng } = response.results[0].geometry.location;
-          setCurrMapLocs([...currMapLocs, { lat, lng, zipcode: session.zip }]);
-        },
-        error => {
-          console.error(error);
-        },
-      );
-    });
-
-    // CReate a new collection that has a property of the zip and a value of the collection of sessions objects foundin that zip.
+    // Create a new collection that has a property of the zip and a value of the collection of sessions objects found in that zip.
     // Allows the sessions to be added to the map with only one marker representing a sessions set there
     const zipsForMarkers = {};
     sessions.forEach((session) => {
@@ -346,11 +334,38 @@ const FindSessions = ({ user, sessions }) => {
         zipsForMarkers[session.zip].push(session);
       }
     });
-    console.log('zipsForMarkers:', zipsForMarkers);
+    // console.log('zipsForMarkers:', zipsForMarkers);
+    setSessionColl(zipsForMarkers);
 
-    console.log('geoSessions:', currMapLocs);
+    Object.keys(zipsForMarkers).forEach((zipForMarker) => {
+      console.log(`zipForMarker: ${zipForMarker}: ${zipsForMarkers[zipForMarker]}`);
+      Geocode.fromAddress(zipForMarker).then(
+        response => {
+          const { lat, lng } = response.results[0].geometry.location;
+          if (currMapLocs.every((mapObj) => mapObj.zipcode !== zipForMarker)) {
+            setCurrMapLocs([...currMapLocs, { lat, lng, zipcode: zipForMarker }]);
+          }
+        },
+        error => {
+          console.error('Error geocoding zips for sessions:', error);
+        },
+      );
+    });
+
+    // Adds a marker for every session, at that session's zip
+    // sessions.forEach((session) => {
+    //   Geocode.fromAddress(session.zip).then(
+    //     response => {
+    //       const { lat, lng } = response.results[0].geometry.location;
+    //       setCurrMapLocs([...currMapLocs, { lat, lng, zipcode: session.zip }]);
+    //     },
+    //     error => {
+    //       console.error(error);
+    //     },
+    //   );
+    // });
   }, [sessions]);
-
+  
   // When the user prop becomes available, and is no longer null
   useEffect(() => {
     if (map) {
@@ -403,6 +418,26 @@ const FindSessions = ({ user, sessions }) => {
   //      that a new zipcode has been focused on */
   //   addMarker(userLoc, centerMarker);
   // }, [userLoc]);
+
+  console.log('markers:', markers);
+
+  // Marker visibility functions
+  // Sets the map on all markers in the array.
+  const setMapOnAll = (mapArg) => {
+    for (let i = 0; i < markers.length; i += 1) {
+      markers[i].setMap(mapArg);
+    }
+  };
+
+  // Removes the markers from the map, but keeps them in the array.
+  const clearMarkers = () => {
+    setMapOnAll(null);
+  };
+
+  // Shows any markers currently in the array.
+  const showMarkers = () => {
+    setMapOnAll(map);
+  };
 
   return (
     <div className="Find">
