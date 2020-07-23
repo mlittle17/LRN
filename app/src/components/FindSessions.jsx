@@ -320,6 +320,19 @@ const FindSessions = ({ user, sessions }) => {
     });
   }
 
+  // When the user prop becomes available, and is no longer null
+  useEffect(() => {
+    if (map) {
+      if (user) {
+        const { location } = user;
+        map.setOptions({
+          center: location,
+          zoom: 12,
+        });
+      }
+    }
+  }, [user]);
+ 
   return (
     <div className="Find">
       <Grid container justify="space-around" className={classes.grid}>
