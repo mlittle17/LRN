@@ -128,7 +128,7 @@ const Navbar = ({
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/registered" component={Sessions} />
-          <Route exact path="/find" component={FindSessions} />
+          <Route exact path="/find" render={() => (<FindSessions user={user} sessions={sessions} />)} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route path="/room/:roomID" component={Room} />
           <Route exact path="/board" render={() => (<Board />)} />
