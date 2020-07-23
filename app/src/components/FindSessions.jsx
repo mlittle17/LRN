@@ -334,13 +334,6 @@ const FindSessions = ({ user, sessions }) => {
       );
     });
     console.log('geoSessions:', currMapLocs);
-    // [
-    //   { lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 },
-    //   { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 },
-    //   { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 },
-    //   { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 },
-    //   { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 },
-    // ]
   }, [sessions]);
 
   // When the user prop becomes available, and is no longer null
