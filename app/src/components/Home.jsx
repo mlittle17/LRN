@@ -6,7 +6,6 @@ import {
   Card, CardActionArea, CardContent, Grid, Typography
 } from '@material-ui/core';
 import { Button } from 'semantic-ui-react';
-
 import ProfileCard from './ProfileCard.jsx';
 import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
@@ -21,9 +20,7 @@ const Home = ({ user, binder, sessions }) => {
           <>
             {/* <br /> */}
             <Button as={Link} to="/registered" style={{ backgroundColor: '#474a2c', color: '#f6fef5' }}>My Sessions</Button>
-
             <Button as={Link} to="/find" style={{ backgroundColor: '#474a2c', color: '#f6fef5' }}>Find Sessions</Button>
-
             <Button as={Link} to="/create" style={{ backgroundColor: '#474a2c', color: '#f6fef5' }}>Create Session</Button>
           </>
           <div style={{ marginTop: '30px' }}>
@@ -41,12 +38,10 @@ const Home = ({ user, binder, sessions }) => {
           </CardContent>
         </Card>
       </div>
-
       <div>
         <Switch />
       </div>
     </div>
   );
 };
-
 export default Home;

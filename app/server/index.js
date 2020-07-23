@@ -9,8 +9,8 @@ const io = socket(server);
 // start express server
 // Creating your own HTTP server to allow us the ability to reuse the server
 // Useful for running socket.io in the same server instance
-const port = 8080;
-server.listen(port, () => console.log(`server is running on port ${port}`));
+const PORT = process.env.port || 8080;
+server.listen(PORT, () => console.log(`server is running on port ${PORT}`));
 // room id from uuid as the key
 // an array of socket ids will be the value
 const users = {};
@@ -42,7 +42,7 @@ io.on('connection', socket => {
     io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
   });
 
-  // socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+  socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
 
   socket.on('disconnect', () => {
     const roomID = socketToRoom[socket.id];
