@@ -6,6 +6,9 @@ import {
   Avatar, Button, Card, CardContent, CardActionArea, CardActions,
   Grid, Typography,
 } from '@material-ui/core';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'; // for document
+import SlideshowTwoToneIcon from '@material-ui/icons/SlideshowTwoTone'; // two-toned for pp
+import ViewCarouselTwoToneIcon from '@material-ui/icons/ViewCarouselTwoTone'; // flash cards
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +61,15 @@ const BulletinBoard = ({ notes, user }) => {
             <div>
               {notes.map((session) => (
                 <div>
+                  {document.documenttype === 'google docs' && (
+                    <InsertDriveFileIcon />
+                  )}
+                  {/* {document.documenttype === 'slides' && (
+                    <div> <SlideshowTwoToneIcon /> </div>
+                  )}
+                  {document.documenttype === 'flash cards' && (
+                    <div> <ViewCarouselTwoToneIcon /> </div>
+                  )} */}
                   <div>{session.documenttype}</div>
                   <div>{session.linkto}</div><AddCircleIcon onClick={() => { clickIcon(session.id); }} className={classes.icon} />
                 </div>
