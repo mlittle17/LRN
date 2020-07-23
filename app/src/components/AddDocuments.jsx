@@ -7,9 +7,12 @@ import {
   Button, Dialog, DialogActions, DialogContent,
   DialogTitle, Slide,
 } from '@material-ui/core';
-import { authorize } from 'passport';
 
 const useStyles = makeStyles((theme) => ({
+  dialog: {
+    minWidth: 620,
+    minHeight: 400,
+  },
   docsButton: {
     margin: 'auto',
     width: 586,
@@ -24,8 +27,7 @@ const Transition = React.forwardRef((props, ref) => {
 
 const AddDocuments = function AlertDialogSlide(props) {
   const [open, setOpen] = React.useState(false);
-  const [link, setLink] = React.useState('');
-
+  const [links, setLinks] = React.useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,10 +38,10 @@ const AddDocuments = function AlertDialogSlide(props) {
   };
 
   const onDocumentChange = (e) => {
-    setLink(e.target.value);
+    setLinks([...links, e.target.value]);
   };
   const handleSubmitDocs = () => {
-    props.setDoc(link);
+    props.setDocs(links);
     handleClose();
   };
 
@@ -51,6 +53,9 @@ const AddDocuments = function AlertDialogSlide(props) {
 
       <Dialog
         open={open}
+        className={classes.dialog}
+        fullWidth="true"
+        maxWidth="md"
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
