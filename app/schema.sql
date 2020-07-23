@@ -11,6 +11,7 @@ CREATE TABLE users (
 
 CREATE TABLE event (
   id SERIAL PRIMARY KEY NOT NULL,
+  zip VARCHAR(10),
   name VARCHAR(100),
   topic VARCHAR NOT NULL,
   description VARCHAR(250),
