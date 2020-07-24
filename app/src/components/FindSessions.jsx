@@ -7,8 +7,9 @@ import { useGoogleMaps } from 'react-hook-google-maps';
 
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
 import {
-  Card, CardActionArea, CardContent, Dialog, Grid, Typography,
+  Card, CardActionArea, CardContent, Dialog, DialogTitle, Grid, IconButton, Typography,
 } from '@material-ui/core';
 
 import '../styles/Form.css';
@@ -360,6 +361,7 @@ const FindSessions = ({ user, sessions }) => {
     });
     marker.zip = zipcode;
     marker.addListener('click', () => {
+      console.log(marker.title);
       setListOpen(true);
       // map.setZoom(8);
       // map.setCenter(marker.getPosition());
@@ -564,8 +566,18 @@ const FindSessions = ({ user, sessions }) => {
           aria-labelledby="max-width-dialog-title"
           hideBackdrop="true"
         >
+          <DialogTitle id="max-width-dialog-title">
+            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h3" className={classes.title}>
+              SCHEDULED SESSIONS
+            </Typography>
+          </DialogTitle>
           <Card className={classes.root} variant="outlined">
-            
+            <Typography variant="h3" className={classes.title}>
+              THE REST OF THE CARD S CONTENT
+            </Typography>
           </Card>
         </Dialog>
         <Card className={classes.mapCard} variant="outlined">
