@@ -46,7 +46,7 @@ Events
 // location header - url ends with newly created resource id
 const createEvent = async(req, res) => {
   try {
-    const id = await db.query('INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit) VALUES ( ${name}, ${topic}, ${description}, ${duration}, ${date}, ${time}, ${user_id}, ${classLimit}) RETURNING id', req.body);
+    const id = await db.query('INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit, zip) VALUES ( ${name}, ${topic}, ${description}, ${duration}, ${date}, ${time}, ${user_id}, ${classLimit}, ${zip}) RETURNING id', req.body);
     res.send(id);
   } catch (err) {
     console.log('nah bruh', err);
