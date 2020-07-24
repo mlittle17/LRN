@@ -1,11 +1,10 @@
 import React, {
   useState, ReactElement, useRef, useEffect,
 } from 'react';
-import { Container } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-
-const Video = ({ peer, userID}) => {
+const Video = ({ peer, userID }) => {
   const ref = useRef();
 
   const StyledVideo = styled.video`
