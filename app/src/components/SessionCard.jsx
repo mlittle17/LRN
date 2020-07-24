@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SessionCard = () => {
+const SessionCard = ({ event }) => {
   const classes = useStyles();
   const [cardOpen, setCardOpen] = useState('false');
   const [expanded, setExpanded] = React.useState(false);
@@ -39,13 +40,15 @@ const SessionCard = () => {
     setExpanded(!expanded);
   };
 
+  const location = useLocation();
+
   return (
     <Card className={classes.root} variant="outlined">
 
       <CardActionArea className={classes.actionArea}>
         <div style={{ marginTop: '10px' }}>
           <Typography gutterBottom variant="h4" component="h1" align="center">
-            History of the Aztec
+            {/* {event.name} */}
           </Typography>
         </div>
         <br />
@@ -58,7 +61,7 @@ const SessionCard = () => {
           </Typography>
           {/* Possibly add an avatar here with instructor name */}
           <Typography variant="body1" color="textSecondary" component="p">
-            Prof. Robin Thicke
+            {/* {`${event.namefirst} ${event.namelast}`} */}
           </Typography>
         </div>
         <br />
@@ -68,7 +71,7 @@ const SessionCard = () => {
               Subject
             </Typography>
             <Typography variant="body1" color="textSecondary" component="p">
-              History
+              {/* {event.topic} */}
             </Typography>
           </div>
           <div>
@@ -76,7 +79,7 @@ const SessionCard = () => {
               Capacity
             </Typography>
             <Typography variant="body1" color="textSecondary" component="p">
-              12/25
+              {/* {event.capacityCount} */}
             </Typography>
           </div>
         </Grid>
@@ -87,7 +90,7 @@ const SessionCard = () => {
               Date
             </Typography>
             <Typography variant="body1" color="textSecondary" component="p">
-              07/ 26 / 2020
+              {/* {event.date} */}
             </Typography>
           </div>
           <div>
@@ -95,7 +98,7 @@ const SessionCard = () => {
               Time
             </Typography>
             <Typography variant="body1" color="textSecondary" component="p">
-              5:30 pm
+              {/* {event.time} */}
             </Typography>
           </div>
         </Grid>
@@ -105,9 +108,12 @@ const SessionCard = () => {
         <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
           Close
         </Button>
-        <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
-          Register
-        </Button>
+        {/* && registered !== true */}
+        { (location.pathname !== '/registered') && (
+          <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
+            Register
+          </Button>
+        )}
 
         <IconButton
           className={clsx(classes.expand, {
