@@ -33,6 +33,7 @@ const Board = () => {
     const test = colorsRef.current;
     const context = canvas.getContext('2d');
 
+    context.fillRect(0,0,canvas.width,canvas.height);
     // ---------------------------------------------------------------------------------
 
     // ----------------------- Colors --------------------------------------------------
@@ -164,7 +165,7 @@ const Board = () => {
     // socketRef.current = io.connect('/');
     // console.log(props.socket)
     socket.current.on('drawing', onDrawingEvent);
-    socket.current.on('clear', clearCanvas);
+    socket.current.on('clear Canva', clearCanvas);
   }, []);
   // ----------------------------------------------------------------------------
 
