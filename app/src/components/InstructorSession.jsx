@@ -192,8 +192,8 @@ const InstructorSession = (props) => {
             <Grid item xs={8}>
               <Paper className={classes.paper} elevation={0}>
                 <h1> {props.sessionName} </h1>
-                <a href={joinLink}>Here is the student join link</a>
-                <a>(open in new tab for testing)</a>
+                {/* <a href={joinLink}>Here is the student join link</a> */}
+                {/* <a>(open in new tab for testing)</a> */}
               </Paper>
             </Grid>
             <Grid item xs={8}>

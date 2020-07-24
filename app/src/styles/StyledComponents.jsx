@@ -16,7 +16,7 @@ border: 1px solid #cddfe7;
 right: 10px;
 box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 border-radius: 5px;
-width: 500px;
+width: 400px;
 `;
 
 export {
