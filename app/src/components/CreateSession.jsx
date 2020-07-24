@@ -8,10 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Grid } from '@material-ui/core';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'; // for document
-import SlideshowTwoToneIcon from '@material-ui/icons/SlideshowTwoTone'; // two-toned for pp
-import ViewCarouselTwoToneIcon from '@material-ui/icons/ViewCarouselTwoTone'; // flash cards
-
 import AddDocuments from './AddDocuments.jsx';
 import CreateFlashCards from './CreateFlashCards.jsx';
 import '../styles/Form.css';

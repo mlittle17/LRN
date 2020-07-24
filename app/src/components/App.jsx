@@ -11,6 +11,7 @@ function App() {
   const [binder, setBinder] = useState([]);
   const [sessions, setSessions] = useState([]);
   const [notes, setNotes] = useState([]);
+  //const [users, setUsers] = useState([]);
 
   useEffect(() => {
     axios.get('/event')

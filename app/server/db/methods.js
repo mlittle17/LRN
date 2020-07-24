@@ -82,14 +82,14 @@ const createTopic = async(req, res) => {
   }
 };
 // method that get from topic
-const getTopic = async(req, res) => {
-  try {
-    const topic = await db.any(`SELECT * FROM topic WHERE users_id = ${req.param.id} `);
-    res.send(topic);
-  } catch (err) {
-    console.log(`they not ready for this knowledge, ${err}`);
-  }
-};
+// const getTopic = async(req, res) => {
+//   try {
+//     const topic = await db.any(`SELECT * FROM topic WHERE users_id = ${req.param.id} `);
+//     res.send(topic);
+//   } catch (err) {
+//     console.log(`they not ready for this knowledge, ${err}`);
+//   }
+// };
 
 // get topics a user likes
 const getTopicByUser = async(req, res) => {
@@ -193,7 +193,6 @@ module.exports = {
   getUser,
   createUser,
   createTopic,
-  getTopic,
   getTopicByUser,
   getEventbyUser,
   addDocument,
