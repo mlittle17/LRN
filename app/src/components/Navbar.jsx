@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom';
 import { Menu, Image } from 'semantic-ui-react';
 import { v1 as uuid } from 'uuid';
-
 import Home from './Home.jsx';
 import Profile from './Profile.jsx';
 import Sessions from './Sessions.jsx';
@@ -13,22 +12,23 @@ import FindSessions from './FindSessions.jsx';
 import CreateSession from './CreateSession.jsx';
 import Room from './Room.jsx';
 import Board from './Board.jsx';
+import CreateFlashCards from './CreateFlashCards.jsx';
+import SessionRoute from './SessionRoute.jsx';
+import InstructorSession from './InstructorSession.jsx';
+import StudentSession from './StudentSession.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
 const Navbar = ({
-  user, googleLogin, googleLogout, documents, sessions,
+  user, googleLogin, googleLogout, binder, sessions, notes,
 }) => {
   const [activeItem, setActiveItem] = useState('home');
-
   const handleItemClick = (e, { name }) => setActiveItem(name);
-
   const id = uuid();
   // console.log(user.id, 'NAVBAR');
   return (
     <div>
-
       <Menu pointing secondary size="massive" style={{ backgroundColor: '#2d2e2e' }}>
         <Menu.Item
           name="home"
@@ -39,17 +39,31 @@ const Navbar = ({
             <Image src={logo} size="tiny" alt="LRN logo" />
           </Link>
         </Menu.Item>
-
         <Menu.Menu position="right" class="right menu">
 
-          <Menu.Item
-            name="room"
-            active={activeItem === 'room'}
+          {/* <Menu.Item
+            name="board"
+            active={activeItem === 'board'}
             onClick={handleItemClick}
           >
-            <Link to={`/room/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Room</Link>
+            <Link to='/board' class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Test Room</Link>
+          </Menu.Item> */}
+
+          <Menu.Item
+            name="instructor"
+            active={activeItem === 'session'}
+            onClick={handleItemClick}
+          >
+            <Link to={`/instructor/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Instructor</Link>
           </Menu.Item>
 
+          <Menu.Item
+            name="student"
+            active={activeItem === 'student'}
+            onClick={handleItemClick}
+          >
+            <Link to={`/student/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Student</Link>
+          </Menu.Item>
           <Menu.Item
             name="profile"
             active={activeItem === 'profile'}
@@ -57,7 +71,6 @@ const Navbar = ({
           >
             <Link to="/sessions" class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Sessions</Link>
           </Menu.Item>
-
           <Menu.Item
             name="sessions"
             active={activeItem === 'sessions'}
@@ -120,22 +133,20 @@ const Navbar = ({
 
         </Menu.Menu>
       </Menu>
-
       <div>
         <Switch>
-          <Route exact path="/" render={() => (<Home user={user} documents={documents} sessions={sessions} />)} />
-          <Route exact path="/profile" render={() => (<Profile user={user} documents={documents} />)} />
+          <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} />)} />
+          <Route exact path="/profile" render={() => (<Profile user={user} binder={binder} />)} />
           <Route exact path="/sessions" component={Sessions} />
-          <Route exact path="/logout" component={Logout} />
-          <Route exact path="/registered" component={Sessions} />
           <Route exact path="/find" render={() => (<FindSessions user={user} sessions={sessions} />)} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
-          <Route path="/room/:roomID" component={Room} />
-          <Route exact path="/board" render={() => (<Board />)} />
+          <Route exact path="/logout" component={Logout} />
+          <Route exact path="/registered" component={Sessions} />
+          <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} />)} />
+          <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} notes={notes} />)} />
         </Switch>
       </div>
     </div>
   );
 };
-
 export default Navbar;

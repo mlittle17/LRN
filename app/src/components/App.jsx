@@ -21,8 +21,10 @@ const theme = createMuiTheme({
 
 function App() {
   const [user, setUser] = useState(null);
-  const [documents, setDocuments] = useState([]);
+  const [binder, setBinder] = useState([]);
   const [sessions, setSessions] = useState([]);
+  const [notes, setNotes] = useState([]);
+  //const [users, setUsers] = useState([]);
 
   useEffect(() => {
     axios.get('/event')
@@ -33,13 +35,14 @@ function App() {
 
   useEffect(() => {
     // may need to change to user documents
-    axios.get('event/3/documents')
+    axios.get('users/1/binder')
       .then(response => {
-        setDocuments(response.data);
+        setBinder(response.data);
       })
       .catch(err => {
         console.log(err);
       });
+
   }, []);
 
   useEffect(() => {
@@ -71,9 +74,31 @@ function App() {
       },
     );
   }
+  // useEffect(() => {
+  // axios.get('event/1/documents')
+  //   .then(response => {
+  //     setNotes(response.data);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+  // fetch('8080/students/event/1/documents',
+  // {
+  //     /*
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept':'application/json'
+  //     },
+  //     */
+  //     method: "get",
+  //     dataType: 'json',
+  // })
+  // .then((res) => res.json())
+  // .catch(err => console.log(err));
+  // }, []);
 
   const googleLogin = () => {
-    window.location.replace('http://localhost:8080/auth/login');
+    window.location.replace('https://lrn-solid-sun-282620.uc.r.appspot.com/');
   };
 
   const googleLogout = () => {
@@ -164,7 +189,7 @@ function App() {
   return (
     <div>
       <MuiThemeProvider theme={theme}>
-        <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} documents={userFakeDocuments} sessions={sessions} />
+        <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} binder={binder} sessions={sessions} notes={notes} />
         {/* <button onClick={googleLogin}>Log In</button> */}
         <Router>
           <div className="App" />

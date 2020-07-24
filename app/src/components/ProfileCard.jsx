@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { authorize } from 'passport';
-
 import {
   Avatar, Button, Card, CardContent, CardActionArea, CardActions,
   Grid, Typography,
@@ -8,7 +7,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 310,
@@ -29,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#474a2c',
   },
 }));
-
 const ProfileCard = ({ userInfo }) => {
   const classes = useStyles();
   const [user, setUser] = useState({
@@ -48,7 +45,6 @@ const ProfileCard = ({ userInfo }) => {
       <CardActionArea className={classes.actionArea}>
         <br />
         <Avatar alt="Sally Name" src={userInfo ? userInfo.imageurl : user.avatar} className={classes.large} />
-
         <br />
         <Typography gutterBottom variant="h4" component="h4" align="center" style={{ color: '#474337' }}>
           <b>{userInfo ? userInfo.username : user.name}</b>
@@ -65,7 +61,6 @@ const ProfileCard = ({ userInfo }) => {
             <PersonPinCircleIcon className={classes.icon} /> 70810
           </Typography>
         </div>
-
         <br />
         <div>
           <Typography gutterBottom variant="h6" component="h7" style={{ color: '#a58e57' }}>
@@ -81,11 +76,8 @@ const ProfileCard = ({ userInfo }) => {
         </div>
       </CardContent>
       {/* <CardActions>
-
       </CardActions> */}
-
     </Card>
   );
 };
-
 export default ProfileCard;

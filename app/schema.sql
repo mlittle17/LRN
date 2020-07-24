@@ -11,7 +11,6 @@ CREATE TABLE users (
 
 CREATE TABLE event (
   id SERIAL PRIMARY KEY NOT NULL,
-  zip VARCHAR(10),
   name VARCHAR(100),
   topic VARCHAR NOT NULL,
   description VARCHAR(250),
@@ -22,7 +21,9 @@ CREATE TABLE event (
   users_id Integer NOT NULL,
   classLimit INT NOT NULL,
   capacityCount Integer,
-  privacy Varchar(10)
+  privacy Varchar(10),
+  zip Varchar(10),
+  uuid Varchar(50)
 );
 
 CREATE TABLE student_event (

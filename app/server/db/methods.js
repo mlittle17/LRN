@@ -85,14 +85,14 @@ const createTopic = async(req, res) => {
   }
 };
 // method that get from topic
-const getTopic = async(req, res) => {
-  try {
-    const topic = await db.any(`SELECT * FROM topic WHERE users_id = ${req.param.id} `);
-    res.send(topic);
-  } catch (err) {
-    console.log(`they not ready for this knowledge, ${err}`);
-  }
-};
+// const getTopic = async(req, res) => {
+//   try {
+//     const topic = await db.any(`SELECT * FROM topic WHERE users_id = ${req.param.id} `);
+//     res.send(topic);
+//   } catch (err) {
+//     console.log(`they not ready for this knowledge, ${err}`);
+//   }
+// };
 
 // get topics a user likes
 const getTopicByUser = async(req, res) => {
@@ -109,10 +109,12 @@ Document
 */
 
 const addDocument = async(req, res) => {
-  const {type, link, user_id, event_id} = req.body;
+  const {
+    type, link, user_id, event_id,
+  } = req.body;
   try {
-    await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}')`);
-    res.send('document added');
+    const id = await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}') RETURNING id`);
+    res.send(id);
   } catch (err) {
     console.log('got documents', err);
   }
@@ -142,16 +144,16 @@ Binder
 
 const addToBinder = async(req, res) => {
   try {
-    await db.query('INSERT INTO binder (user_id, document_id) (${user_id}, ${document_id})', req.body);
+    await db.query('INSERT INTO binder (users_id, document_id) VALUES(${users_id}, ${document_id})', req.body);
     res.send('it worked');
   } catch (err) {
     console.log('nah', err);
   }
 };
-// method that get from topic
+// method that get from topic.
 const getUserBinder = async(req, res) => {
   try {
-    const userBinder = await db.any(`SELECT * FROM binder WHERE users_id =${req.params.id}`);
+    const userBinder = await db.any(`SELECT B.*, U.nameFirst, U.nameLast, D.linkTo, D.documentType from binder B INNER JOIN document D on D.id = B.document_id INNER JOIN users U on U.id = D.users_id WHERE D.users_id = ${req.params.id}`);
     res.send(userBinder);
   } catch (err) {
     console.log(`No Binder, ${err}`);
@@ -163,11 +165,28 @@ Flash_Cards
  */
 // method that insert into Flash Cards
 // method that get from Flach Cards
+const saveCards = async(req, res) => {
+  const { cards, packId } = req.body;
+
+  cards.forEach(card => {
+    const { front, back } = card;
+    db.query(`INSERT INTO flashcard (question, answer, flashCardPack_id) VALUES ('${front}', '${back}', '${packId}')`);
+  });
+};
 
 /*
 Flash card packs
  */
 // method that insert into Flash Card Pack
+const createPack = async(req, res) => {
+  const { packName, user_id, event_id } = req.body;
+  try {
+    const id = await db.query(`INSERT INTO flashCardPack (name, users_id, event_id) VALUES ( '${packName}', '${user_id}', '${event_id}') RETURNING id`);
+    res.send(id);
+  } catch (err) {
+    console.log('nah bruh', err);
+  }
+};
 // method that get from Flash Card Pack
 
 module.exports = {
@@ -177,7 +196,6 @@ module.exports = {
   getUser,
   createUser,
   createTopic,
-  getTopic,
   getTopicByUser,
   getEventbyUser,
   addDocument,
@@ -186,4 +204,6 @@ module.exports = {
   addToBinder,
   getUserBinder,
   getEventDocument,
+  createPack,
+  saveCards,
 };
