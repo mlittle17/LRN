@@ -11,6 +11,7 @@ function App() {
   const [binder, setBinder] = useState([]);
   const [sessions, setSessions] = useState([]);
   const [notes, setNotes] = useState([]);
+  //const [users, setUsers] = useState([]);
 
   useEffect(() => {
     axios.get('/event')
@@ -70,7 +71,7 @@ function App() {
   // }, []);
 
   const googleLogin = () => {
-    window.location.replace('http://localhost:8080/auth/login');
+    window.location.replace('https://lrn-solid-sun-282620.uc.r.appspot.com/');
   };
 
   const googleLogout = () => {
