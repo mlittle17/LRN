@@ -23,11 +23,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 340,
     // maxHeight: 340,
   },
-  docsButton: {
-    width: 500,
-    backgroundColor: '#474a2c',
-    color: '#f6fef5',
-  },
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
@@ -52,8 +47,6 @@ const timeOptions = [
 
 const CreateSession = ({ user }) => {
   const { id } = user;
-  //  console.log(user);
-  // console.log(id)
   const [sessionTitle, setSessionTitle] = useState('');
   const [sessionDesc, setSessionDesc] = useState('');
   const [subject, setSessionSubject] = useState('');
