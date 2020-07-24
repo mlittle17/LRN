@@ -65,18 +65,19 @@ const FindSessions = ({ user, sessions }) => {
   });
   const [sessionColl, setSessionColl] = useState({});
   const [currMapLocs, setCurrMapLocs] = useState([
-    { lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 },
+    // { lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 },
     // { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 },
     // { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 },
     // { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 },
     // { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 },
   ]);
   const markers = [];
-  // const [currMarkers, setCurrMarkers] = useState([]);
+  // const [markers, setMarkers] = useState([]);
 
   // The custom marker images
   const sessionsMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595383700/CustomBlackMapMarker.png';
   const centerMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595495976/customWhiteCenterMarker.png';
+
 
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
@@ -286,28 +287,67 @@ const FindSessions = ({ user, sessions }) => {
       ],
     },
   );
+
   // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
   // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
 
+
+  // Marker visibility functions
+  // Sets the map on all markers in the array, making them visible
+  const showMarkers = () => {
+    markers.forEach((marker) => {
+      marker.setMap(map);
+      marker.setVisible(true);
+    });
+  };
+
+  // Removes the markers from the map, but does not delete them from the array
+  const clearMarkersWhere = (searchType, searchValue) => {
+    markers.forEach((marker) => {
+      marker.setMap(null);
+      marker.setVisible(false);
+
+      // if (!(sessionColl[marker.zip].every((session) => session[searchType] === searchValue))) {
+      //   // marker.setMap(null);
+      //   marker.setVisible(false);
+
+      // }
+    });
+    // if (marker[searchType] !== searchValue) {
+  };
+
+  // Clear the form of all searched and reset the map view
+  const clearForm = () => {
+    // let form = document.querySelector('form');
+    // console.log('form:', form);
+    // $('form').form('reset');
+
+    setSubject('');
+    setSessionDate('');
+    setZip(0);
+    showMarkers();
+  };
+  // Add a marker to the map, at the provided coordinates, with the provided image
   const addMarker = (markerObj, url) => {
     console.log('add marker, markerObj:', markerObj);
-    if (markerObj.zipcode) {
-      const { zipcode } = markerObj;
-    }
+    const { zipcode } = markerObj;
 
     const marker = new google.maps.Marker({
       map,
       position: markerObj,
-      // title: zipcode.toString(),
+      title: zipcode.toString(),
       icon: {
         url,
       },
     });
+    marker.zip = zipcode;
     markers.push(marker);
+    // setMarkers([...markers, marker]);
     return marker;
   };
 
   // Execute when map object is ready
+  // Add the markers for session object zips that exist within the state
   if (map) {
     // if (user) {
     //   const { location } = user;
@@ -323,6 +363,7 @@ const FindSessions = ({ user, sessions }) => {
     });
   }
 
+  // Watching the sessions prop for update
   useEffect(() => {
     // Create a new collection that has a property of the zip and a value of the collection of sessions objects found in that zip.
     // Allows the sessions to be added to the map with only one marker representing a sessions set there
@@ -335,6 +376,7 @@ const FindSessions = ({ user, sessions }) => {
       }
     });
     // console.log('zipsForMarkers:', zipsForMarkers);
+    delete zipsForMarkers.null;
     setSessionColl(zipsForMarkers);
 
     Object.keys(zipsForMarkers).forEach((zipForMarker) => {
@@ -351,21 +393,9 @@ const FindSessions = ({ user, sessions }) => {
         },
       );
     });
-
-    // Adds a marker for every session, at that session's zip
-    // sessions.forEach((session) => {
-    //   Geocode.fromAddress(session.zip).then(
-    //     response => {
-    //       const { lat, lng } = response.results[0].geometry.location;
-    //       setCurrMapLocs([...currMapLocs, { lat, lng, zipcode: session.zip }]);
-    //     },
-    //     error => {
-    //       console.error(error);
-    //     },
-    //   );
-    // });
   }, [sessions]);
-  
+
+  // Watching the user prop for update
   // When the user prop becomes available, and is no longer null
   useEffect(() => {
     if (map) {
@@ -379,7 +409,24 @@ const FindSessions = ({ user, sessions }) => {
     }
   }, [user]);
 
-  // When a user searches by zipcode
+  // Watching the subject state value for update
+  // (When a user searches by subject)
+  useEffect(() => {
+    // Remove any markers from the map that do not have any sessions that have the subject of searched value
+    console.log('subject:', subject);
+    console.log('markers:', markers);
+    clearMarkersWhere('topic', subject);
+  }, [subject]);
+
+  // Watching the date state value for update
+  // (When a user searches by date)
+  useEffect(() => {
+    // Remove any markers from the map that do not have any sessions that have the subject of searched value
+    clearMarkersWhere('date', sessionDate);
+  }, [sessionDate]);
+
+  // Watching the zip state value for update
+  // (When a user searches by zipcode)
   useEffect(() => {
     // Find the lat and lon to re-center the map over, based on the user's search provided zip
     Geocode.fromAddress(zip).then(
@@ -398,12 +445,14 @@ const FindSessions = ({ user, sessions }) => {
           },
           zoom: 12,
         });
-        addMarker({
-          lat,
-          lng,
-          zipcode: zip,
-        },
-        centerMarker);
+        if (zip.toString.length === 5) {
+          addMarker({
+            lat,
+            lng,
+            zipcode: zip,
+          },
+          centerMarker);
+        }
       },
       error => {
         console.error(error);
@@ -411,7 +460,8 @@ const FindSessions = ({ user, sessions }) => {
     );
   }, [zip]);
 
-  // When the userLoc state value is updated
+  // Watching the userLoc state value for update
+  // (When the userLoc state value is updated)
   // useEffect(() => {
   //   // Add a new marker over the center
   //   /* Does not necessarily mean there are session there but signifies to the user
@@ -419,25 +469,10 @@ const FindSessions = ({ user, sessions }) => {
   //   addMarker(userLoc, centerMarker);
   // }, [userLoc]);
 
-  console.log('markers:', markers);
-
-  // Marker visibility functions
-  // Sets the map on all markers in the array.
-  const setMapOnAll = (mapArg) => {
-    for (let i = 0; i < markers.length; i += 1) {
-      markers[i].setMap(mapArg);
-    }
-  };
-
-  // Removes the markers from the map, but keeps them in the array.
-  const clearMarkers = () => {
-    setMapOnAll(null);
-  };
-
-  // Shows any markers currently in the array.
-  const showMarkers = () => {
-    setMapOnAll(map);
-  };
+  // When the map is dragged, write the new center zip to the form
+  // $('form').form('set values', {
+  //   zip: CODE TO FIND NEW MAP CENTER, THEN GEOCODED,
+  // })
 
   return (
     <div className="Find">
@@ -471,6 +506,7 @@ const FindSessions = ({ user, sessions }) => {
                     placeholder="MM/DD/YYYY"
                     options={{ date: true, datePattern: ['m', 'd', 'Y'] }}
                     onChange={onSessionDateChange}
+                    value={sessionDate}
                     className="form-field"
                   />
                 </Form.Field>
@@ -479,17 +515,18 @@ const FindSessions = ({ user, sessions }) => {
                 <Form.Field>
                   <label>ZIP</label>
                   <Cleave
-                    placeholder="*****"
                     options={{
                       blocks: [5],
                       numericOnly: true,
                     }}
                     onChange={onZipChange}
+                    value={zip}
+                    placeholder="*****"
                     className="form-field"
                   />
                 </Form.Field>
               </Form><br /><br />
-              <Button style={{ backgroundColor: '#474a2c', color: '#f6fef5', float: 'right' }}>Search</Button>
+              <Button onClick={clearForm} style={{ backgroundColor: '#474a2c', color: '#f6fef5', float: 'right' }}>Clear Search</Button>
             </CardContent>
           </Card>
         </div>
