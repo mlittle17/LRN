@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Peer from 'simple-peer';
+import axios from 'axios';
 
 // the video style
-
+//
 import Slider from 'react-slick';
 import { Grid, Typography, Avatar } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
@@ -12,6 +13,7 @@ import Board from './Board.jsx';
 import Questions from './Questions.jsx';
 import socket from './Socket.jsx';
 import BulletinBoard from './BulletinBoard.jsx';
+import StudentChatWidget from './StudentChatWidget.jsx';
 
 import '../styles/Upcoming.css';
 
@@ -41,6 +43,8 @@ const videoConstraints = {
 
 const StudentSession = (props) => {
   const [peers, setPeers] = useState([]);
+  const [user, setUser] = useState({});
+
   // const socket = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
@@ -48,7 +52,19 @@ const StudentSession = (props) => {
   const [videoSwitch, setVideoSwitch] = useState(true);
   const [audioSwitch, setAudioSwitch] = useState(true);
 
+  // const [showBB, setShowBB] = useState(false);
+  const [notes, setNotes] = useState();
+
   useEffect(() => {
+    axios.get('/event/1/documents')
+    .then(response => {
+      setNotes(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    // console.log(props.notes);
+
     navigator.mediaDevices.getUserMedia({ video: videoConstraints }).then(stream => {
       userVideo.current.srcObject = stream;
       socket.current.emit('join room', roomID);
@@ -131,6 +147,8 @@ const StudentSession = (props) => {
     }
   };
 
+  
+
   return (
     <Container>
       <div className="ui stackable two column grid">
@@ -155,6 +173,7 @@ const StudentSession = (props) => {
         </button>
 
       </div>
+      <StudentChatWidget />
     </Container>
   );
 };

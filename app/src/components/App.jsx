@@ -29,6 +29,7 @@ function App() {
       .catch(err => {
         console.log(err);
       });
+      
   }, []);
 
   useEffect(() => {
@@ -46,15 +47,28 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
-    axios.get('event/3/documents')
-      .then(response => {
-        setNotes(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+    // axios.get('event/1/documents')
+    //   .then(response => {
+    //     setNotes(response.data);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+      // fetch('8080/students/event/1/documents',
+      // {
+      //     /*
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'Accept':'application/json'
+      //     },
+      //     */
+      //     method: "get",
+      //     dataType: 'json',
+      // })
+      // .then((res) => res.json())
+      // .catch(err => console.log(err));
+  // }, []);
 
   const googleLogin = () => {
     window.location.replace('http://localhost:8080/auth/login');

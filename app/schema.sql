@@ -21,7 +21,9 @@ CREATE TABLE event (
   users_id Integer NOT NULL,
   classLimit INT NOT NULL,
   capacityCount Integer,
-  privacy Varchar(10)
+  privacy Varchar(10),
+  zip Varchar(10),
+  uuid Varchar(50)
 );
 
 CREATE TABLE student_event (

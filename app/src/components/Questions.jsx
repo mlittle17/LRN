@@ -2,15 +2,11 @@ import React, {
   useState, MouseEvent, KeyboardEvent, useEffect, useRef,
 } from 'react';
 import io from 'socket.io-client';
-import { Widget, addResponseMessage } from 'react-chat-widget';
+import { Widget, addResponseMessage, addUserMessage } from 'react-chat-widget';
 
 import 'react-chat-widget/lib/styles.css';
 
 import socket from './Socket.jsx';
-
-// const user = {
-//   username: 'Jerry',
-// };
 
 const Questions = ({ user }) => {
   const [message, setMessage] = useState('');
@@ -21,6 +17,8 @@ const Questions = ({ user }) => {
     socket.current.on('sending chat message', (msg) => {
       setMessages((msgs) => [...msgs, msg]);
     });
+
+    handleNewUserMessage('hello');
   }, []);
 
   const sendChat = (event) => {
@@ -32,17 +30,23 @@ const Questions = ({ user }) => {
       user,
     };
     socket.current.emit('chat message', messageObj);
-    setMessage(''); // clear the input
+    setMessage(''); 
   };
 
   const onKeyPress = (event) => {
     if (event.which === 13) sendChat(event);
   };
 
+  const renderAnInstructorMessage = (message) => {
+
+  };
+
   const handleNewUserMessage = (newMessage) => {
     console.log(`New message incoming! ${newMessage}`);
     // Now send the message throught the backend API]
-    addResponseMessage('ok Caryn', 'Rachael');
+    // socket.current.emit('chat message', messageObj);
+
+    addUserMessage('ok Caryn', 'Rachael');
   };
 
   return (
@@ -51,23 +55,11 @@ const Questions = ({ user }) => {
       <div>
         <Widget
           handleNewUserMessage={handleNewUserMessage}
+          title="Questions?"
+          subtitle=""
+          // profileAvatar={user.imageurl}
         />
       </div>
-      {messages.map((msg) => {
-        const key = msg.messageCount + msg.user.id;
-        return (
-          <div key={key}>
-            <p>
-              {`${msg.user.username}: ${msg.message}`}
-            </p>
-          </div>
-        );
-      })}
-      <br />
-      <input id="chat-input" value={message} onKeyPress={onKeyPress} onChange={(e) => setMessage(e.target.value)} type="text" />
-      <br />
-      <button onClick={(e) => sendChat(e)} type="button">Send</button>
-      <br />
     </div>
   );
 };
