@@ -52,7 +52,19 @@ const StudentSession = (props) => {
   const [videoSwitch, setVideoSwitch] = useState(true);
   const [audioSwitch, setAudioSwitch] = useState(true);
 
+  // const [showBB, setShowBB] = useState(false);
+  const [notes, setNotes] = useState();
+
   useEffect(() => {
+    axios.get('/event/1/documents')
+    .then(response => {
+      setNotes(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    // console.log(props.notes);
+
     navigator.mediaDevices.getUserMedia({ video: videoConstraints }).then(stream => {
       userVideo.current.srcObject = stream;
       socket.current.emit('join room', roomID);
@@ -135,6 +147,8 @@ const StudentSession = (props) => {
     }
   };
 
+  
+
   return (
     <Container>
       <div className="ui stackable two column grid">
@@ -145,7 +159,7 @@ const StudentSession = (props) => {
         </div>
         <div className="column">
           <Board />
-          {/* <BulletinBoard notes={props.notes} /> */}
+          <BulletinBoard notes={notes} user={user} />}
         </div>
 
         student/user.
