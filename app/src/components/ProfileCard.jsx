@@ -58,7 +58,7 @@ const ProfileCard = ({ userInfo }) => {
           </Typography>
           <br /><br />
           <Typography gutterBottom variant="h6" component="h7" style={{ color: '#a58e57' }}>
-            <PersonPinCircleIcon className={classes.icon} /> 70810
+            <PersonPinCircleIcon className={classes.icon} /> {userInfo ? userInfo.zip : 70810}
           </Typography>
         </div>
         <br />

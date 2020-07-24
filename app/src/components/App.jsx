@@ -29,6 +29,7 @@ function App() {
   useEffect(() => {
     axios.get('/event')
       .then(response => {
+        console.log('response data:', response.data);
         setSessions(response.data);
       });
   }, []);

@@ -52,7 +52,6 @@ const UpcomingTable = ({
   // } = sessions;
   const classes = useStyles();
 
-  // const rows = sessions.chunk(3);
   return (
     <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
       <Table className={classes.table} aria-label="customized table">
@@ -69,7 +68,7 @@ const UpcomingTable = ({
           {sessionPage.map((session) => (
             <StyledTableRow key={session.name}>
               <StyledTableCell component="th" scope="row" className={classes.rowText}>
-                {session.title}
+                {session.name}
               </StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{`${session.namefirst} ${session.namelast}`}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{session.date}</StyledTableCell>
@@ -82,5 +81,8 @@ const UpcomingTable = ({
     </TableContainer>
   );
 };
+
+
+// INSERT INTO event (zip, name, topic, description, duration, date, time, users_id, classLimit, capacityCount, privacy, uuid) VALUES ('70063', 'Fake Session 3', 'Food', 'FakeDescription 3', '45 mins', '07/25/2020', '7:30 pm', 1, 25, 10, 'public', 'cc8f09f1-cd77-11ea-b352-1795043c4790');
 
 export default UpcomingTable;
