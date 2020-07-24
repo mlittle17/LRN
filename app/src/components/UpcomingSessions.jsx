@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography } from '@material-ui/core';
@@ -20,7 +21,7 @@ const settings = {
 Object.defineProperty(Array.prototype, 'chunk', {
   // eslint-disable-next-line func-names
   // eslint-disable-next-line object-shorthand
-  value: function(chunkSize) {
+  value: function (chunkSize) {
     const P = [];
     for (let i = 0; i < this.length; i += chunkSize) {
       P.push(this.slice(i, i + chunkSize));
@@ -30,6 +31,18 @@ Object.defineProperty(Array.prototype, 'chunk', {
 });
 
 const UpcomingSessions = ({ sessions }) => {
+  // Simplify and sort to order the sessions by upcoming dates
+  sessions.map((session) => {
+    const { date } = session;
+    // date.replace(/\//g, '');
+    session.sortDate = new Date(date.slice(6, date.length), date.slice(0, 2) - 1, date.slice(3, 5));
+    return session;
+  })
+    .sort((a, b) => {
+    // Turn strings into dates, and then subtract them, to get a value that is either -, +, or 0
+      return b.sortDate - a.sortDate;
+    });
+
   const rows = sessions.chunk(3);
   return (
     <div>
