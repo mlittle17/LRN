@@ -51,21 +51,21 @@ const Navbar = ({
             <Link to='/board' class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Test Room</Link>
           </Menu.Item> */}
 
-          <Menu.Item
+          {/* <Menu.Item
             name="instructor"
             active={activeItem === 'session'}
             onClick={handleItemClick}
           >
             <Link to={`/instructor/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Instructor</Link>
-          </Menu.Item>
+          </Menu.Item> */}
 
-          <Menu.Item
+          {/* <Menu.Item
             name="student"
             active={activeItem === 'student'}
             onClick={handleItemClick}
           >
             <Link to={`/student/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Student</Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item
             name="profile"
             active={activeItem === 'profile'}
