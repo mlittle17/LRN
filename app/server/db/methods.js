@@ -26,6 +26,9 @@ const createUser = (user) => {
 const getUser = (id) => {
   return db.query(`SELECT * FROM users WHERE googleid = '${id}'`);
 };
+const getSessionCreator = (id) => {
+  return db.query(`SELECT * FROM users WHERE id = '${id}'`);
+};
 
 // method that gets all the users info
 const getAllUser = async(req, res) => {
@@ -179,6 +182,7 @@ module.exports = {
   getEventbyUser,
   addDocument,
   getAllDocument,
+  getSessionCreator,
   addToBinder,
   getUserBinder,
   getEventDocument,
