@@ -11,7 +11,7 @@ function App() {
   const [binder, setBinder] = useState([]);
   const [sessions, setSessions] = useState([]);
   const [notes, setNotes] = useState([]);
-  //const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
   useEffect(() => {
     axios.get('/event')
@@ -29,7 +29,6 @@ function App() {
       .catch(err => {
         console.log(err);
       });
-      
   }, []);
 
   useEffect(() => {
@@ -48,30 +47,30 @@ function App() {
   }, []);
 
   // useEffect(() => {
-    // axios.get('event/1/documents')
-    //   .then(response => {
-    //     setNotes(response.data);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-      // fetch('8080/students/event/1/documents',
-      // {
-      //     /*
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //       'Accept':'application/json'
-      //     },
-      //     */
-      //     method: "get",
-      //     dataType: 'json',
-      // })
-      // .then((res) => res.json())
-      // .catch(err => console.log(err));
+  // axios.get('event/1/documents')
+  //   .then(response => {
+  //     setNotes(response.data);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+  // fetch('8080/students/event/1/documents',
+  // {
+  //     /*
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept':'application/json'
+  //     },
+  //     */
+  //     method: "get",
+  //     dataType: 'json',
+  // })
+  // .then((res) => res.json())
+  // .catch(err => console.log(err));
   // }, []);
 
   const googleLogin = () => {
-    window.location.replace('https://lrn-solid-sun-282620.uc.r.appspot.com/');
+    window.location.replace('http://localhost:8080/auth/login');
   };
 
   const googleLogout = () => {
