@@ -41,6 +41,10 @@ const SessionCard = ({ event }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
+  const {
+    name, namefirst, namelast, date, time, description, duration,
+    topic, capacitycount, classlimit,
+  } = event.other;
 
   // Open the event card window
   const handleClickOpen = () => {
@@ -75,12 +79,12 @@ const SessionCard = ({ event }) => {
         aria-labelledby="max-width-dialog-title"
         hideBackdrop="true"
       >
-        {/* {/* {event && ( */}
+        { event && (
           <Card className={classes.root} variant="outlined">
             <CardActionArea className={classes.actionArea}>
               <div style={{ marginTop: '10px' }}>
                 <Typography gutterBottom variant="h4" component="h1" align="center">
-                  {/* {event.name} */}
+                  {name}
                 </Typography>
               </div>
               <br />
@@ -93,7 +97,7 @@ const SessionCard = ({ event }) => {
             </Typography>
                 {/* Possibly add an avatar here with instructor name */}
                 <Typography variant="body1" color="textSecondary" component="p">
-                  {/* {`${event.namefirst} ${event.namelast}`} */}
+                  {`${namefirst} ${namelast}`}
                 </Typography>
               </div>
               <br />
@@ -103,7 +107,7 @@ const SessionCard = ({ event }) => {
                     Subject
               </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
-                    {/* {event.topic} */}
+                    {topic}
                   </Typography>
                 </div>
                 <div>
@@ -111,7 +115,7 @@ const SessionCard = ({ event }) => {
                     Capacity
               </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
-                    {/* {event.capacityCount} */}
+                    {capacitycount} / {classlimit}
                   </Typography>
                 </div>
               </Grid>
@@ -122,7 +126,7 @@ const SessionCard = ({ event }) => {
                     Date
               </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
-                    {/* {event.date} */}
+                    {date}
                   </Typography>
                 </div>
                 <div>
@@ -130,7 +134,7 @@ const SessionCard = ({ event }) => {
                     Time
               </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
-                    {/* {event.time} */}
+                    {time}
                   </Typography>
                 </div>
               </Grid>
@@ -182,7 +186,7 @@ const SessionCard = ({ event }) => {
               </CardContent>
             </Collapse>
           </Card>
-        {/* // )} */}
+        )}
       </Dialog>
     </>
   );
