@@ -53,17 +53,17 @@ const StudentSession = (props) => {
   const [audioSwitch, setAudioSwitch] = useState(true);
 
   // const [showBB, setShowBB] = useState(false);
-  const [notes, setNotes] = useState();
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     axios.get('/event/1/documents')
-    .then(response => {
-      setNotes(response.data);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-    // console.log(props.notes);
+      .then(response => {
+        setNotes(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+      
 
     navigator.mediaDevices.getUserMedia({ video: videoConstraints }).then(stream => {
       userVideo.current.srcObject = stream;
@@ -102,6 +102,7 @@ const StudentSession = (props) => {
     // });
   }, []);
 
+  console.log(notes);
   const createPeer = (userToSignal, callerID, stream) => {
     const peer = new Peer({
       initiator: true,
@@ -147,8 +148,6 @@ const StudentSession = (props) => {
     }
   };
 
-  
-
   return (
     <Container>
       <div className="ui stackable two column grid">
@@ -159,7 +158,7 @@ const StudentSession = (props) => {
         </div>
         <div className="column">
           <Board />
-          <BulletinBoard notes={props.notes} user={props.user} />
+          <BulletinBoard notes={notes} user={props.user} />
         </div>
 
         student/user.
