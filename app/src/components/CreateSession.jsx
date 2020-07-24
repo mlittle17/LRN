@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Cleave from 'cleave.js/react';
 import CounterInput from 'react-counter-input';
 import axios from 'axios';
+import { v1 as generateUuid } from 'uuid';
 
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -97,8 +98,9 @@ const CreateSession = ({ user }) => {
   };
 
   const addEvent = () => {
+    const uuid = generateUuid();
     return axios.post('/event', {
-      user_id: id, name: sessionTitle, topic: subject, description: sessionDesc, duration: sessionLength, date: sessionDate, time: `${sessionTime} ${sessionMeridiem}`, classLimit: capacity, zip: user.zip,
+      user_id: id, name: sessionTitle, topic: subject, description: sessionDesc, duration: sessionLength, date: sessionDate, time: `${sessionTime} ${sessionMeridiem}`, classLimit: capacity, zip: user.zip, uuid: uuid
     })
       .then(response => response.data[0].id)
       .then(eventId => {
@@ -127,6 +129,8 @@ const CreateSession = ({ user }) => {
                   packId: res.data[0].id,
                   cards: cards.cards,
                 });
+                window.location.replace('/');
+
               }),
           );
       })

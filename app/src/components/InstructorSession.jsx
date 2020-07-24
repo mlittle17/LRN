@@ -156,9 +156,9 @@ const InstructorSession = (props) => {
     <Container>
       <div className={classes.root}>
         <Grid container spacing={1}>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Paper className={classes.paper}>xs=12</Paper>
-          </Grid>
+          </Grid> */}
           <Grid item xs={8} container>
             <Grid item xs={4}>
               <Paper className={classes.paper} elevation={0}>
@@ -190,8 +190,8 @@ const InstructorSession = (props) => {
               </Paper>
             </Grid>
             <Grid item xs={8}>
-              <Paper className={classes.paper}>
-                <h1> Event Name </h1>
+              <Paper className={classes.paper} elevation={0}>
+                <h1> {props.sessionName} </h1>
                 <a href={joinLink}>Here is the student join link</a>
                 <a>(open in new tab for testing)</a>
               </Paper>
