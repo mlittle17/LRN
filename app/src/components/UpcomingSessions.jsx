@@ -31,6 +31,7 @@ Object.defineProperty(Array.prototype, 'chunk', {
 
 const UpcomingSessions = ({ sessions }) => {
   const rows = sessions.chunk(3);
+  console.log(sessions, 'inside of upcoming session');
   return (
     <div>
       <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>UPCOMING SESSIONS</b></Typography>
