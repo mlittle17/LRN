@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable quote-props */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Cleave from 'cleave.js/react';
 import Geocode from 'react-geocode';
 import { useGoogleMaps } from 'react-hook-google-maps';
@@ -8,7 +8,7 @@ import { useGoogleMaps } from 'react-hook-google-maps';
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Card, CardActionArea, CardContent, Grid, Typography,
+  Card, CardActionArea, CardContent, Dialog, Grid, Typography,
 } from '@material-ui/core';
 
 import '../styles/Form.css';
@@ -17,6 +17,20 @@ import '../styles/Form.css';
 Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    minWidth: 798,
+    maxWidth: 798,
+    minHeight: 498,
+    maxHeight: 498,
+    borderColor: '#474a2c',
+  },
+  dialog: {
+    minWidth: 798,
+    maxWidth: 798,
+    minHeight: 498,
+    maxHeight: 498,
+    marginLeft: 'auto',
+  },
   grid: {
     marginTop: 40,
   },
@@ -57,6 +71,7 @@ const FindSessions = ({ user, sessions }) => {
   const [zip, setZip] = useState(0);
 
   // Map and location data states
+  const [listOpen, setListOpen] = useState(false);
   const [userLoc, setUserLoc] = useState(() => {
     if (user) {
       console.log(user.location);
@@ -78,6 +93,9 @@ const FindSessions = ({ user, sessions }) => {
   const sessionsMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595383700/CustomBlackMapMarker.png';
   const centerMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595495976/customWhiteCenterMarker.png';
 
+  const handleClose = () => {
+    setListOpen(false);
+  };
 
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
@@ -341,6 +359,12 @@ const FindSessions = ({ user, sessions }) => {
       },
     });
     marker.zip = zipcode;
+    marker.addListener('click', () => {
+      setListOpen(true);
+      // map.setZoom(8);
+      // map.setCenter(marker.getPosition());
+    });
+
     markers.push(marker);
     // setMarkers([...markers, marker]);
     return marker;
@@ -445,14 +469,14 @@ const FindSessions = ({ user, sessions }) => {
           },
           zoom: 12,
         });
-        if (zip.toString.length === 5) {
-          addMarker({
-            lat,
-            lng,
-            zipcode: zip,
-          },
-          centerMarker);
-        }
+        // if (zip.toString.length === 5) {
+        addMarker({
+          lat,
+          lng,
+          zipcode: zip,
+        },
+        centerMarker);
+        // }
       },
       error => {
         console.error(error);
@@ -530,6 +554,20 @@ const FindSessions = ({ user, sessions }) => {
             </CardContent>
           </Card>
         </div>
+        <Dialog
+          fullWidth="true"
+          className={classes.dialog}
+          maxWidth="md"
+          scroll="paper"
+          open={listOpen}
+          onClose={handleClose}
+          aria-labelledby="max-width-dialog-title"
+          hideBackdrop="true"
+        >
+          <Card className={classes.root} variant="outlined">
+            
+          </Card>
+        </Dialog>
         <Card className={classes.mapCard} variant="outlined">
           <div ref={ref} style={{ width: 798, height: 498 }} />
         </Card>
