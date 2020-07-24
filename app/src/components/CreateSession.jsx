@@ -6,7 +6,9 @@ import { v1 as generateUuid } from 'uuid';
 
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent, Grid } from '@material-ui/core';
+import {
+  Card, CardContent, FormControlLabel, Grid, Switch, Typography,
+} from '@material-ui/core';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
 import AddDocuments from './AddDocuments.jsx';
@@ -50,33 +52,55 @@ const timeOptions = [
 
 const CreateSession = ({ user }) => {
   const { id } = user;
+  //  console.log(user);
+  // console.log(id)
+  const [sessionTitle, setSessionTitle] = useState('');
+  const [sessionDesc, setSessionDesc] = useState('');
+  const [subject, setSessionSubject] = useState('');
   const [sessionDate, setSessionDate] = useState('');
   const [sessionTime, setSessionTime] = useState('');
+  const [sessionMeridiem, setSessionMeridiem] = useState('');
+  const [sessionLength, setSessionLength] = useState('');
   const [capacity, setCapacity] = useState(1);
-  const [subject, setSubject] = useState('');
+  const [documents, setDocuments] = useState([]);
   const [document, setDocument] = useState('');
   const [cards, setCards] = useState('');
   // const [eventId, setEventId] = useState(1);
 
   // for now hardcoded user
   // const user_id = '1'
+  // console.log(document);
 
-  const onSessionDateChange = (e) => {
-    setSessionDate(e.target.rawValue);
+  const onSessionNameChange = (e) => {
+    setSessionTitle(e.target.value);
   };
-
-  const onSessionTimeChange = (e) => {
-    setSessionTime(e.target.rawValue);
+  const onSessionDescChange = (e) => {
+    setSessionDesc(e.target.value);
   };
   const onSessionSubjectChange = (e, result) => {
     const { value } = result;
-    setSubject(value);
+    setSessionSubject(value);
+  };
+  const onSessionDateChange = (e) => {
+    setSessionDate(e.target.value);
+  };
+
+  const onSessionTimeChange = (e) => {
+    setSessionTime(e.target.value);
+  };
+  const onSessionMeridiemChange = (e, result) => {
+    const { value } = result;
+    setSessionMeridiem(value);
+  };
+
+  const onSessionLengthChange = (e) => {
+    setSessionLength(e.target.value);
   };
 
   const addEvent = () => {
     const uuid = generateUuid();
     return axios.post('/event', {
-      user_id: id, topic: subject, date: sessionDate, time: sessionTime, classLimit: capacity, uuid: uuid,
+      user_id: id, name: sessionTitle, topic: subject, description: sessionDesc, duration: sessionLength, date: sessionDate, time: `${sessionTime} ${sessionMeridiem}`, classLimit: capacity,
     })
       .then(response => response.data[0].id)
       .then(eventId => {
@@ -117,10 +141,19 @@ const CreateSession = ({ user }) => {
   return (
     <div className="Create">
       <div>
-        <Grid container justify="space-around">
+        <Grid container justify="space-around" style={{ marginTop: 40 }}>
+          <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>CREATE SESSION</b></Typography>
+        </Grid>
+        <Grid container justify="space-around" style={{ marginBottom: 40 }}>
           <Card className={classes.root}>
             <CardContent>
               <Form>
+                {/* session name */}
+                <Form.Field>
+                  <label>Name</label>
+                  <input onChange={onSessionNameChange} />
+                </Form.Field>
+
                 {/* subject select */}
                 <Form.Select
                   fluid
@@ -131,6 +164,9 @@ const CreateSession = ({ user }) => {
                   value={subject}
                 />
 
+                {/* session description */}
+                <Form.TextArea label="Description" maxLength="250" onChange={onSessionDescChange} />
+
                 {/* session date */}
                 <Form.Field>
                   <label>Date</label>
@@ -138,7 +174,7 @@ const CreateSession = ({ user }) => {
                     placeholder="MM/DD/YYYY"
                     options={{ date: true, datePattern: ['m', 'd', 'Y'] }}
                     onChange={onSessionDateChange}
-                    className="form-field"
+                  // className="form-field"
                   />
                 </Form.Field>
 
@@ -147,34 +183,64 @@ const CreateSession = ({ user }) => {
                   <Form.Field>
                     <label>Time</label>
                     <Cleave
-                      placeholder="00:00"
+                      placeholder="HH:MM"
                       options={{ time: true, timePattern: ['h', 'm'] }}
                       onChange={onSessionTimeChange}
-                      className="form-field"
+                    // className="form-field"
                     />
                   </Form.Field>
+                  {/* am / pm */}
                   <Form.Select
                     fluid
                     label={<span><WbSunnyIcon /><Brightness3Icon /></span>}
                     options={timeOptions}
                     placeholder="AM"
+                    onChange={onSessionMeridiemChange}
                   />
+
+                  {/* session length */}
+                  <Form.Field style={{ float: 'right' }}>
+                    <label>Est. Duration</label>
+                    <Cleave
+                      placeholder="H:MM"
+                      options={{ delimiters: [' hr ', ' mins'], blocks: [1, 2, 0] }}
+                      onChange={onSessionLengthChange}
+                    // className="form-field"
+                    />
+                  </Form.Field>
                 </Form.Group>
 
-                {/* session size limit */}
-                <Form.Field>
-                  <label>Session Capacity</label>
-                  <CounterInput
-                    count={1}
-                    min={1}
-                    max={25}
-                    onCountChange={count => setCapacity(count)}
+                <Grid container justify="space-between">
+                  {/* session size limit */}
+                  <Form.Field>
+                    <label>Session Capacity</label>
+                    <CounterInput
+                      count={1}
+                      min={1}
+                      max={25}
+                      onCountChange={count => setCapacity(count)}
+                      inputStyle={{ fontSize: 18 }}
+                      btnStyle={{ color: '#a58e57', fontSize: 30 }}
+                    />
+                  </Form.Field>
+                  <FormControlLabel
+                    control={<Switch size="large" color="primary" />}
+                    // <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
+                    labelPlacement="end"
+                    label={<b>Private</b>}
                   />
-                </Form.Field>
-                <AddDocuments setDoc={setDocument} />
+                </Grid>
+                <AddDocuments setDocs={setDocuments} />
                 <CreateFlashCards setCards={setCards} />
               </Form> <br />
-              <Button type="submit" onClick={addEvent}>Submit</Button>
+              <Button
+                type="submit"
+                onClick={addEvent}
+                style={{
+                  float: 'right', border: 'none', backgroundColor: '#ffffff', color: '#a58e57',
+                }}
+              >DONE
+              </Button>
             </CardContent>
           </Card>
         </Grid>

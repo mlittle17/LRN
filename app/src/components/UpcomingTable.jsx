@@ -69,7 +69,7 @@ const UpcomingTable = ({
           {sessionPage.map((session) => (
             <StyledTableRow key={session.name}>
               <StyledTableCell component="th" scope="row" className={classes.rowText}>
-                {session.topic}
+                {session.title}
               </StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{`${session.namefirst} ${session.namelast}`}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{session.date}</StyledTableCell>

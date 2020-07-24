@@ -26,6 +26,9 @@ const createUser = (user) => {
 const getUser = (id) => {
   return db.query(`SELECT * FROM users WHERE googleid = '${id}'`);
 };
+const getSessionCreator = (id) => {
+  return db.query(`SELECT * FROM users WHERE id = '${id}'`);
+};
 
 // method that gets all the users info
 const getAllUser = async(req, res) => {
@@ -40,10 +43,10 @@ const getAllUser = async(req, res) => {
 /*
 Events
  */
-
+// location header - url ends with newly created resource id
 const createEvent = async(req, res) => {
   try {
-    const id = await db.query('INSERT INTO event (topic, date, time, users_id, classLimit, uuid) VALUES ( ${topic}, ${date}, ${time}, ${user_id}, ${classLimit}, ${uuid}) RETURNING id', req.body);
+    const id = await db.query('INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit) VALUES ( ${name}, ${topic}, ${description}, ${duration}, ${date}, ${time}, ${user_id}, ${classLimit}) RETURNING id', req.body);
     res.send(id);
   } catch (err) {
     console.log('nah bruh', err);
@@ -197,6 +200,7 @@ module.exports = {
   getEventbyUser,
   addDocument,
   getAllDocument,
+  getSessionCreator,
   addToBinder,
   getUserBinder,
   getEventDocument,

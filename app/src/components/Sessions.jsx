@@ -6,23 +6,38 @@ import Calendar from './Calendar.jsx';
 import SessionCard from './SessionCard.jsx';
 
 function Sessions() {
-  const [sessionObj, setSessionObj] = useState([]);
+  const [sessionObjs, setSessionObjs] = useState([]);
   useEffect(() => {
-    // adding some pseudocode
+    // get all events
     axios.get('/event')
       .then(response => {
-        setSessionObj(response.data);
+        setSessionObjs(response.data);
       })
       .catch(error => {
-        console.log(error);
+        console.error('Error getting all events from database:', error);
       });
-  });
+
+    console.log(sessionObjs);
+  }, []);
+
+  useEffect(() => {
+    console.log('reaching sessions', sessionObjs);
+    sessionObjs.forEach((sessionObj) => {
+      axios.get(`/users/${sessionObj.users_id}`)
+        .then(response => {
+          console.log('R:', response);
+        })
+        .catch(error => {
+          console.error('Error finding session creator:', error);
+        });
+    });
+  }, [sessionObjs]);
 
   return (
     <div className="Sessions">
       <br />
       <Grid container justify="space-evenly">
-        <Calendar sessions={sessionObj} />
+        <Calendar sessions={sessionObjs} />
         <div>
           <SessionCard />
         </div>

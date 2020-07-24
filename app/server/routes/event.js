@@ -1,5 +1,8 @@
 const { Router } = require('express');
-const { createEvent, getAllEvents, getEventbyUser, addDocument, getEventDocument, getAllDocument, createPack, saveCards } = require('../db/methods');
+const {
+  createEvent, getAllEvents, getEventbyUser, addDocument,
+  getEventDocument, getAllDocument, createPack, saveCards,
+} = require('../db/methods');
 
 const eventRouter = Router();
 
