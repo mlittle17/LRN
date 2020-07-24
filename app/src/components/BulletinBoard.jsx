@@ -35,9 +35,11 @@ const useStyles = makeStyles((theme) => ({
 
 const BulletinBoard = ({ notes, user }) => {
   const classes = useStyles();
-
+  console.log(user);
+  console.log(notes);
   const clickIcon = (documentId) => {
     // do a post request to add the documents to the students binder
+    console.log(user);
     axios.post(`users/${user.id}/binder`, { users_id: user.id, document_id: documentId })
       .then(response => {
         console.log(response);

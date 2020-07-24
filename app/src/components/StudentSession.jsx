@@ -141,7 +141,7 @@ const StudentSession = (props) => {
         </div>
         <div className="column">
           <Board />
-          {/* <BulletinBoard notes={props.notes} /> */}
+          <BulletinBoard notes={props.notes} user={props.user} />
         </div>
 
         student/user.
