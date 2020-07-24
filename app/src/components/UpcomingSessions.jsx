@@ -1,5 +1,8 @@
+/* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment';
+
 import { Typography } from '@material-ui/core';
 import Slider from 'react-slick';
 
@@ -20,7 +23,7 @@ const settings = {
 Object.defineProperty(Array.prototype, 'chunk', {
   // eslint-disable-next-line func-names
   // eslint-disable-next-line object-shorthand
-  value: function(chunkSize) {
+  value: function (chunkSize) {
     const P = [];
     for (let i = 0; i < this.length; i += chunkSize) {
       P.push(this.slice(i, i + chunkSize));
@@ -30,8 +33,25 @@ Object.defineProperty(Array.prototype, 'chunk', {
 });
 
 const UpcomingSessions = ({ sessions }) => {
+  // Simplify and sort to order the sessions by upcoming dates
+  sessions.map((session) => {
+    const { date } = session;
+    // new Date(date.slice(6, date.length), date.slice(0, 2) - 1, date.slice(3, 5));
+    session.sortDate = date.replace(/\//g, '-');
+    return session;
+  });
+
+  const sortDates = (a, b) => a - b;
+    // .sort((a, b) => {
+      // console.log('minus', a.sortDate.valueOf() - b.sortDate.valueOf());
+      // Turn strings into dates, and then subtract them, to get a value that is either -, +, or 0
+      // return a.sortDate.valueOf() - b.sortDate.valueOf();
+    // });
+
+  sessions.sort(sortDates);
+
+  console.log(sessions);
   const rows = sessions.chunk(3);
-  console.log(sessions, 'inside of upcoming session');
   return (
     <div>
       <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>UPCOMING SESSIONS</b></Typography>
