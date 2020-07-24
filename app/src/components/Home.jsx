@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
 // import axios from 'axios';
+import moment from 'moment';
+
 
 import {
   Card, CardActionArea, CardContent, Grid, Typography
@@ -11,6 +13,13 @@ import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
 const Home = ({ user, binder, sessions }) => {
+  const [currentTime, setCurrentTime] = useState();
+
+  useEffect(() => {
+    // we need to create the current date/time
+    console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
+  }, []);
+
   return (
     <div className="Home">
       <Grid container justify="space-evenly" style={{ marginBottom: '30px' }}>
