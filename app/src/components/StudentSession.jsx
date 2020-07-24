@@ -16,6 +16,10 @@ import Questions from './Questions.jsx';
 import socket from './Socket.jsx';
 import BulletinBoard from './BulletinBoard.jsx';
 import StudentChatWidget from './StudentChatWidget.jsx';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import VideocamOffIcon from '@material-ui/icons/VideocamOff';
+import MicNoneOutlinedIcon from '@material-ui/icons/MicNoneOutlined';
+import MicOffOutlinedIcon from '@material-ui/icons/MicOffOutlined';
 
 import '../styles/Upcoming.css';
 
@@ -170,18 +174,63 @@ const StudentSession = (props) => {
 
   return (
     <Container>
+      <Grid item xs={12}>
+      <Paper className={classes.paper}>
+        <h1> {props.sessionName} </h1>
+      </Paper>
+        </Grid>
       <div className={classes.root}>
         <Grid container spacing={1}>
-
-          instructor
-          {peers.length > 0 && <InstructorVideo peer={peers[0]} />}
-
-        
+        <Grid item xs={4}>
+          {peers.length > 0 && 
+          <Paper className={classes.paper} elevation={0}>
+            <InstructorVideo peer={peers[0]} />}
+          </Paper>}
+          </Grid>
+          <Grid item xs={8}>
           <Board />
+          </Grid>
+          <Grid item xs={6}>
+      <Paper className={classes.paper}>
           <BulletinBoard notes={notes} user={props.user} />
+        
+      </Paper>
+        </Grid>
+        <Grid item xs={6} container>
+        <Grid item xs={6}>
+        <Paper className={classes.paper} elevation={0}>
+                <StyledVideo muted ref={userVideo} autoPlay playsInline />
+      
+        {videoSwitch
+                  && (
+                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                      <VideocamIcon />
+                    </IconButton>
+                  )
+                  || (
+                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                      <VideocamOffIcon />
+                    </IconButton>
+                  )}
 
-        student/user.
-        <StyledVideo muted ref={userVideo} autoPlay playsInline />
+                {audioSwitch
+                  && (
+                    <IconButton aria-label="pause" onClick={mute}>
+                      <MicNoneOutlinedIcon />
+                    </IconButton>
+                  )
+                  || (
+                    <IconButton aria-label="pause" onClick={mute}>
+                      <MicOffOutlinedIcon />
+                    </IconButton>
+                  )}
+                  </Paper>
+        </Grid>
+              
+        </Grid>
+
+      
+
 
 
      </Grid>
