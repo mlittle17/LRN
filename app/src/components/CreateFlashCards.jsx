@@ -24,7 +24,7 @@ const StyledTableRow = withStyles((theme) => ({
     maxWidth: 750,
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
-    }, 
+    },
   },
   body: {
     fontSize: 30,
@@ -44,11 +44,15 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 340,
     // maxHeight: 340,
   },
-  docsButton: {
+  cardsButton: {
     margin: 10,
     width: 500,
     backgroundColor: '#474a2c',
     color: '#f6fef5',
+    "&:hover": {
+      backgroundColor: '#a58e57',
+      color: '#2d2e2e',
+    },
   },
   large: {
     width: theme.spacing(7),
@@ -133,36 +137,38 @@ const CreateFlashCards = ({ setCards }) => {
                 />
 
               </Form> <br />
-              <Button className={classes.docsButton} onClick={addFlashCard}>Create Flash Card</Button>
+              <Button className={classes.cardsButton} onClick={addFlashCard}>Create Flash Card</Button>
             </CardContent>
           </Card>
         </Grid>
-      </div>
-      <div>
-        <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
-          <Table className={classes.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="middle" className={classes.colLabel}>Front</StyledTableCell>
-                <StyledTableCell align="middle" className={classes.colLabel}>Back</StyledTableCell>
-                <StyledTableCell align="middle" className={classes.colLabel}>Pack</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {flashCards.map(fc => (
-                <StyledTableRow key={document.id}>
-                  <StyledTableCell align="middle" className={classes.rowText}> {fc.front} </StyledTableCell>
-                  <StyledTableCell align="middle" className={classes.rowText}> {fc.back} </StyledTableCell>
-                  <StyledTableCell align="middle" className={classes.rowText}> {packName} </StyledTableCell>
-                </StyledTableRow>
+        <div>
+          <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
+            <Table className={classes.table} aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell align="middle" className={classes.colLabel}>Front</StyledTableCell>
+                  <StyledTableCell align="middle" className={classes.colLabel}>Back</StyledTableCell>
+                  <StyledTableCell align="middle" className={classes.colLabel}>Pack</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {flashCards.map(fc => (
+                  <StyledTableRow key={document.id}>
+                    <StyledTableCell align="middle" className={classes.rowText}> {fc.front} </StyledTableCell>
+                    <StyledTableCell align="middle" className={classes.rowText}> {fc.back} </StyledTableCell>
+                    <StyledTableCell align="middle" className={classes.rowText}> {packName} </StyledTableCell>
+                  </StyledTableRow>
 
-              ))}
-            </TableBody>
-          </Table>
+                ))}
+              </TableBody>
+            </Table>
 
-        </TableContainer>
-        <Button className={classes.docsButton} onClick={addCards}>Add Cards to Session</Button>
+          </TableContainer>
+          <Button className={classes.cardsButton} onClick={addCards}>
+            Add Cards to Session
+          </Button>
 
+        </div>
       </div>
     </div>
 
