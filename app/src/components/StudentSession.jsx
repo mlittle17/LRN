@@ -5,8 +5,10 @@ import axios from 'axios';
 // the video style
 //
 import Slider from 'react-slick';
-import { Grid, Typography, Avatar } from '@material-ui/core';
-import Container from '@material-ui/core/Container';
+import {
+  Grid, Typography, Avatar, Paper, Container, IconButton,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { StyledVideo, StudentInstructorVideo } from '../styles/StyledComponents.jsx';
 import Board from './Board.jsx';
 // import Video from './Video.jsx';
@@ -16,6 +18,22 @@ import BulletinBoard from './BulletinBoard.jsx';
 import StudentChatWidget from './StudentChatWidget.jsx';
 
 import '../styles/Upcoming.css';
+
+const useStyles = makeStyles((theme) => ({
+  border: 'none',
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+    flexGrow: 1,
+  },
+  paper: {
+    border: 'none',
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 const InstructorVideo = ({ peer }) => {
   const ref = useRef();
@@ -54,6 +72,8 @@ const StudentSession = (props) => {
 
   // const [showBB, setShowBB] = useState(false);
   const [notes, setNotes] = useState([]);
+  const classes = useStyles();
+
 
   useEffect(() => {
     axios.get('/event/1/documents')
@@ -150,28 +170,22 @@ const StudentSession = (props) => {
 
   return (
     <Container>
-      <div className="ui stackable two column grid">
-        <div className="column">
+      <div className={classes.root}>
+        <Grid container spacing={1}>
+
           instructor
           {peers.length > 0 && <InstructorVideo peer={peers[0]} />}
 
-        </div>
-        <div className="column">
+        
           <Board />
           <BulletinBoard notes={notes} user={props.user} />
-        </div>
 
         student/user.
         <StyledVideo muted ref={userVideo} autoPlay playsInline />
-        <button type="button" onClick={pauseVideo} className="ui icon button">
-          <i aria-hidden="true" className="play icon" />
-        </button>
-        {/* audio on/off button */}
-        <button type="button" onClick={mute} className="ui icon button">
-          <i aria-hidden="true" className="microphone icon" />
-        </button>
 
-      </div>
+
+     </Grid>
+     </div>
       <StudentChatWidget />
     </Container>
   );
