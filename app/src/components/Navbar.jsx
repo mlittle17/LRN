@@ -24,6 +24,8 @@ const Navbar = ({
   user, googleLogin, googleLogout, binder, sessions, notes,
 }) => {
   const [activeItem, setActiveItem] = useState('home');
+  const [navBarSessionName, setNavbarSessionName] = useState('');
+
   const handleItemClick = (e, { name }) => setActiveItem(name);
   const id = uuid();
   // console.log(user.id, 'NAVBAR');
@@ -49,21 +51,21 @@ const Navbar = ({
             <Link to='/board' class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Test Room</Link>
           </Menu.Item> */}
 
-          <Menu.Item
+          {/* <Menu.Item
             name="instructor"
             active={activeItem === 'session'}
             onClick={handleItemClick}
           >
             <Link to={`/instructor/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Instructor</Link>
-          </Menu.Item>
+          </Menu.Item> */}
 
-          <Menu.Item
+          {/* <Menu.Item
             name="student"
             active={activeItem === 'student'}
             onClick={handleItemClick}
           >
             <Link to={`/student/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Student</Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item
             name="profile"
             active={activeItem === 'profile'}
@@ -135,15 +137,15 @@ const Navbar = ({
       </Menu>
       <div>
         <Switch>
-          <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} />)} />
+          <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} setNavbarSessionName={setNavbarSessionName} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} binder={binder} />)} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/find" render={() => (<FindSessions user={user} sessions={sessions} />)} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/registered" component={Sessions} />
-          <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} />)} />
-          <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} notes={notes} />)} />
+          <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} sessionName={navBarSessionName} />)} />
+          <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} notes={notes} sessionName={navBarSessionName} />)} />
         </Switch>
       </div>
     </div>

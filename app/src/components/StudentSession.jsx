@@ -5,8 +5,10 @@ import axios from 'axios';
 // the video style
 //
 import Slider from 'react-slick';
-import { Grid, Typography, Avatar } from '@material-ui/core';
-import Container from '@material-ui/core/Container';
+import {
+  Grid, Typography, Avatar, Paper, Container, IconButton,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { StyledVideo, StudentInstructorVideo } from '../styles/StyledComponents.jsx';
 import Board from './Board.jsx';
 // import Video from './Video.jsx';
@@ -14,8 +16,28 @@ import Questions from './Questions.jsx';
 import socket from './Socket.jsx';
 import BulletinBoard from './BulletinBoard.jsx';
 import StudentChatWidget from './StudentChatWidget.jsx';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import VideocamOffIcon from '@material-ui/icons/VideocamOff';
+import MicNoneOutlinedIcon from '@material-ui/icons/MicNoneOutlined';
+import MicOffOutlinedIcon from '@material-ui/icons/MicOffOutlined';
 
 import '../styles/Upcoming.css';
+
+const useStyles = makeStyles((theme) => ({
+  border: 'none',
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+    flexGrow: 1,
+  },
+  paper: {
+    border: 'none',
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 const InstructorVideo = ({ peer }) => {
   const ref = useRef();
@@ -54,6 +76,8 @@ const StudentSession = (props) => {
 
   // const [showBB, setShowBB] = useState(false);
   const [notes, setNotes] = useState([]);
+  const classes = useStyles();
+
 
   useEffect(() => {
     axios.get('/event/1/documents')
@@ -150,28 +174,67 @@ const StudentSession = (props) => {
 
   return (
     <Container>
-      <div className="ui stackable two column grid">
-        <div className="column">
-          instructor
-          {peers.length > 0 && <InstructorVideo peer={peers[0]} />}
-
-        </div>
-        <div className="column">
+      <Grid item xs={12}>
+      <Paper className={classes.paper}>
+        <h1> {props.sessionName} </h1>
+      </Paper>
+        </Grid>
+      <div className={classes.root}>
+        <Grid container spacing={1}>
+        <Grid item xs={4}>
+          {peers.length > 0 && 
+          <Paper className={classes.paper} elevation={0}>
+            <InstructorVideo peer={peers[0]} />}
+          </Paper>}
+          </Grid>
+          <Grid item xs={8}>
           <Board />
+          </Grid>
+          <Grid item xs={6}>
+      <Paper className={classes.paper} elevation={0}>
           <BulletinBoard notes={notes} user={props.user} />
-        </div>
+        
+      </Paper>
+        </Grid>
+        <Grid item xs={6} container>
+        <Grid item xs={6}>
+        <Paper className={classes.paper} elevation={0}>
+                <StyledVideo muted ref={userVideo} autoPlay playsInline />
+      
+        {videoSwitch
+                  && (
+                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                      <VideocamIcon />
+                    </IconButton>
+                  )
+                  || (
+                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                      <VideocamOffIcon />
+                    </IconButton>
+                  )}
 
-        student/user.
-        <StyledVideo muted ref={userVideo} autoPlay playsInline />
-        <button type="button" onClick={pauseVideo} className="ui icon button">
-          <i aria-hidden="true" className="play icon" />
-        </button>
-        {/* audio on/off button */}
-        <button type="button" onClick={mute} className="ui icon button">
-          <i aria-hidden="true" className="microphone icon" />
-        </button>
+                {audioSwitch
+                  && (
+                    <IconButton aria-label="pause" onClick={mute}>
+                      <MicNoneOutlinedIcon />
+                    </IconButton>
+                  )
+                  || (
+                    <IconButton aria-label="pause" onClick={mute}>
+                      <MicOffOutlinedIcon />
+                    </IconButton>
+                  )}
+                  </Paper>
+        </Grid>
+              
+        </Grid>
 
-      </div>
+      
+
+
+
+     </Grid>
+     </div>
       <StudentChatWidget />
     </Container>
   );
