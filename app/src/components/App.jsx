@@ -98,7 +98,7 @@ function App() {
   // }, []);
 
   const googleLogin = () => {
-    window.location.replace('http://localhost:8080/auth/login');
+    window.location.replace('https://lrn-solid-sun-282620.uc.r.appspot.com/auth/login');
   };
 
   const googleLogout = () => {
