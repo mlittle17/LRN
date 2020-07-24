@@ -138,12 +138,12 @@ const Navbar = ({
           <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} />)} />
           <Route exact path="/profile" render={() => (<Profile user={user} binder={binder} />)} />
           <Route exact path="/sessions" component={Sessions} />
-          <Route exact path="/logout" component={Logout} />
+          <Route exact path="/find" render={() => (<FindSessions user={user} sessions={sessions} />)} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
+          <Route exact path="/logout" component={Logout} />
           <Route exact path="/registered" component={Sessions} />
           <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} />)} />
           <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} notes={notes} />)} />
-          <Route exact path="/find" component={FindSessions} />
         </Switch>
       </div>
     </div>

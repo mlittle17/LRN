@@ -11,23 +11,6 @@ import SlideshowTwoToneIcon from '@material-ui/icons/SlideshowTwoTone'; // two-t
 import ViewCarouselTwoToneIcon from '@material-ui/icons/ViewCarouselTwoTone'; // flash cards
 
 
-// let documents = [
-//   {
-//     type: 'Word Document',
-//     linkTo: 'Lasagna Recipe',
-//     creator: 'Rya Sicily',
-//     dateSaved: '08/03/2020',
-//   },
-//   {
-//     type: 'Word Document',
-//     linkTo: 'Packing Ess. List',
-//     creator: 'Greg Sanzen',
-//     dateSaved: '08/10/2020',
-//   },
-// ];
-
-// request to get data
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: '#a58e57',
@@ -40,7 +23,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    maxWidth: 750,
+    maxWidth: 500,
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
@@ -49,8 +32,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles(() => ({
   table: {
-    // maxWidth: 700,
-    // minWidth: 700,
+    minWidth: 500,
     maxHeight: 200,
   },
   colLabel: {
@@ -65,8 +47,8 @@ const Binder = ({ userInfo, binder }) => {
   const classes = useStyles();
 
   return (
-    <div className="Binder">
-      <Typography gutterBottom variant="h4" component="h6" style={{ marginLeft: '35px', color: '#2d2e2e' }}><b>MY BINDER</b></Typography>
+    <div className="Binder" style={{ marginTop: '35px' }}>
+      <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>MY BINDER</b></Typography>
 
       <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
         <Table className={classes.table} aria-label="customized table">
@@ -92,7 +74,7 @@ const Binder = ({ userInfo, binder }) => {
                     <ViewCarouselTwoToneIcon />
                   )}
                 </StyledTableCell>
-                <StyledTableCell align="right" className={classes.rowText}><a href={document.linkto}> {document.linkto} </a></StyledTableCell>
+                <StyledTableCell align="right" className={classes.rowText}><a href={document.linkto}> {document.title} </a></StyledTableCell>
                 <StyledTableCell align="right" className={classes.rowText}>{`${document.namefirst} ${document.namelast}`}</StyledTableCell>
                 <StyledTableCell align="right" className={classes.rowText}>{document.dateSaved}</StyledTableCell>
               </StyledTableRow>
