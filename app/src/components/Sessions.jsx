@@ -16,12 +16,10 @@ function Sessions() {
       .catch(error => {
         console.error('Error getting all events from database:', error);
       });
-
-    console.log(sessionObjs);
   }, []);
 
   useEffect(() => {
-    console.log('reaching sessions', sessionObjs);
+    // console.log('reaching sessions', sessionObjs);
     sessionObjs.forEach((sessionObj) => {
       axios.get(`/users/${sessionObj.users_id}`)
         .then(response => {
@@ -39,7 +37,7 @@ function Sessions() {
       <Grid container justify="space-evenly">
         <Calendar sessions={sessionObjs} />
         <div>
-          <SessionCard />
+          {/* <SessionCard /> */}
         </div>
       </Grid>
     </div>
