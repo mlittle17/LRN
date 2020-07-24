@@ -100,7 +100,7 @@ const CreateSession = ({ user }) => {
   const addEvent = () => {
     const uuid = generateUuid();
     return axios.post('/event', {
-      user_id: id, name: sessionTitle, topic: subject, description: sessionDesc, duration: sessionLength, date: sessionDate, time: `${sessionTime} ${sessionMeridiem}`, classLimit: capacity, uuid: uuid,
+      user_id: id, name: sessionTitle, topic: subject, description: sessionDesc, duration: sessionLength, date: sessionDate, time: `${sessionTime} ${sessionMeridiem}`, classLimit: capacity, zip: user.zip, uuid: uuid
     })
       .then(response => response.data[0].id)
       .then(eventId => {
