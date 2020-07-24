@@ -145,7 +145,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Button size="small" onClick={handleClose} style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
                     Close
-              </Button>
+                  </Button>
                   {/* && registered !== true */}
                   {(location.pathname !== '/registered') && (
                     <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
@@ -170,19 +170,17 @@ const SessionCard = ({ event }) => {
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   Description:
-            </Typography>
+                </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  What was the class structure of the Aztecs? What language did the Aztec speak?
-                  What can we learn from the Aztecs? Find out the answers to these questions and
-                  more in this comprehensive session pulled straight from my course curriculum at Tulane.
-            </Typography>
+                  {description}
+                </Typography>
 
                 <Typography gutterBottom variant="h5" component="h2">
                   Est. Duration:
-            </Typography>
+                </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  1hr 45min
-            </Typography>
+                  {duration}
+                </Typography>
               </CardContent>
             </Collapse>
           </Card>
