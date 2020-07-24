@@ -95,9 +95,9 @@ const SessionCalendar = ({
         style={{
           height: 600, width: 940, border: '#474a2c 1px', borderStyle: 'solid',
         }}
-        // components={{
-        //   event: SessionCard,
-        // }}
+        components={{
+          event: SessionCard,
+        }}
       />
     </div>
   );
