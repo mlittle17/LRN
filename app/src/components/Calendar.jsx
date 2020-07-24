@@ -80,7 +80,7 @@ const SessionCalendar = ({
         },
       });
     });
-    console.log(sessionsColl);
+    console.log('sessionsColl:', sessionsColl);
     // setSessionsList(sessionsColl);
   }, []);
 
