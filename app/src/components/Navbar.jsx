@@ -16,6 +16,7 @@ import CreateFlashCards from './CreateFlashCards.jsx';
 import SessionRoute from './SessionRoute.jsx';
 import InstructorSession from './InstructorSession.jsx';
 import StudentSession from './StudentSession.jsx';
+import NotLoggedIn from './NotLoggedIn.jsx';
 
 import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
@@ -137,7 +138,9 @@ const Navbar = ({
       </Menu>
       <div>
         <Switch>
-          <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} setNavbarSessionName={setNavbarSessionName} />)} />
+          {!user && <Route exact path="/" render={() => (<NotLoggedIn />)} />}
+          {user && <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} setNavbarSessionName={setNavbarSessionName} />)} />}
+          {/* <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} setNavbarSessionName={setNavbarSessionName} />)} /> */}
           <Route exact path="/profile" render={() => (<Profile user={user} binder={binder} />)} />
           <Route exact path="/sessions" component={Sessions} />
           <Route exact path="/find" render={() => (<FindSessions user={user} sessions={sessions} />)} />

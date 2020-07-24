@@ -7,8 +7,10 @@ import { useGoogleMaps } from 'react-hook-google-maps';
 
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
 import {
-  Card, CardActionArea, CardContent, Dialog, Grid, Typography,
+  Card, CardActionArea, CardContent, Dialog, DialogTitle, Divider,
+  Grid, IconButton, List, ListItem, Typography,
 } from '@material-ui/core';
 
 import '../styles/Form.css';
@@ -25,11 +27,12 @@ const useStyles = makeStyles((theme) => ({
     borderColor: '#474a2c',
   },
   dialog: {
-    minWidth: 798,
-    maxWidth: 798,
-    minHeight: 498,
-    maxHeight: 498,
-    marginLeft: 'auto',
+    minWidth: 877,
+    maxWidth: 810,
+    minHeight: 577,
+    maxHeight: 510,
+    margin: 'auto',
+    marginRight: 70,
   },
   grid: {
     marginTop: 40,
@@ -79,6 +82,7 @@ const FindSessions = ({ user, sessions }) => {
     }
   });
   const [sessionColl, setSessionColl] = useState({});
+  const [sessionList, setSessionsList] = useState([]);
   const [currMapLocs, setCurrMapLocs] = useState([
     // { lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 },
     // { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 },
@@ -360,6 +364,8 @@ const FindSessions = ({ user, sessions }) => {
     });
     marker.zip = zipcode;
     marker.addListener('click', () => {
+      console.log(marker.title);
+      setSessionsList(sessionColl[marker.title]);
       setListOpen(true);
       // map.setZoom(8);
       // map.setCenter(marker.getPosition());
@@ -565,7 +571,40 @@ const FindSessions = ({ user, sessions }) => {
           hideBackdrop="true"
         >
           <Card className={classes.root} variant="outlined">
-            
+            <DialogTitle id="max-width-dialog-title" className={classes.actionArea}>
+                <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close" style={{ float: 'left' }}>
+                  <CloseIcon />
+                </IconButton>
+                <Typography variant="h3" align="center">
+                  SCHEDULED SESSIONS
+                </Typography>
+            </DialogTitle>
+
+            <List style={{ width: '100%', backgroundColor: '' }}>
+              { sessionList.map((session) => (
+                <ListItem alignItems="flex-start" style={{ backgroundColor: '#2d2e2e', color: '#f6fef5' }}>
+                  <Grid container justify="space-evenly">
+                    <Typography variant="h5">
+                      <b>{session.name.toUpperCase()}</b>
+                    </Typography><br />
+                    <Typography variant="h7">
+                      {session.date} {session.time}
+                    </Typography>
+                  </Grid>
+
+                  <Grid container justify="space-evenly">
+                    <Typography variant="h5">
+                      {session.topic.toUpperCase()}
+                    </Typography>
+                    <Typography variant="h7">
+                      {session.description}
+                    </Typography>
+                  </Grid><br />
+                  <Divider variant="middle" color="primary" /><br />
+                </ListItem>
+              ))}
+            </List>
+
           </Card>
         </Dialog>
         <Card className={classes.mapCard} variant="outlined">
