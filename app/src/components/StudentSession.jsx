@@ -191,7 +191,7 @@ const StudentSession = (props) => {
           <Board />
           </Grid>
           <Grid item xs={6}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} elevation={0}>
           <BulletinBoard notes={notes} user={props.user} />
         
       </Paper>
