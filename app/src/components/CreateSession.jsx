@@ -58,11 +58,6 @@ const CreateSession = ({ user }) => {
   const [documents, setDocuments] = useState([]);
   const [document, setDocument] = useState('');
   const [cards, setCards] = useState('');
-  // const [eventId, setEventId] = useState(1);
-
-  // for now hardcoded user
-  // const user_id = '1'
-  // console.log(document);
 
   const onSessionNameChange = (e) => {
     setSessionTitle(e.target.value);
@@ -123,7 +118,6 @@ const CreateSession = ({ user }) => {
                   cards: cards.cards,
                 });
                 window.location.replace('/');
-
               }),
           );
       })
