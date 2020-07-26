@@ -4,7 +4,8 @@ import axios from 'axios';
 import { Form } from 'semantic-ui-react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
-  Button, TableCell, Paper, Card, CardContent, Grid, TableContainer, Table, TableHead, TableRow, TableBody,
+  Button, TableCell, Paper, Card, CardContent, Dialog, Grid, TableContainer,
+  Table, TableHead, TableRow, TableBody,
 } from '@material-ui/core';
 
 import '../styles/Form.css';
@@ -44,6 +45,20 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 340,
     // maxHeight: 340,
   },
+  docsButton: {
+    margin: 10,
+    width: 586,
+    backgroundColor: '#474a2c',
+    color: '#f6fef5',
+    "&:hover": {
+      backgroundColor: '#a58e57',
+      color: '#2d2e2e',
+    },
+  },
+  dialog: {
+    minWidth: 620,
+    minHeight: 400,
+  },
   cardsButton: {
     margin: 10,
     width: 500,
@@ -61,11 +76,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateFlashCards = ({ setCards }) => {
+  const [open, setOpen] = useState(false)
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
   const [packName, setPackName] = useState('');
   const [flashCard, setFlashCard] = useState({});
   const [flashCards, setFlashCards] = useState([]);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const addFlashCard = () => {
     // this will add to Flash Card to flashCards state
@@ -79,18 +103,17 @@ const CreateFlashCards = ({ setCards }) => {
     setBack('');
   };
 
-  const addName = (e) => {
+  const handleNameChange = (e) => {
     setPackName(e.target.value);
   };
 
-  const addFront = (e) => {
+  const handleFrontChange = (e) => {
     setFront(e.target.value);
   };
 
-  const addBack = (e) => {
+  const handleBackChange = (e) => {
     setBack(e.target.value);
   };
-
 
   const addCards = () => {
     const pack = {
@@ -106,72 +129,85 @@ const CreateFlashCards = ({ setCards }) => {
 
   return (
     <div className="Create">
+      <Button className={classes.docsButton} onClick={handleOpen}>
+        Add FlashCards to Session
+      </Button>
       <div>
-        <Grid container justify="space-around">
-          <Card className={classes.root}>
-            <CardContent>
-              <Form.Input
-                fluid
-                label="Pack Name"
-                placeholder="Pack Name"
-                onChange={addName}
-              />
-              <Form>
-                {/* subject select */}
+        <Dialog
+          fullWidth="true"
+          className={classes.dialog}
+          maxWidth="md"
+          scroll="paper"
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="max-width-dialog-title"
+          hideBackdrop="true"
+        >
+          <Grid container justify="space-around">
+            <Card className={classes.root}>
+              <CardContent>
                 <Form.Input
-                  class="flash"
                   fluid
-                  label="Front"
-                  placeholder="Question"
-                  value={front}
-                  onChange={addFront}
+                  label="Pack Name"
+                  placeholder="Pack Name"
+                  onChange={handleNameChange}
                 />
+                <Form>
+                  {/* subject select */}
+                  <Form.Input
+                    class="flash"
+                    fluid
+                    label="Front"
+                    placeholder="Question"
+                    value={front}
+                    onChange={handleFrontChange}
+                  />
 
-                {/* session date */}
-                <Form.Input
-                  class="flash"
-                  label="Back"
-                  placeholder="Answer"
-                  value={back}
-                  onChange={addBack}
-                />
+                  {/* session date */}
+                  <Form.Input
+                    class="flash"
+                    label="Back"
+                    placeholder="Answer"
+                    value={back}
+                    onChange={handleBackChange}
+                  />
 
-              </Form> <br />
-              <Button className={classes.cardsButton} onClick={addFlashCard}>Create Flash Card</Button>
-            </CardContent>
-          </Card>
-        </Grid>
-        <div>
-          <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
-            <Table className={classes.table} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="middle" className={classes.colLabel}>Front</StyledTableCell>
-                  <StyledTableCell align="middle" className={classes.colLabel}>Back</StyledTableCell>
-                  <StyledTableCell align="middle" className={classes.colLabel}>Pack</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {flashCards.map(fc => (
-                  <StyledTableRow key={document.id}>
-                    <StyledTableCell align="middle" className={classes.rowText}> {fc.front} </StyledTableCell>
-                    <StyledTableCell align="middle" className={classes.rowText}> {fc.back} </StyledTableCell>
-                    <StyledTableCell align="middle" className={classes.rowText}> {packName} </StyledTableCell>
-                  </StyledTableRow>
+                </Form> <br />
+                <Button className={classes.cardsButton} onClick={addFlashCard}>Create Flash Card</Button>
+              </CardContent>
+            </Card>
+          </Grid>
+          <div>
+            <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
+              <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="middle" className={classes.colLabel}>Front</StyledTableCell>
+                    <StyledTableCell align="middle" className={classes.colLabel}>Back</StyledTableCell>
+                    <StyledTableCell align="middle" className={classes.colLabel}>Pack</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {flashCards.map(fc => (
+                    <StyledTableRow key={document.id}>
+                      <StyledTableCell align="middle" className={classes.rowText}> {fc.front} </StyledTableCell>
+                      <StyledTableCell align="middle" className={classes.rowText}> {fc.back} </StyledTableCell>
+                      <StyledTableCell align="middle" className={classes.rowText}> {packName} </StyledTableCell>
+                    </StyledTableRow>
 
-                ))}
-              </TableBody>
-            </Table>
+                  ))}
+                </TableBody>
+              </Table>
 
-          </TableContainer>
-          <Button className={classes.cardsButton} onClick={addCards}>
-            Add Cards to Session
-          </Button>
+            </TableContainer>
+            <Button className={classes.cardsButton} onClick={addCards}>
+              Save Pack
+            </Button>
 
-        </div>
+          </div>
+        </Dialog>
       </div>
     </div>
-
   );
 };
 
