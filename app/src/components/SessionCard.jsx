@@ -94,7 +94,7 @@ const SessionCard = ({ event }) => {
                 {/* Possibly add an avatar here with instructor name */}
                 <Typography gutterBottom variant="h5" component="h2">
                   Instructor
-            </Typography>
+                </Typography>
                 {/* Possibly add an avatar here with instructor name */}
                 <Typography variant="body1" color="textSecondary" component="p">
                   {`${namefirst} ${namelast}`}
@@ -105,7 +105,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Typography gutterBottom variant="h5" component="h2">
                     Subject
-              </Typography>
+                  </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
                     {topic}
                   </Typography>
@@ -113,7 +113,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Typography gutterBottom variant="h5" component="h2">
                     Capacity
-              </Typography>
+                  </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
                     {capacitycount} / {classlimit}
                   </Typography>
@@ -124,7 +124,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Typography gutterBottom variant="h5" component="h2">
                     Date
-              </Typography>
+                  </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
                     {date}
                   </Typography>
@@ -132,7 +132,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Typography gutterBottom variant="h5" component="h2">
                     Time
-              </Typography>
+                  </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
                     {time}
                   </Typography>
