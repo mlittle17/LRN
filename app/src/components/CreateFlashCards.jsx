@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Cleave from 'cleave.js/react';
-import axios from 'axios';
+import React, { useState } from 'react';
+
 import { Form } from 'semantic-ui-react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
-  Button, TableCell, Paper, Card, CardContent, Dialog, Grid, TableContainer,
-  Table, TableHead, TableRow, TableBody,
+  Button, Card, CardContent, Dialog, Fade, Grid, Table, Paper,
+  TableBody, TableCell, TableContainer, TableHead, TableRow,
 } from '@material-ui/core';
 
 import '../styles/Form.css';
@@ -34,7 +33,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    // maxWidth: 700,
+    maxWidth: 620,
     // minWidth: 700,
     maxHeight: 200,
   },
@@ -42,41 +41,37 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 40,
     maxWidth: 620,
     minWidth: 620,
-    minHeight: 340,
-    // maxHeight: 340,
+    minHeight: 300,
+    marginBottom: 40,
   },
   docsButton: {
-    margin: 10,
+    marginTop: 10,
     width: 586,
     backgroundColor: '#474a2c',
     color: '#f6fef5',
-    "&:hover": {
+    '&:hover': {
       backgroundColor: '#a58e57',
       color: '#2d2e2e',
     },
   },
   dialog: {
     minWidth: 620,
-    minHeight: 400,
+    minHeight: 545,
   },
   cardsButton: {
     margin: 10,
     width: 500,
     backgroundColor: '#474a2c',
     color: '#f6fef5',
-    "&:hover": {
+    '&:hover': {
       backgroundColor: '#a58e57',
       color: '#2d2e2e',
     },
   },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
 }));
 
 const CreateFlashCards = ({ setCards }) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
   const [packName, setPackName] = useState('');
@@ -101,6 +96,7 @@ const CreateFlashCards = ({ setCards }) => {
     flashCards.push(card);
     setFront('');
     setBack('');
+    console.log(flashCards);
   };
 
   const handleNameChange = (e) => {
@@ -123,6 +119,7 @@ const CreateFlashCards = ({ setCards }) => {
 
     setCards(pack);
     console.log(pack);
+    handleClose();
   };
 
   const classes = useStyles();
@@ -134,6 +131,9 @@ const CreateFlashCards = ({ setCards }) => {
       </Button>
       <div>
         <Dialog
+          maxHeight="md"
+          border={2}
+          borderColor="primary"
           fullWidth="true"
           className={classes.dialog}
           maxWidth="md"
@@ -141,7 +141,6 @@ const CreateFlashCards = ({ setCards }) => {
           open={open}
           onClose={handleClose}
           aria-labelledby="max-width-dialog-title"
-          hideBackdrop="true"
         >
           <Grid container justify="space-around">
             <Card className={classes.root}>
@@ -177,34 +176,38 @@ const CreateFlashCards = ({ setCards }) => {
               </CardContent>
             </Card>
           </Grid>
-          <div>
-            <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
-              <Table className={classes.table} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell align="middle" className={classes.colLabel}>Front</StyledTableCell>
-                    <StyledTableCell align="middle" className={classes.colLabel}>Back</StyledTableCell>
-                    <StyledTableCell align="middle" className={classes.colLabel}>Pack</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {flashCards.map(fc => (
-                    <StyledTableRow key={document.id}>
-                      <StyledTableCell align="middle" className={classes.rowText}> {fc.front} </StyledTableCell>
-                      <StyledTableCell align="middle" className={classes.rowText}> {fc.back} </StyledTableCell>
-                      <StyledTableCell align="middle" className={classes.rowText}> {packName} </StyledTableCell>
-                    </StyledTableRow>
+          {flashCards.length > 0 && (
+            // <Fade>
+              <div>
+                <TableContainer className={classes.table} component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
+                  <Table className={classes.table} aria-label="customized table">
+                    <TableHead>
+                      <TableRow>
+                        <StyledTableCell align="middle" className={classes.colLabel}>Front</StyledTableCell>
+                        <StyledTableCell align="middle" className={classes.colLabel}>Back</StyledTableCell>
+                        <StyledTableCell align="middle" className={classes.colLabel}>Pack</StyledTableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {flashCards.map(fc => (
+                        <StyledTableRow key={document.id}>
+                          <StyledTableCell align="middle" className={classes.rowText}> {fc.front} </StyledTableCell>
+                          <StyledTableCell align="middle" className={classes.rowText}> {fc.back} </StyledTableCell>
+                          <StyledTableCell align="middle" className={classes.rowText}> {packName} </StyledTableCell>
+                        </StyledTableRow>
 
-                  ))}
-                </TableBody>
-              </Table>
+                      ))}
+                    </TableBody>
+                  </Table>
 
-            </TableContainer>
-            <Button className={classes.cardsButton} onClick={addCards}>
-              Save Pack
-            </Button>
+                </TableContainer>
+                <Button className={classes.cardsButton} onClick={addCards}>
+                  Save Pack
+                </Button>
 
-          </div>
+              </div>
+            // </Fade>
+          )}
         </Dialog>
       </div>
     </div>
