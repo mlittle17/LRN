@@ -33,6 +33,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   table: {
+    margin: 'auto',
     maxWidth: 620,
     // minWidth: 700,
     maxHeight: 200,
@@ -61,6 +62,19 @@ const useStyles = makeStyles((theme) => ({
   cardsButton: {
     margin: 10,
     width: 500,
+    backgroundColor: '#474a2c',
+    color: '#f6fef5',
+    '&:hover': {
+      backgroundColor: '#a58e57',
+      color: '#2d2e2e',
+    },
+  },
+  save: {
+    float: 'right',
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 10,
+    width: 100,
     backgroundColor: '#474a2c',
     color: '#f6fef5',
     '&:hover': {
@@ -201,7 +215,7 @@ const CreateFlashCards = ({ setCards }) => {
                   </Table>
 
                 </TableContainer>
-                <Button className={classes.cardsButton} onClick={addCards}>
+                <Button className={classes.cardsButton, classes.save} onClick={addCards}>
                   Save Pack
                 </Button>
 
