@@ -23,11 +23,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 340,
     // maxHeight: 340,
   },
-  docsButton: {
-    width: 500,
-    backgroundColor: '#474a2c',
-    color: '#f6fef5',
-  },
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
@@ -52,8 +47,6 @@ const timeOptions = [
 
 const CreateSession = ({ user }) => {
   const { id } = user;
-  //  console.log(user);
-  // console.log(id)
   const [sessionTitle, setSessionTitle] = useState('');
   const [sessionDesc, setSessionDesc] = useState('');
   const [subject, setSessionSubject] = useState('');
@@ -65,11 +58,6 @@ const CreateSession = ({ user }) => {
   const [documents, setDocuments] = useState([]);
   const [document, setDocument] = useState('');
   const [cards, setCards] = useState('');
-  // const [eventId, setEventId] = useState(1);
-
-  // for now hardcoded user
-  // const user_id = '1'
-  // console.log(document);
 
   const onSessionNameChange = (e) => {
     setSessionTitle(e.target.value);
@@ -130,7 +118,6 @@ const CreateSession = ({ user }) => {
                   cards: cards.cards,
                 });
                 window.location.replace('/');
-
               }),
           );
       })

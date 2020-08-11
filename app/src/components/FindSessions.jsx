@@ -580,7 +580,7 @@ const FindSessions = ({ user, sessions }) => {
                 </Typography>
             </DialogTitle>
 
-            <List style={{ width: '100%', backgroundColor: '' }}>
+            <List style={{ width: '100%' }}>
               { sessionList.map((session) => (
                 <ListItem alignItems="flex-start" style={{ backgroundColor: '#2d2e2e', color: '#f6fef5' }}>
                   <Grid container justify="space-evenly">
@@ -600,6 +600,9 @@ const FindSessions = ({ user, sessions }) => {
                       {session.description}
                     </Typography>
                   </Grid><br />
+                  <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
+                    Register
+                  </Button>
                   <Divider variant="middle" color="primary" /><br />
                 </ListItem>
               ))}
