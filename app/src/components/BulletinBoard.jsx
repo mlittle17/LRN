@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 500,
     minWidth: 500,
-    minHeight: 500,
-    maxHeight: 500,
+    // minHeight: 500,
+    // maxHeight: 500,
     borderColor: '#474a2c',
     backgroundColor: '#474a2c',
   },

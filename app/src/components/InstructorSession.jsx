@@ -30,6 +30,20 @@ const useStyles = makeStyles((theme) => ({
     },
     flexGrow: 1,
   },
+  unselected: {
+    backgroundColor: '#a58e57',
+    color: '#f6fef5',
+    "&:hover, &.Mui-focusVisible": {
+      backgroundColor: '#474a2c',
+    },
+  },
+  selected: {
+    backgroundColor: '#474a2c',
+    color: '#f6fef5',
+    "&:hover, &.Mui-focusVisible": {
+      backgroundColor: '#a58e57',
+    },
+  },
   paper: {
     border: 'none',
     padding: theme.spacing(1),
@@ -165,24 +179,24 @@ const InstructorSession = (props) => {
                 <StyledVideo muted ref={userVideo} autoPlay playsInline />
                 {videoSwitch
                   && (
-                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                    <IconButton className={classes.unselected} aria-label="pause" onClick={pauseVideo} color="">
                       <VideocamIcon />
                     </IconButton>
                   )
                   || (
-                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                    <IconButton className={classes.selected} aria-label="pause" onClick={pauseVideo}>
                       <VideocamOffIcon />
                     </IconButton>
                   )}
 
                 {audioSwitch
                   && (
-                    <IconButton aria-label="pause" onClick={mute}>
+                    <IconButton className={classes.unselected} aria-label="pause" onClick={mute}>
                       <MicNoneOutlinedIcon />
                     </IconButton>
                   )
                   || (
-                    <IconButton aria-label="pause" onClick={mute}>
+                    <IconButton className={classes.selected} aria-label="pause" onClick={mute}>
                       <MicOffOutlinedIcon />
                     </IconButton>
                   )}

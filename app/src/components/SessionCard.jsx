@@ -94,7 +94,7 @@ const SessionCard = ({ event }) => {
                 {/* Possibly add an avatar here with instructor name */}
                 <Typography gutterBottom variant="h5" component="h2">
                   Instructor
-            </Typography>
+                </Typography>
                 {/* Possibly add an avatar here with instructor name */}
                 <Typography variant="body1" color="textSecondary" component="p">
                   {`${namefirst} ${namelast}`}
@@ -105,7 +105,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Typography gutterBottom variant="h5" component="h2">
                     Subject
-              </Typography>
+                  </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
                     {topic}
                   </Typography>
@@ -113,7 +113,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Typography gutterBottom variant="h5" component="h2">
                     Capacity
-              </Typography>
+                  </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
                     {capacitycount} / {classlimit}
                   </Typography>
@@ -124,7 +124,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Typography gutterBottom variant="h5" component="h2">
                     Date
-              </Typography>
+                  </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
                     {date}
                   </Typography>
@@ -132,7 +132,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Typography gutterBottom variant="h5" component="h2">
                     Time
-              </Typography>
+                  </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
                     {time}
                   </Typography>
@@ -145,7 +145,7 @@ const SessionCard = ({ event }) => {
                 <div>
                   <Button size="small" onClick={handleClose} style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
                     Close
-              </Button>
+                  </Button>
                   {/* && registered !== true */}
                   {(location.pathname !== '/registered') && (
                     <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
@@ -170,19 +170,17 @@ const SessionCard = ({ event }) => {
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   Description:
-            </Typography>
+                </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  What was the class structure of the Aztecs? What language did the Aztec speak?
-                  What can we learn from the Aztecs? Find out the answers to these questions and
-                  more in this comprehensive session pulled straight from my course curriculum at Tulane.
-            </Typography>
+                  {description}
+                </Typography>
 
                 <Typography gutterBottom variant="h5" component="h2">
                   Est. Duration:
-            </Typography>
+                </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  1hr 45min
-            </Typography>
+                  {duration}
+                </Typography>
               </CardContent>
             </Collapse>
           </Card>
