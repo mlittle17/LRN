@@ -62,7 +62,7 @@ function App() {
 
   if (user) {
     // Set up the Geocoding for transforming the zip to lat and lon
-    Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
+    Geocode.setApiKey(process.env.GOOGLE_API_KEY);
     console.log('User obj in App.jsx:', user);
     Geocode.fromAddress('70810').then(
       response => {
