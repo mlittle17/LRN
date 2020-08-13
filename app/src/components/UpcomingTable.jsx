@@ -1,10 +1,15 @@
 /* eslint-disable object-shorthand */
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory, Link, Switch } from 'react-router-dom';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
-  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
 } from '@material-ui/core';
+
+import moment, { isBefore, isSameOrAfter } from 'moment';
+import VoiceChatIcon from '@material-ui/icons/VoiceChat';
+
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -45,12 +50,42 @@ const useStyles = makeStyles({
 });
 
 const UpcomingTable = ({
-  sessionPage,
+  sessionPage, user, setNavbarSessionName,
 }) => {
   // const {
   //   name, creator, date, time,
   // } = sessions;
   const classes = useStyles();
+  const [joinSession, setJoinSession] = useState(true);
+  const history = useHistory();
+
+
+  
+  const doWeNeedButton = (date) => {
+    const mDY = date.split('/').join('-');
+    console.log(mDY);
+    if (moment().isSameOrAfter(mDY)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const placeInSession = (uuid, date, sessionName, creatorUserId) => {
+    doWeNeedButton(date);
+    console.log('you pushed a button', uuid, sessionName);
+    setNavbarSessionName(sessionName);
+    console.log(user.id, 'userid', creatorUserId, 'creatorId');
+    if (user.id === creatorUserId) {
+      history.push(`/instructor/${uuid}/${sessionName}`);
+    } else {
+      history.push(`/student/${uuid}/${sessionName}`);
+    }
+
+    // check if the user is the instructor or the student
+
+    
+  };
 
   return (
     <TableContainer component={Paper} variant="outlined" style={{ borderColor: '#474a2c' }}>
@@ -72,7 +107,11 @@ const UpcomingTable = ({
               </StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{`${session.namefirst} ${session.namelast}`}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{session.date}</StyledTableCell>
-              <StyledTableCell align="right" className={classes.rowText}>{session.time}</StyledTableCell>
+              <StyledTableCell align="right" className={classes.rowText}>
+                {doWeNeedButton(session.date) && <Fab color="primary" aria-label="add" style={{ marginLeft: '30px' }} onClick={() => placeInSession(session.uuid, session.date, session.name, session.users_id )} >
+                  <VoiceChatIcon fontSize="large" />
+                </Fab> || session.time}
+              </StyledTableCell>
             </StyledTableRow>
           ))}
           {/* }) */}
