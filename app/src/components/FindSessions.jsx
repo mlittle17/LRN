@@ -22,8 +22,8 @@ Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 798,
-    maxWidth: 798,
+    minWidth: 877,
+    maxWidth: 877,
     minHeight: 498,
     maxHeight: 498,
     borderColor: '#474a2c',
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 577,
     maxHeight: 510,
     margin: 'auto',
-    marginRight: 70,
+    marginRight: 65,
   },
   grid: {
     marginTop: 40,
@@ -389,6 +389,7 @@ const FindSessions = ({ user, sessions }) => {
         <Dialog
           fullWidth="true"
           className={classes.dialog}
+          variant="outlined"
           maxWidth="md"
           scroll="paper"
           open={listOpen}
