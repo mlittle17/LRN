@@ -61,11 +61,14 @@ const UpcomingTable = ({
 
 
   
-  const doWeNeedButton = (date) => {
+  const doWeNeedButton = (date, time) => {
     const mDY = date.split('/').join('-');
-    console.log(mDY);
+    // console.log(mDY);
+    // console.log(time, moment().isSameOrAfter(moment(time, 'HH:mm a')));
     if (moment().isSameOrAfter(mDY)) {
-      return true;
+      if(moment().isSameOrAfter(moment(time, 'HH:mm a'))){
+        return true;
+      }
     } else {
       return false;
     }
@@ -108,7 +111,7 @@ const UpcomingTable = ({
               <StyledTableCell align="right" className={classes.rowText}>{`${session.namefirst} ${session.namelast}`}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{session.date}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>
-                {doWeNeedButton(session.date) && <Fab color="primary" aria-label="add" style={{ marginLeft: '30px' }} onClick={() => placeInSession(session.uuid, session.date, session.name, session.users_id )} >
+                {doWeNeedButton(session.date, session.time) && <Fab color="primary" aria-label="add" style={{ marginLeft: '30px' }} onClick={() => placeInSession(session.uuid, session.date, session.name, session.users_id )} >
                   <VoiceChatIcon fontSize="large" />
                 </Fab> || session.time}
               </StyledTableCell>
