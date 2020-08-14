@@ -32,7 +32,7 @@ Object.defineProperty(Array.prototype, 'chunk', {
   },
 });
 
-const UpcomingSessions = ({ sessions }) => {
+const UpcomingSessions = ({ sessions, user, setNavbarSessionName }) => {
   // Simplify and sort to order the sessions by upcoming dates
   sessions.map((session) => {
     const { date } = session;
@@ -59,7 +59,7 @@ const UpcomingSessions = ({ sessions }) => {
         {rows.map((sessionPage) => {
           return (
             <div>
-              <UpcomingTable sessionPage={sessionPage} />
+              <UpcomingTable sessionPage={sessionPage} user={user} setNavbarSessionName={setNavbarSessionName} />
             </div>
           );
         })}

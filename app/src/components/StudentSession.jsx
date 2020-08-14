@@ -31,6 +31,20 @@ const useStyles = makeStyles((theme) => ({
     },
     flexGrow: 1,
   },
+  unselected: {
+    backgroundColor: '#a58e57',
+    color: '#f6fef5',
+    "&:hover, &.Mui-focusVisible": {
+      backgroundColor: '#474a2c',
+    },
+  },
+  selected: {
+    backgroundColor: '#474a2c',
+    color: '#f6fef5',
+    "&:hover, &.Mui-focusVisible": {
+      backgroundColor: '#a58e57',
+    },
+  },
   paper: {
     border: 'none',
     padding: theme.spacing(1),
@@ -87,7 +101,7 @@ const StudentSession = (props) => {
       .catch(err => {
         console.log(err);
       });
-      
+
 
     navigator.mediaDevices.getUserMedia({ video: videoConstraints }).then(stream => {
       userVideo.current.srcObject = stream;
@@ -175,66 +189,62 @@ const StudentSession = (props) => {
   return (
     <Container>
       <Grid item xs={12}>
-      <Paper className={classes.paper}>
-        <h1> {props.sessionName} </h1>
-      </Paper>
-        </Grid>
+        <Paper className={classes.paper}>
+          <h1> {props.sessionName} </h1>
+        </Paper>
+      </Grid>
       <div className={classes.root}>
         <Grid container spacing={1}>
-        <Grid item xs={4}>
-          {peers.length > 0 && 
-          <Paper className={classes.paper} elevation={0}>
-            <InstructorVideo peer={peers[0]} />}
-          </Paper>}
+          <Grid item xs={4}>
+            {peers.length > 0 && (
+              <Paper className={classes.paper} elevation={0}>
+                <InstructorVideo peer={peers[0]} />
+              </Paper>
+            )}
           </Grid>
           <Grid item xs={8}>
-          <Board />
+            <Board />
           </Grid>
           <Grid item xs={6}>
-      <Paper className={classes.paper} elevation={0}>
-          <BulletinBoard notes={notes} user={props.user} />
-        
-      </Paper>
-        </Grid>
-        <Grid item xs={6} container>
-        <Grid item xs={6}>
-        <Paper className={classes.paper} elevation={0}>
+            <Paper className={classes.paper} elevation={0}>
+              <BulletinBoard notes={notes} user={props.user} />
+
+            </Paper>
+          </Grid>
+          <Grid item xs={6} container>
+            <Grid item xs={6}>
+              <Paper className={classes.paper} elevation={0}>
                 <StyledVideo muted ref={userVideo} autoPlay playsInline />
-      
-        {videoSwitch
+
+                {videoSwitch
                   && (
-                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                    <IconButton className={classes.unselected} aria-label="pause" onClick={pauseVideo}>
                       <VideocamIcon />
                     </IconButton>
                   )
                   || (
-                    <IconButton aria-label="pause" onClick={pauseVideo}>
+                    <IconButton className={classes.selected} aria-label="pause" onClick={pauseVideo}>
                       <VideocamOffIcon />
                     </IconButton>
                   )}
 
                 {audioSwitch
                   && (
-                    <IconButton aria-label="pause" onClick={mute}>
+                    <IconButton className={classes.unselected} aria-label="pause" onClick={mute}>
                       <MicNoneOutlinedIcon />
                     </IconButton>
                   )
                   || (
-                    <IconButton aria-label="pause" onClick={mute}>
+                    <IconButton className={classes.selected} aria-label="pause" onClick={mute}>
                       <MicOffOutlinedIcon />
                     </IconButton>
                   )}
-                  </Paper>
+              </Paper>
+            </Grid>
+
+          </Grid>
         </Grid>
-              
-        </Grid>
-
-      
-
-
-
-     </Grid>
-     </div>
+      </div>
       <StudentChatWidget />
     </Container>
   );
