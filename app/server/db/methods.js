@@ -74,9 +74,11 @@ const getEventbyUser = async(req, res) => {
 
 // add user events
 const addUserEvent = async(req, res) => {
-  const { name, topic, description, duration, date, time, user_id, classLimit, zip, uuid } = req.body;
+  const {
+    name, topic, description, duration, date, time, user_id, classLimit, zip, uuid,
+  } = req.body;
   try {
-       await db.query(`INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit, zip, uuid) VALUES ( '${name}', '${topic}', '${description}', '${duration}', '${date}', '${time}', '${user_id}', '${classLimit}', '${zip}', '${uuid}') WHERE user_ids = '${req.params}'`);
+    await db.query(`INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit, zip, uuid) VALUES ( '${name}', '${topic}', '${description}', '${duration}', '${date}', '${time}', '${user_id}', '${classLimit}', '${zip}', '${uuid}') WHERE user_ids = '${req.params}'`);
     res.send('user added');
   } catch (err) {
     console.log('nah bruh', err);
@@ -121,10 +123,10 @@ Document
 
 const addDocument = async(req, res) => {
   const {
-    type, link, user_id, event_id,
+    type, name, link, user_id, event_id,
   } = req.body;
   try {
-    const id = await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}') RETURNING id`);
+    const id = await db.query(`INSERT INTO document (documentType, name, linkTo, users_id, event_id) VALUES ('${type}', '${name}','${link}', '${user_id}', '${event_id}') RETURNING id`);
     res.send(id);
   } catch (err) {
     console.log('got documents', err);
@@ -164,8 +166,8 @@ const addToBinder = async(req, res) => {
 // method that get from topic.
 const getUserBinder = async(req, res) => {
   try {
-    const userBinder = await db.any(`SELECT B.*, U.nameFirst, U.nameLast, D.linkTo, D.documentType, F.name from binder B INNER JOIN document D on D.id = B.document_id 
-    INNER JOIN users U on U.id = D.users_id WHERE D.users_id = ${req.params.id} INNER JOIN flashCardPack F on F.id = B.flashCardPack_id`);
+    const userBinder = await db.any(`SELECT B.*, U.nameFirst, U.nameLast, D.linkTo, D.documentType, D.name from binder B INNER JOIN document D on D.id = B.document_id 
+    INNER JOIN users U on U.id = D.users_id WHERE D.users_id = ${req.params.id}`);
     res.send(userBinder);
   } catch (err) {
     console.log(`No Binder, ${err}`);

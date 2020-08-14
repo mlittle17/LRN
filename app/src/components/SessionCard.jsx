@@ -177,14 +177,14 @@ const SessionCard = ({ event }) => {
                   Description:
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  {description}
+                  {event.description}
                 </Typography>
 
                 <Typography gutterBottom variant="h5" component="h2">
                   Est. Duration:
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  {duration}
+                  {event.duration}
                 </Typography>
               </CardContent>
             </Collapse>

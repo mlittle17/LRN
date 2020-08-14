@@ -25,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const docOptions = [
+  { key: 'gd', text: 'google doc', value: 'Google Doc' },
+  { key: 's', text: 'slides', value: 'slides' },
+  { key: 'v', text: 'video', value: 'video' },
+];
+
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -32,6 +38,8 @@ const Transition = React.forwardRef((props, ref) => {
 const AddDocuments = function AlertDialogSlide(props) {
   const [open, setOpen] = React.useState(false);
   const [links, setLinks] = React.useState([]);
+  const [name, setName] = React.useState([]);
+  const [type, setDocumentType] = React.useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,9 +52,20 @@ const AddDocuments = function AlertDialogSlide(props) {
   const onDocumentChange = (e) => {
     setLinks([...links, e.target.value]);
   };
+
+  const onDocumentNameChange = (e) => {
+    setName(e.target.value);
+  };
   const handleSubmitDocs = () => {
+    props.setName(name);
     props.setDocs(links);
+    props.setType(type);
     handleClose();
+  };
+
+  const onDocumentTypeChange = (e, result) => {
+    const { value } = result;
+    setDocumentType(value);
   };
 
   const classes = useStyles();
@@ -70,8 +89,18 @@ const AddDocuments = function AlertDialogSlide(props) {
         <DialogContent>
           <Form>
             <Form.Field>
+              <label>Name</label>
+              <input className="input" onChange={onDocumentNameChange} />
               <label>Link</label>
               <input className="input" onChange={onDocumentChange} />
+              <Form.Select
+                fluid
+                label="Document Type"
+                options={docOptions}
+                placeholder="Document Type"
+                onChange={onDocumentTypeChange}
+                value={type}
+              />
 
             </Form.Field>
           </Form>
