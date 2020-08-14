@@ -59,7 +59,7 @@ CREATE TABLE binder (
   flashCardPack_id Integer
 );
 
-CREATE TABLE FlashCard (
+CREATE TABLE flashCard (
   id SERIAL PRIMARY KEY NOT NULL,
   question VARCHAR(100),
   answer VARCHAR(100),

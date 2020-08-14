@@ -37,7 +37,7 @@ function Sessions() {
       <Grid container justify="space-evenly">
         <Calendar sessions={sessionObjs} />
         <div>
-          {/* <SessionCard /> */}
+          <SessionCard />
         </div>
       </Grid>
     </div>

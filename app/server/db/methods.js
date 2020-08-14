@@ -72,6 +72,17 @@ const getEventbyUser = async(req, res) => {
   }
 };
 
+// add user events
+const addUserEvent = async(req, res) => {
+  const { name, topic, description, duration, date, time, user_id, classLimit, zip, uuid } = req.body;
+  try {
+       await db.query(`INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit, zip, uuid) VALUES ( '${name}', '${topic}', '${description}', '${duration}', '${date}', '${time}', '${user_id}', '${classLimit}', '${zip}', '${uuid}') WHERE user_ids = '${req.params}'`);
+    res.send('user added');
+  } catch (err) {
+    console.log('nah bruh', err);
+  }
+};
+
 /*
 Topic
  */
@@ -153,7 +164,8 @@ const addToBinder = async(req, res) => {
 // method that get from topic.
 const getUserBinder = async(req, res) => {
   try {
-    const userBinder = await db.any(`SELECT B.*, U.nameFirst, U.nameLast, D.linkTo, D.documentType from binder B INNER JOIN document D on D.id = B.document_id INNER JOIN users U on U.id = D.users_id WHERE D.users_id = ${req.params.id}`);
+    const userBinder = await db.any(`SELECT B.*, U.nameFirst, U.nameLast, D.linkTo, D.documentType, F.name from binder B INNER JOIN document D on D.id = B.document_id 
+    INNER JOIN users U on U.id = D.users_id WHERE D.users_id = ${req.params.id} INNER JOIN flashCardPack F on F.id = B.flashCardPack_id`);
     res.send(userBinder);
   } catch (err) {
     console.log(`No Binder, ${err}`);
@@ -195,6 +207,7 @@ module.exports = {
   getAllUser,
   getUser,
   createUser,
+  addUserEvent,
   createTopic,
   getTopicByUser,
   getEventbyUser,
