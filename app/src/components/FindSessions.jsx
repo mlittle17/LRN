@@ -1,16 +1,17 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable quote-props */
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import Geocode from 'react-geocode';
 import { useGoogleMaps } from 'react-hook-google-maps';
 import Cleave from 'cleave.js/react';
 
+import MapSessionList from './MapSessionList';
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import {
-  Card, CardActionArea, CardContent, Dialog, DialogTitle, Divider,
-  Grid, IconButton, List, ListItem, Typography,
+  Card, CardActionArea, CardContent, Collapse, Dialog, DialogTitle, Divider,
+  Grid, IconButton, List, ListItem, Slide, Typography, Zoom,
 } from '@material-ui/core';
 
 import '../styles/Form.css';
@@ -21,9 +22,9 @@ import mapStyles from '../styles/Map.js'
 Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  card: {
     minWidth: 877,
-    maxWidth: 877,
+    maxWidth: 810,
     minHeight: 498,
     maxHeight: 498,
     borderColor: '#474a2c',
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 510,
     margin: 'auto',
     marginRight: 65,
+    borderColor: '#474a2c',
   },
   grid: {
     marginTop: 40,
@@ -55,6 +57,19 @@ const useStyles = makeStyles((theme) => ({
     borderColor: '#474a2c',
   },
 }));
+
+// const Transition = forwardRef(function Transition(props, ref) {
+//   return <Slide direction="up" ref={ref} {...props} />;
+// });
+
+// const Transition = forwardRef(function Transition(props, ref) {
+//   return <Zoom ref={ref} {...props} />;
+// });
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Collapse ref={ref} {...props} />;
+});
+
 
 const subOptions = [
   { key: 'fi', text: 'Finance', value: 'finance' },
@@ -85,13 +100,7 @@ const FindSessions = ({ user, sessions }) => {
   });
   const [sessionColl, setSessionColl] = useState({});
   const [sessionList, setSessionsList] = useState([]);
-  const [currMapLocs, setCurrMapLocs] = useState([
-    // { lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 },
-    // { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 },
-    // { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 },
-    // { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 },
-    // { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 },
-  ]);
+  const [currMapLocs, setCurrMapLocs] = useState([]);
   const markers = [];
   // const [markers, setMarkers] = useState([]);
 
@@ -307,7 +316,7 @@ const FindSessions = ({ user, sessions }) => {
           lng,
           zipcode: zip,
         },
-        centerMarker);
+          centerMarker);
         // }
       },
       error => {
@@ -316,24 +325,11 @@ const FindSessions = ({ user, sessions }) => {
     );
   }, [zip]);
 
-  // Watching the userLoc state value for update
-  // (When the userLoc state value is updated)
-  // useEffect(() => {
-  //   // Add a new marker over the center
-  //   /* Does not necessarily mean there are session there but signifies to the user
-  //      that a new zipcode has been focused on */
-  //   addMarker(userLoc, centerMarker);
-  // }, [userLoc]);
-
-  // When the map is dragged, write the new center zip to the form
-  // $('form').form('set values', {
-  //   zip: CODE TO FIND NEW MAP CENTER, THEN GEOCODED,
-  // })
-
   return (
     <div className="Find">
       <Grid container justify="space-around" className={classes.grid}>
         <div>
+          {/* Search Filter Component */}
           <Card className={classes.searchCard} variant="outlined">
             <CardActionArea className={classes.actionArea}>
               <div style={{ marginTop: '10px' }}>
@@ -386,29 +382,34 @@ const FindSessions = ({ user, sessions }) => {
             </CardContent>
           </Card>
         </div>
+
+        {/* Session List 'Popup' Component */}
         <Dialog
-          fullWidth="true"
           className={classes.dialog}
+          aria-labelledby="max-width-dialog-title"
           variant="outlined"
-          maxWidth="md"
           scroll="paper"
+          fullWidth="true"
+          maxWidth="md"
           open={listOpen}
           onClose={handleClose}
-          aria-labelledby="max-width-dialog-title"
           hideBackdrop="true"
+          TransitionComponent={Transition}
         >
-          <Card className={classes.root} variant="outlined">
+          <Card className={classes.card} variant="outlined">
             <DialogTitle id="max-width-dialog-title" className={classes.actionArea}>
-                <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close" style={{ float: 'left' }}>
-                  <CloseIcon />
-                </IconButton>
-                <Typography variant="h3" align="center">
-                  SCHEDULED SESSIONS
+              <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close" style={{ float: 'left' }}>
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h3" align="center">
+                SCHEDULED SESSIONS
                 </Typography>
             </DialogTitle>
 
-            <List style={{ width: '100%' }}>
-              { sessionList.map((session) => (
+            <MapSessionList sessionList={sessionList}/>
+
+            {/* <List style={{ width: '100%' }}>
+              {sessionList.map((session) => (
                 <ListItem alignItems="flex-start" style={{ backgroundColor: '#2d2e2e', color: '#f6fef5' }}>
                   <Grid container justify="space-evenly">
                     <Typography variant="h5">
@@ -433,10 +434,11 @@ const FindSessions = ({ user, sessions }) => {
                   <Divider variant="middle" color="primary" /><br />
                 </ListItem>
               ))}
-            </List>
-
+            </List> */}
           </Card>
         </Dialog>
+
+        {/* Map Component */}
         <Card className={classes.mapCard} variant="outlined">
           <div ref={ref} style={{ width: 798, height: 498 }} />
         </Card>
