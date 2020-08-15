@@ -2,14 +2,12 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
-
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar, Button, Card, CardContent, CardActionArea, CardActions,
   CardHeader, Collapse, Dialog, Grid, Typography, IconButton,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
@@ -36,39 +34,27 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
 }));
-
 const SessionCard = ({ event }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
-  // const {
-  //   name, namefirst, namelast, date, time, description, duration,
-  //   topic, capacitycount, classlimit,
-  // } = event.other;
-
+  const {
+    name, namefirst, namelast, date, time, description, duration,
+    topic, capacitycount, classlimit,
+  } = event.other;
   // Open the event card window
   const handleClickOpen = () => {
-    console.log(event);
     setOpen(true);
   };
-
   // Close the event card window
   const handleClose = () => {
     setOpen(false);
   };
-
   // Set the Card to expand show the extra details
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  const onRegister = () => {
-    console.log('clicked')
-    
-  };
-
   const location = useLocation();
-
   return (
     <>
       <Button size="small" onClick={handleClickOpen}>
@@ -84,12 +70,12 @@ const SessionCard = ({ event }) => {
         aria-labelledby="max-width-dialog-title"
         hideBackdrop="true"
       >
-        {/* { event && ( */}
+        { event && (
           <Card className={classes.root} variant="outlined">
             <CardActionArea className={classes.actionArea}>
               <div style={{ marginTop: '10px' }}>
                 <Typography gutterBottom variant="h4" component="h1" align="center">
-                  {/* {name} */}
+                  {name}
                 </Typography>
               </div>
               <br />
@@ -102,7 +88,7 @@ const SessionCard = ({ event }) => {
                 </Typography>
                 {/* Possibly add an avatar here with instructor name */}
                 <Typography variant="body1" color="textSecondary" component="p">
-                  {/* {`${namefirst} ${namelast}`} */}
+                  {`${namefirst} ${namelast}`}
                 </Typography>
               </div>
               <br />
@@ -112,7 +98,7 @@ const SessionCard = ({ event }) => {
                     Subject
                   </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
-                    {/* {topic} */}
+                    {topic}
                   </Typography>
                 </div>
                 <div>
@@ -120,7 +106,7 @@ const SessionCard = ({ event }) => {
                     Capacity
                   </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
-                    {/* {capacitycount} / {classlimit} */}
+                    {capacitycount} / {classlimit}
                   </Typography>
                 </div>
               </Grid>
@@ -131,7 +117,7 @@ const SessionCard = ({ event }) => {
                     Date
                   </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
-                    {/* {date} */}
+                    {date}
                   </Typography>
                 </div>
                 <div>
@@ -139,11 +125,10 @@ const SessionCard = ({ event }) => {
                     Time
                   </Typography>
                   <Typography variant="body1" color="textSecondary" component="p">
-                    {/* {time} */}
+                    {time}
                   </Typography>
                 </div>
               </Grid>
-
             </CardContent>
             <CardActions>
               <Grid container justify="space-between">
@@ -153,7 +138,7 @@ const SessionCard = ({ event }) => {
                   </Button>
                   {/* && registered !== true */}
                   {(location.pathname !== '/registered') && (
-                    <Button onClick={onRegister} size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
+                    <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
                       Register
                     </Button>
                   )}
@@ -170,29 +155,26 @@ const SessionCard = ({ event }) => {
                 </IconButton>
               </Grid>
             </CardActions>
-
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   Description:
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  {event.description}
+                  {description}
                 </Typography>
-
                 <Typography gutterBottom variant="h5" component="h2">
                   Est. Duration:
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  {event.duration}
+                  {duration}
                 </Typography>
               </CardContent>
             </Collapse>
           </Card>
-        {/* )} */}
+        )}
       </Dialog>
     </>
   );
 };
-
 export default SessionCard;

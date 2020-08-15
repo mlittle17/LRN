@@ -72,7 +72,7 @@ const BulletinBoard = ({ notes, user }) => {
                   {document.documenttype === 'flash cards' && (
                     <div> <ViewCarouselTwoToneIcon /> </div>
                   )} */}
-                  <div>{session.documenttype}</div>
+                  <div>{session.name}</div>
                   <div>{session.linkto}</div><AddCircleIcon onClick={() => { clickIcon(session.id); }} className={classes.icon} />
                 </div>
               ))}
