@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Cleave from 'cleave.js/react';
-import CounterInput from 'react-counter-input';
+import React, { useState } from 'react';
 import axios from 'axios';
+import Cleave from 'cleave.js/react';
 import { v1 as generateUuid } from 'uuid';
+import CounterInput from 'react-counter-input';
 
+import AddDocuments from './AddDocuments.jsx';
+import CreateFlashCards from './CreateFlashCards.jsx';
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -11,8 +13,7 @@ import {
 } from '@material-ui/core';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
-import AddDocuments from './AddDocuments.jsx';
-import CreateFlashCards from './CreateFlashCards.jsx';
+
 import '../styles/Form.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 620,
     minWidth: 620,
     minHeight: 340,
-    // maxHeight: 340,
   },
   large: {
     width: theme.spacing(7),
