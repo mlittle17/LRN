@@ -7,7 +7,7 @@ import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import {
-  AccordionActions, Button, Divider, Grid, Typography,
+ Button, Divider, Grid, Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -75,6 +75,12 @@ const AccordionDetails = withStyles((theme) => ({
   },
 }))(MuiAccordionDetails);
 
+const AccordionActions = withStyles({
+  root: {
+    backgroundColor: '#f6fef5',
+  },
+})(MuiAccordionSummary);
+
 const MapSessionList = ({ sessionList }) => {
   const [expanded, setExpanded] = useState(0);
 
@@ -117,7 +123,7 @@ const MapSessionList = ({ sessionList }) => {
               {session.description}
             </Typography>
 
-          <AccordionActions>
+          <AccordionActions style={{ marginTop: 10 }}>
             <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
               Register
             </Button>
