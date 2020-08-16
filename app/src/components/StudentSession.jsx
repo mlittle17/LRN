@@ -133,6 +133,19 @@ const StudentSession = (props) => {
         const item = peersRef.current.find(p => p.peerID === payload.id);
         item.peer.signal(payload.signal);
       });
+
+      socket.current.on('disconnected user', callerID => {
+        setPeers(users => {
+          console.log(users, 'setPeers in disconnect');
+          const set = [];
+          users.forEach(user => {
+            if (user.callerID != callerID) {
+              set.push(user);
+            }
+          })
+          return [...set];
+        });
+      });
     });
 
     // peers[0].on('stream', stream => {
@@ -148,6 +161,8 @@ const StudentSession = (props) => {
       stream,
     });
 
+    peer['callerID'] = callerID;
+
     peer.on('signal', signal => {
       socket.current.emit('sending signal', { userToSignal, callerID, signal });
     });
@@ -161,6 +176,8 @@ const StudentSession = (props) => {
       trickle: false,
       stream,
     });
+
+    peer['callerID'] = callerID;
 
     peer.on('signal', signal => {
       socket.current.emit('returning signal', { signal, callerID });
