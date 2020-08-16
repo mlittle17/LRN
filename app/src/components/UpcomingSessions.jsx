@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import moment from 'moment';
+import moment, { isBefore, isSameOrAfter } from 'moment';
 
 import { Typography } from '@material-ui/core';
 import Slider from 'react-slick';
@@ -33,25 +33,26 @@ Object.defineProperty(Array.prototype, 'chunk', {
 });
 
 const UpcomingSessions = ({ sessions, user, setNavbarSessionName }) => {
-  // Simplify and sort to order the sessions by upcoming dates
-  sessions.map((session) => {
-    const { date } = session;
-    // new Date(date.slice(6, date.length), date.slice(0, 2) - 1, date.slice(3, 5));
-    session.sortDate = date.replace(/\//g, '-');
-    return session;
-  });
+  const [upcomingSessions, setUpcomingSessions] = useState([]);
 
-  const sortDates = (a, b) => a - b;
-    // .sort((a, b) => {
-      // console.log('minus', a.sortDate.valueOf() - b.sortDate.valueOf());
-      // Turn strings into dates, and then subtract them, to get a value that is either -, +, or 0
-      // return a.sortDate.valueOf() - b.sortDate.valueOf();
-    // });
+  useEffect(() => {
+    // remove the sessions that are before todays date
+    const set = [];
+    sessions.forEach((session) => {
+      const mDY = session.date.split('/').join('-');
+      var date = moment(mDY);
+      var now = moment();
+      
+      if (moment().subtract(1, 'days').isSameOrBefore(date)) {
+        set.push(session);
+      }
+    })
+    setUpcomingSessions(set);
 
-  sessions.sort(sortDates);
+  }, [])
 
-  console.log(sessions);
-  const rows = sessions.chunk(3);
+
+  const rows = upcomingSessions.chunk(3);
   return (
     <div>
       <Typography gutterBottom variant="h4" component="h6" style={{ color: '#2d2e2e' }}><b>UPCOMING SESSIONS</b></Typography>
