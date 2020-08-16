@@ -85,18 +85,37 @@ const addUserEvent = async(req, res) => {
   }
 };
 
-/*
-Topic
- */
-
-const createTopic = async(req, res) => {
+const addStudentEvents = async(req, res) => {
   try {
-    await db.query('INSERT INTO topic (name) VALUES (${name})', req.body);
+    await db.query('INSERT INTO student_event (users_id, event_id) VALUES (${users}, ${event})', req.body);
     res.send('it worked');
   } catch (err) {
     console.log('nah', err);
   }
 };
+
+const getStudentevents = async(req, res) => {
+  try {
+    const studentEvents = await db.any(`SELECT S.*, U.nameFirst, U.nameLast, E.name, E.time, E.date from student_event S INNER JOIN event E on E.id = S.event_id INNER JOIN users U on U.id = S.users_id WHERE S.users_id= ${req.params.id}`);
+    res.send(studentEvents);
+  } catch (err) {
+    console.log(`no events, ${err}`);
+  }
+};
+
+/*
+Topic
+ */
+
+// const createTopic = async(req, res) => {
+//   try {
+//     await db.query('INSERT INTO topic (name) VALUES (${name})', req.body);
+//     res.send('it worked');
+//   } catch (err) {
+//     console.log('nah', err);
+//   }
+// };
+
 // method that get from topic
 // const getTopic = async(req, res) => {
 //   try {
@@ -108,14 +127,14 @@ const createTopic = async(req, res) => {
 // };
 
 // get topics a user likes
-const getTopicByUser = async(req, res) => {
-  try {
-    const userTopics = await db.any(`SELECT * FROM topic WHERE user_id = ${req.params.id}`);
-    res.send(userTopics);
-  } catch (err) {
-    console.log(`no user topics, ${err}`);
-  }
-};
+// const getTopicByUser = async(req, res) => {
+//   try {
+//     const userTopics = await db.any(`SELECT * FROM topic WHERE user_id = ${req.params.id}`);
+//     res.send(userTopics);
+//   } catch (err) {
+//     console.log(`no user topics, ${err}`);
+//   }
+// };
 
 /*
 Document
@@ -210,8 +229,10 @@ module.exports = {
   getUser,
   createUser,
   addUserEvent,
-  createTopic,
-  getTopicByUser,
+  addStudentEvents,
+  getStudentevents,
+  // createTopic,
+  // getTopicByUser,
   getEventbyUser,
   addDocument,
   getAllDocument,
