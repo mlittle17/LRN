@@ -78,7 +78,7 @@ const addUserEvent = async(req, res) => {
     name, topic, description, duration, date, time, user_id, classLimit, zip, uuid,
   } = req.body;
   try {
-    await db.query(`INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit, zip, uuid) VALUES ( '${name}', '${topic}', '${description}', '${duration}', '${date}', '${time}', '${user_id}', '${classLimit}', '${zip}', '${uuid}') WHERE user_ids = '${req.params}'`);
+    await db.query(`INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit, zip, uuid) VALUES ( '${name}', '${topic}', '${description}', '${duration}', '${date}', '${time}', '${user_id}', '${classLimit}', '${zip}', '${uuid}')`);
     res.send('user added');
   } catch (err) {
     console.log('nah bruh', err);

@@ -11,7 +11,7 @@ usersRouter.get('/:id', getSessionCreator);
 usersRouter.post('/:id/binder', addToBinder);
 usersRouter.get('/:id/binder', getUserBinder);
 usersRouter.post('/:id/binder', addToBinder);
-usersRouter.post('/:id/event', addUserEvent)
+usersRouter.post('/:id/event', addUserEvent);
 
 module.exports = {
   usersRouter,
