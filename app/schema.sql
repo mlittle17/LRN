@@ -26,11 +26,11 @@ CREATE TABLE event (
   uuid Varchar(50)
 );
 
--- CREATE TABLE student_event (
---   id SERIAL PRIMARY KEY NOT NULL,
---   users_id Integer NOT NULL,
---   event_id Integer NOT NULL
--- );
+CREATE TABLE student_event (
+  id SERIAL PRIMARY KEY NOT NULL,
+  users_id Integer NOT NULL,
+  event_id Integer NOT NULL
+);
 
 -- CREATE TABLE users_topic (
 --   id SERIAL PRIMARY KEY NOT NULL,
@@ -79,9 +79,9 @@ First start the postgresql server sudo -u postgres psql
 
 ALTER TABLE event ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
--- ALTER TABLE student_event ADD FOREIGN KEY (users_id) REFERENCES users (id);
+ALTER TABLE student_event ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
--- ALTER TABLE student_event ADD FOREIGN KEY (event_id) REFERENCES event (id);
+ALTER TABLE student_event ADD FOREIGN KEY (event_id) REFERENCES event (id);
 
 -- ALTER TABLE users_topic ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
