@@ -4,7 +4,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar, Button, Card, CardContent, CardActionArea, CardActions,
-  Grid, Typography,
+  Grid, Typography, IconButton,
 } from '@material-ui/core';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'; // for document
 import SlideshowTwoToneIcon from '@material-ui/icons/SlideshowTwoTone'; // two-toned for pp
@@ -28,8 +28,12 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(16),
     margin: 'auto',
   },
-  icon: {
-    color: '#e57373',
+  unselected: {
+    backgroundColor: '#474a2c',
+    color: '#f6fef5',
+    "&:hover, &.Mui-focusVisible": {
+      backgroundColor: '#a58e57',
+    },
   },
 }));
 
@@ -73,7 +77,11 @@ const BulletinBoard = ({ notes, user }) => {
                     <div> <ViewCarouselTwoToneIcon /> </div>
                   )} */}
                   <div>{session.name}</div>
-                  <div>{session.linkto}</div><AddCircleIcon onClick={() => { clickIcon(session.id); }} className={classes.icon} />
+                  <div>{session.linkto}</div>
+                  <IconButton className={classes.unselected} onClick={() => { clickIcon(session.id); }}>
+                    <AddCircleIcon />
+                  </IconButton>
+
                 </div>
               ))}
             </div>
