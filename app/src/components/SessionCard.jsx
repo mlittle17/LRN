@@ -43,6 +43,7 @@ const SessionCard = ({ event }) => {
     topic, capacitycount, classlimit,
   } = event.other;
   // Open the event card window
+  console.log(event);
   const handleClickOpen = () => {
     setOpen(true);
   };
