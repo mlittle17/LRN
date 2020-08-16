@@ -1,5 +1,5 @@
 /* eslint-disable object-shorthand */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, Link, Switch } from 'react-router-dom';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -56,9 +56,7 @@ const UpcomingTable = ({
   //   name, creator, date, time,
   // } = sessions;
   const classes = useStyles();
-  const [joinSession, setJoinSession] = useState(true);
   const history = useHistory();
-
 
   
   const doWeNeedButton = (date, time) => {
