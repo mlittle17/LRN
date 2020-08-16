@@ -60,7 +60,7 @@ const UpcomingSessions = ({ sessions, user, setNavbarSessionName }) => {
         {rows.map((sessionPage) => {
           return (
             <div>
-              <UpcomingTable sessionPage={upcomingSessions} user={user} setNavbarSessionName={setNavbarSessionName} />
+              <UpcomingTable sessionPage={sessionPage} user={user} setNavbarSessionName={setNavbarSessionName} />
             </div>
           );
         })}
