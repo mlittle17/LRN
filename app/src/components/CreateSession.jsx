@@ -58,6 +58,8 @@ const CreateSession = ({ user }) => {
   const [documents, setDocuments] = useState([]);
   const [document, setDocument] = useState('');
   const [cards, setCards] = useState('');
+  const [name, setName] = useState('');
+  const [type, setType] = useState('');
 
   const onSessionNameChange = (e) => {
     setSessionTitle(e.target.value);
@@ -93,7 +95,8 @@ const CreateSession = ({ user }) => {
       .then(response => response.data[0].id)
       .then(eventId => {
         axios.post('/event/documents', {
-          type: 'google docs',
+          type,
+          name,
           link: document,
           user_id: id,
           event_id: eventId,
@@ -217,7 +220,7 @@ const CreateSession = ({ user }) => {
                     label={<b>Private</b>}
                   />
                 </Grid>
-                <AddDocuments setDocs={setDocuments} />
+                <AddDocuments setDocs={setDocuments} setName={setName} setType={setType} />
                 <CreateFlashCards setCards={setCards} />
               </Form> <br />
               <Button

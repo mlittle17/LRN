@@ -92,6 +92,7 @@ const InstructorSession = (props) => {
       userVideo.current.srcObject = stream;
       socket.current.emit('join room', roomID);
       socket.current.on('all users', users => {
+        console.log('all users', users);
         const peers = [];
         users.forEach(userID => {
           const peer = createPeer(userID, socket.current.id, stream);
@@ -101,22 +102,51 @@ const InstructorSession = (props) => {
           });
           peers.push(peer);
         });
-        setPeers(peers);
+        // setPeers(peers);
       });
 
       socket.current.on('user joined', payload => {
+        console.log(payload, 'payload');
         const peer = addPeer(payload.signal, payload.callerID, stream);
+        console.log(peer, 'user joined (peer)');
         peersRef.current.push({
           peerID: payload.callerID,
           peer,
         });
-
-        setPeers(users => [...users, peer]);
+        // console.log(peers, 'user joined');
+        setPeers(users => {
+          console.log(users, 'setPeers in userJoined');
+          return [...users, peer];
+        });
       });
 
       socket.current.on('receiving returned signal', payload => {
         const item = peersRef.current.find(p => p.peerID === payload.id);
         item.peer.signal(payload.signal);
+      });
+
+      socket.current.on('disconnected user', callerID => {
+        // console.log('a user disconnected', callerID);
+        // search the users and remove the one that disconnected
+        // console.log(peers);
+        setPeers(users => {
+          console.log(users, 'setPeers in disconnect');
+          const set = [];
+          users.forEach(user => {
+            if (user.callerID != callerID) {
+              set.push(user);
+            }
+          })
+          return [...set];
+        });
+        // peers.forEach(peer => {
+        //   console.log(peer);
+        //   if (peer.callerID != callerID) {
+        //     set.push(peer);
+        //   }
+        // })
+        // setPeers(set);
+
       });
     });
   }, []);
@@ -141,6 +171,8 @@ const InstructorSession = (props) => {
       trickle: false,
       stream,
     });
+
+    peer['callerID'] = callerID;
 
     peer.on('signal', signal => {
       socket.current.emit('returning signal', { signal, callerID });

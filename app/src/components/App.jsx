@@ -4,6 +4,7 @@ import Geocode from 'react-geocode';
 import axios from 'axios';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import moment, { isBefore, isSameOrAfter } from 'moment';
 import Navbar from './Navbar.jsx';
 
 import '../styles/App.css';
@@ -32,7 +33,16 @@ function App() {
     axios.get('/event')
       .then(response => {
         console.log('response data:', response.data);
-        setSessions(response.data);
+        // put session in order by date and time. 
+        const sortedSessions = response.data.sort(function(a, b) {
+          const aMDY = a.date.split('/').join('-');
+          const bMDY = b.date.split('/').join('-');
+          const aUnix = moment(aMDY + ' ' + a.time, 'MM-DD-YY HH:mm a').unix();
+          const bUnix = moment(bMDY + ' ' + b.time, 'MM-DD-YY HH:mm a').unix();
+          return aUnix - bUnix;
+        })
+        console.log(sortedSessions, 'sorted sessions');
+        setSessions(sortedSessions);
       });
   }, []);
 
