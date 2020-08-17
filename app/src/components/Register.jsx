@@ -6,24 +6,19 @@ import { Button, Chip } from '@material-ui/core';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    color: '#f7fff6',
-    backgroundColor: '#474a2c',
-  },
   chip: {
     backgroundColor: '#474a2c',
     color: '#f6fef5',
   }
 }));
 
-const Register = ({ user, session }) => {
+const Register = ({ userId, sessionId }) => {
   const [clicked, setClicked] = useState(false);
 
   const classes = useStyles();
 
   const register = (eventId) => {
-    console.log('trying to post at least');
-    axios.post(`event/${user.id}/student`, { user: user.id, event: eventId })
+    axios.post(`event/${userId}/student`, { user: userId, event: eventId })
       .then((response) => {
         console.log('Map Session List, post response:', response)
       })
@@ -36,7 +31,7 @@ const Register = ({ user, session }) => {
     <div className="register">
       {clicked === false
         ? (
-          <Button className={classes.button} size="small" onClick={() => register(session.id)}>
+          <Button style={{ color: '#f7fff6', backgroundColor: '#474a2c' }} size="small" onClick={() => register(sessionId)}>
             Register
           </Button>
         )
