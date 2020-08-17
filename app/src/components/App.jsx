@@ -25,15 +25,14 @@ function App() {
   const [user, setUser] = useState(null);
   const [binder, setBinder] = useState([]);
   const [sessions, setSessions] = useState([]);
+  const [regSessions, setRegSessions] = useState([]);
   const [notes, setNotes] = useState([]);
-  // const [users, setUsers] = useState([]);
 
   // Retrieve all scheduled sessions
   useEffect(() => {
     axios.get('/event')
       .then(response => {
-        console.log('response data:', response.data);
-        // put session in order by date and time. 
+        // Put upcoming session in order by date and time. 
         const sortedSessions = response.data.sort(function(a, b) {
           const aMDY = a.date.split('/').join('-');
           const bMDY = b.date.split('/').join('-');
@@ -41,19 +40,27 @@ function App() {
           const bUnix = moment(bMDY + ' ' + b.time, 'MM-DD-YY HH:mm a').unix();
           return aUnix - bUnix;
         })
-        console.log(sortedSessions, 'sorted sessions');
+
         setSessions(sortedSessions);
       });
   }, []);
 
-  // Retrive all registered sessions
-  // useEffect(() => {
-  //   axios.get('/event')
-  //     .then(response => {
-  //       console.log('response data:', response.data);
-  //       setSessions(response.data);
-  //     });
-  // })
+  // Retrieve all registered sessions
+  useEffect(() => {
+    if(user) {
+      axios.get(`event/${user.id}/student`)
+        .then((response) => {
+          const sortedRegSessions = response.data.sort(function(a, b) {
+            const aMDY = a.date.split('/').join('-');
+            const bMDY = b.date.split('/').join('-');
+            const aUnix = moment(aMDY + ' ' + a.time, 'MM-DD-YY HH:mm a').unix();
+            const bUnix = moment(bMDY + ' ' + b.time, 'MM-DD-YY HH:mm a').unix();
+            return aUnix - bUnix;
+          })
+          setRegSessions(sortedRegSessions);
+        });
+    }
+  });
 
   useEffect(() => {
     // may need to change to user documents
@@ -113,83 +120,10 @@ function App() {
       });
   };
 
-  const fakeUserInfo = {
-    id: 1,
-    image_url: 'https://ca.slack-edge.com/T02P3HQD6-UQADDLNHW-8dd89119b2b0-512',
-    username: 'jessicaTorres',
-    email: 'fakeEmail2',
-  };
-
-  const userFakeSessions = [
-    {
-      title: 'History of the Aztec',
-      namefirst: 'Prof. Alan',
-      namelast: 'Thicke',
-      date: '07/26/2020',
-      time: '5:30 pm',
-    },
-    {
-      title: 'Homestyle Lasagna: The True Italian Way',
-      namefirst: 'Rya',
-      namelast: 'Sicily',
-      date: '08/03/2020',
-      time: '7:25 pm',
-    },
-    {
-      title: 'Traveling Light: Your Trip to Europe',
-      namefirst: 'Greg',
-      namelast: 'Sanzen',
-      date: '08/10/2020',
-      time: '11:00 am',
-    },
-    {
-      title: 'One, Two, Rhythm For Beginners',
-      namefirst: 'Sarah',
-      namelast: 'Courtz',
-      date: '09/15/2020',
-      time: '6:00 pm',
-    },
-    {
-      title: 'A Healthy Home: Hygiene to Keep Up',
-      namefirst: 'Rita',
-      namelast: 'Teller',
-      date: '09/17/2020',
-      time: '8:00 pm',
-    },
-    {
-      title: 'Balancing Your Checkbook',
-      namefirst: 'Yare',
-      namelast: 'Rewwn',
-      date: '10/10/2020',
-      time: '12:00 pm',
-    },
-  ];
-
-  const userFakeDocuments = [
-    {
-      id: 1,
-      documenttype: 'Word Document',
-      title: 'Lasagna Recipe',
-      linkto: 'https://www.google.com/',
-      namefirst: 'Rya',
-      namelast: 'Sicily',
-      dateSaved: '08/03/2020',
-    },
-    {
-      id: 2,
-      documenttype: 'Word Document',
-      title: 'Packing Ess. List',
-      linkto: 'https://www.google.coml',
-      namefirst: 'Greg',
-      namelast: 'Sanzen',
-      dateSaved: '08/10/2020',
-    },
-  ];
-
   return (
     <div>
       <MuiThemeProvider theme={theme}>
-        <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} binder={binder} sessions={sessions} notes={notes} />
+        <Navbar googleLogin={googleLogin} googleLogout={googleLogout} user={user} binder={binder} sessions={sessions} regSessions={regSessions} notes={notes} />
         {/* <button onClick={googleLogin}>Log In</button> */}
         <Router>
           <div className="App" />
