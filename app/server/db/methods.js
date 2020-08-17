@@ -87,14 +87,15 @@ const addUserEvent = async(req, res) => {
 
 const addStudentEvents = async(req, res) => {
   try {
-    await db.query('INSERT INTO student_event (users_id, event_id) VALUES (${users}, ${event})', req.body);
+    console.log(req);
+    await db.query('INSERT INTO student_event (users_id, event_id) VALUES (${user}, ${event})', req.body);
     res.send('it worked');
   } catch (err) {
     console.log('nah', err);
   }
 };
 
-const getStudentevents = async(req, res) => {
+const getStudentEvents = async(req, res) => {
   try {
     const studentEvents = await db.any(`SELECT S.*, U.nameFirst, U.nameLast, E.name, E.time, E.date from student_event S INNER JOIN event E on E.id = S.event_id INNER JOIN users U on U.id = S.users_id WHERE S.users_id= ${req.params.id}`);
     res.send(studentEvents);
@@ -230,7 +231,7 @@ module.exports = {
   createUser,
   addUserEvent,
   addStudentEvents,
-  getStudentevents,
+  getStudentEvents,
   // createTopic,
   // getTopicByUser,
   getEventbyUser,

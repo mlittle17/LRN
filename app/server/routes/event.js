@@ -2,7 +2,7 @@ const { Router } = require('express');
 const {
   createEvent, getAllEvents, getEventbyUser, addDocument,
   getEventDocument, getAllDocument, createPack, saveCards,
-  addStudentEvents, getStudentevents,
+  addStudentEvents, getStudentEvents,
 } = require('../db/methods');
 
 const eventRouter = Router();
@@ -15,7 +15,7 @@ eventRouter.get('/:id/documents', getEventDocument);
 eventRouter.get('/:id', getEventbyUser);
 eventRouter.post('/flashCards', createPack);
 eventRouter.post('/cards', saveCards);
-eventRouter.get('/:id/student', getStudentevents);
+eventRouter.get('/:id/student', getStudentEvents);
 eventRouter.post('/:id/student', addStudentEvents);
 
 module.exports = {

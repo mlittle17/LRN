@@ -2,18 +2,15 @@ import React, { useState } from 'react';
 import {
   Link, Switch, Route,
 } from 'react-router-dom';
-import { Menu, Image } from 'semantic-ui-react';
+
 import { v1 as uuid } from 'uuid';
+import { Menu, Image } from 'semantic-ui-react';
 import Home from './Home.jsx';
 import Profile from './Profile.jsx';
 import Sessions from './Sessions.jsx';
 import Logout from './Logout.jsx';
 import FindSessions from './FindSessions.jsx';
 import CreateSession from './CreateSession.jsx';
-import Room from './Room.jsx';
-import Board from './Board.jsx';
-import CreateFlashCards from './CreateFlashCards.jsx';
-import SessionRoute from './SessionRoute.jsx';
 import InstructorSession from './InstructorSession.jsx';
 import StudentSession from './StudentSession.jsx';
 import NotLoggedIn from './NotLoggedIn.jsx';
@@ -22,7 +19,7 @@ import 'semantic-ui-css/semantic.min.css';
 import logo from '../styles/images/logo.png';
 
 const Navbar = ({
-  user, googleLogin, googleLogout, binder, sessions, notes,
+  user, googleLogin, googleLogout, binder, sessions, regSessions, notes,
 }) => {
   const [activeItem, setActiveItem] = useState('home');
   const [navBarSessionName, setNavbarSessionName] = useState('');
@@ -43,23 +40,6 @@ const Navbar = ({
           </Link>
         </Menu.Item>
         <Menu.Menu position="right" class="right menu">
-
-          {/* <Menu.Item
-            name="board"
-            active={activeItem === 'board'}
-            onClick={handleItemClick}
-          >
-            <Link to='/board' class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Test Room</Link>
-          </Menu.Item> */}
-
-          {/* <Menu.Item
-            name="instructor"
-            active={activeItem === 'session'}
-            onClick={handleItemClick}
-          >
-            <Link to={`/instructor/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Instructor</Link>
-          </Menu.Item> */}
-
           <Menu.Item
             name="student"
             active={activeItem === 'student'}
@@ -105,48 +85,18 @@ const Navbar = ({
                 </Menu.Item>
               </Menu.Menu>
             )}
-
-          {/* <Menu.Menu position="right" class="right menu">
-        <Menu.Item
-          name="profile"
-          active={activeItem === 'profile'}
-          onClick={handleItemClick}
-        >
-          <Link to="/sessions" class="item">Sessions</Link>
-        </Menu.Item>
-        <Menu.Item
-          name="room"
-          active={activeItem === 'room'}
-          onClick={handleItemClick}
-        >
-          <Link to={`/room/${id}`} class="item">Room</Link>
-        </Menu.Item>
-
-        {user ? <a>You are logged in</a>
-        :
-        <Menu.Menu position="right" class="right menu">
-          <Menu.Item
-            name="login"
-            active={activeItem === 'logout'}
-            onClick={googleLogin}
-          >
-            <Link class="item" style={{ color: '#a58e57' }}>Login</Link>
-          </Menu.Item>
-        </Menu.Menu> */}
-
         </Menu.Menu>
       </Menu>
       <div>
         <Switch>
           {!user && <Route exact path="/" render={() => (<NotLoggedIn />)} />}
-          {user && <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} setNavbarSessionName={setNavbarSessionName} />)} />}
-          {/* <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} setNavbarSessionName={setNavbarSessionName} />)} /> */}
+          {user && <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} regSessions={regSessions} setNavbarSessionName={setNavbarSessionName} />)} />}
           <Route exact path="/profile" render={() => (<Profile user={user} binder={binder} />)} />
-          <Route exact path="/sessions" component={Sessions} />
-          <Route exact path="/find" render={() => (<FindSessions user={user} sessions={sessions} />)} />
+          <Route exact path="/sessions" render={() => (<Sessions user={user} sessions={sessions} regSessions={regSessions}/>)} />
+          <Route exact path="/find" render={() => (<FindSessions user={user} sessions={sessions} regSessions={regSessions}/>)} />
           <Route exact path="/create" render={() => (<CreateSession user={user} />)} />
           <Route exact path="/logout" component={Logout} />
-          <Route exact path="/registered" component={Sessions} />
+          <Route exact path="/registered" render={() => (<Sessions user={user} sessions={sessions} regSessions={regSessions}/>)} />
           <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} sessionName={navBarSessionName} />)} />
           <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} notes={notes} sessionName={navBarSessionName} />)} />
         </Switch>

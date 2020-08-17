@@ -1,27 +1,30 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable quote-props */
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import Cleave from 'cleave.js/react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import Geocode from 'react-geocode';
 import { useGoogleMaps } from 'react-hook-google-maps';
+import Cleave from 'cleave.js/react';
 
+import MapSessionList from './MapSessionList';
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import {
-  Card, CardActionArea, CardContent, Dialog, DialogTitle, Divider,
-  Grid, IconButton, List, ListItem, Typography,
+  Card, CardActionArea, CardContent, Collapse, Dialog, DialogTitle, Divider,
+  Grid, IconButton, List, ListItem, Slide, Typography, Zoom,
 } from '@material-ui/core';
 
 import '../styles/Form.css';
+import mapStyles from '../styles/Map.js'
 
 // Set up the Geocoding for transforming the zip to lat and lon
+// process.env.GOOGLE_API_KEY
 Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    minWidth: 798,
-    maxWidth: 798,
+  card: {
+    minWidth: 877,
+    maxWidth: 810,
     minHeight: 498,
     maxHeight: 498,
     borderColor: '#474a2c',
@@ -32,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 577,
     maxHeight: 510,
     margin: 'auto',
-    marginRight: 70,
+    marginRight: 65,
+    borderColor: '#474a2c',
   },
   grid: {
     marginTop: 40,
@@ -54,6 +58,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// const Transition = forwardRef(function Transition(props, ref) {
+//   return <Slide direction="up" ref={ref} {...props} />;
+// });
+
+// const Transition = forwardRef(function Transition(props, ref) {
+//   return <Zoom ref={ref} {...props} />;
+// });
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Collapse ref={ref} {...props} />;
+});
+
+
 const subOptions = [
   { key: 'fi', text: 'Finance', value: 'finance' },
   { key: 'fd', text: 'Food', value: 'food' },
@@ -66,30 +83,24 @@ const subOptions = [
   { key: 'ot', text: 'Other', value: 'other' },
 ];
 
-const FindSessions = ({ user, sessions }) => {
+const FindSessions = ({ user, sessions, regSessions }) => {
   const classes = useStyles();
   // Input field states
   const [subject, setSubject] = useState('');
   const [sessionDate, setSessionDate] = useState('');
-  const [zip, setZip] = useState(0);
+  const [zip, setZip] = useState('*****');
 
   // Map and location data states
   const [listOpen, setListOpen] = useState(false);
   const [userLoc, setUserLoc] = useState(() => {
     if (user) {
-      console.log(user.location);
+      console.log('user', user);
       return user.location;
     }
   });
   const [sessionColl, setSessionColl] = useState({});
   const [sessionList, setSessionsList] = useState([]);
-  const [currMapLocs, setCurrMapLocs] = useState([
-    // { lat: 30.35058129999999, lng: -91.0873551, zipcode: 70810 },
-    // { lat: 30.4293497, lng: -91.1686843, zipcode: 70808 },
-    // { lat: 30.4475809, lng: -91.1756636, zipcode: 70806 },
-    // { lat: 30.4362797, lng: -91.1773287, zipcode: 70802 },
-    // { lat: 30.5267767, lng: -91.1280092, zipcode: 70811 },
-  ]);
+  const [currMapLocs, setCurrMapLocs] = useState([]);
   const markers = [];
   // const [markers, setMarkers] = useState([]);
 
@@ -114,7 +125,7 @@ const FindSessions = ({ user, sessions }) => {
     setZip(e.target.rawValue);
   };
 
-  const { ref, map, google } = useGoogleMaps(
+  let { ref, map, google } = useGoogleMaps(
     // Use your own API key, you can get one from Google (https://console.cloud.google.com/google/maps-apis/overview)
     'AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68',
     {
@@ -130,183 +141,7 @@ const FindSessions = ({ user, sessions }) => {
       streetViewControl: false,
       rotateControl: false,
       fullscreenControl: true,
-      styles: [
-        {
-          'featureType': 'all',
-          'elementType': 'geometry',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-            {
-              'color': '#51562d',
-            },
-          ],
-        },
-        {
-          'featureType': 'all',
-          'elementType': 'labels',
-          'stylers': [
-            {
-              'visibility': 'off',
-            },
-            {
-              'color': '#b5c75c',
-            },
-          ],
-        },
-        {
-          'featureType': 'all',
-          'elementType': 'labels.text.fill',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'all',
-          'elementType': 'labels.text.stroke',
-          'stylers': [
-            {
-              'color': '#000000',
-            },
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'administrative.land_parcel',
-          'elementType': 'geometry',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'landscape',
-          'elementType': 'all',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'landscape',
-          'elementType': 'geometry',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-            {
-              // #474a00
-              'color': '#43462c',
-            },
-          ],
-        },
-        {
-          'featureType': 'landscape.man_made',
-          'elementType': 'geometry.fill',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-            {
-              'color': '#c4a96f',
-            },
-          ],
-        },
-        {
-          'featureType': 'landscape.natural',
-          'elementType': 'all',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'landscape.natural',
-          'elementType': 'geometry',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'landscape.natural',
-          'elementType': 'geometry.fill',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'landscape.natural.landcover',
-          'elementType': 'geometry',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-            {
-              'color': '#000000',
-            },
-          ],
-        },
-        {
-          'featureType': 'road.highway',
-          'elementType': 'geometry',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-            {
-              'color': '#9d7a22',
-            },
-          ],
-        },
-        {
-          'featureType': 'road.arterial',
-          'elementType': 'geometry',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'road.arterial',
-          'elementType': 'geometry.fill',
-          'stylers': [
-            {
-              'color': '#7b7a4d',
-            },
-          ],
-        },
-        {
-          'featureType': 'water',
-          'elementType': 'geometry',
-          'stylers': [
-            {
-              'visibility': 'on',
-            },
-          ],
-        },
-        {
-          'featureType': 'water',
-          'elementType': 'geometry.fill',
-          'stylers': [
-            {
-              'color': '#f6fef5',
-            },
-          ],
-        },
-      ],
+      styles: mapStyles,
     },
   );
 
@@ -314,7 +149,7 @@ const FindSessions = ({ user, sessions }) => {
   // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
 
 
-  // Marker visibility functions
+  /* Marker visibility functions */
   // Sets the map on all markers in the array, making them visible
   const showMarkers = () => {
     markers.forEach((marker) => {
@@ -325,30 +160,32 @@ const FindSessions = ({ user, sessions }) => {
 
   // Removes the markers from the map, but does not delete them from the array
   const clearMarkersWhere = (searchType, searchValue) => {
-    markers.forEach((marker) => {
-      marker.setMap(null);
-      marker.setVisible(false);
-
+    markers.length = 0
+    
+    // markers.forEach((marker) => {
+    //   marker.setMap(null);
+    //   marker.icon = null;
+    //   marker.zip = null;
+    //   marker.setVisible(false);
+    //   console.log('marker after clear:', marker)
       // if (!(sessionColl[marker.zip].every((session) => session[searchType] === searchValue))) {
       //   // marker.setMap(null);
       //   marker.setVisible(false);
 
       // }
-    });
+    // });
+    console.log('markers after clear:', markers)
     // if (marker[searchType] !== searchValue) {
   };
 
   // Clear the form of all searched and reset the map view
   const clearForm = () => {
-    // let form = document.querySelector('form');
-    // console.log('form:', form);
-    // $('form').form('reset');
-
     setSubject('');
     setSessionDate('');
-    setZip(0);
+    setZip('*****');
     showMarkers();
   };
+
   // Add a marker to the map, at the provided coordinates, with the provided image
   const addMarker = (markerObj, url) => {
     console.log('add marker, markerObj:', markerObj);
@@ -364,7 +201,6 @@ const FindSessions = ({ user, sessions }) => {
     });
     marker.zip = zipcode;
     marker.addListener('click', () => {
-      console.log(marker.title);
       setSessionsList(sessionColl[marker.title]);
       setListOpen(true);
       // map.setZoom(8);
@@ -378,20 +214,23 @@ const FindSessions = ({ user, sessions }) => {
 
   // Execute when map object is ready
   // Add the markers for session object zips that exist within the state
-  if (map) {
-    // if (user) {
-    //   const { location } = user;
-    //   map.setOptions({
-    //     center: location,
-    //     zoom: 12,
-    //   });
-    // }
+  // useEffect(() => {
 
+    if (map) {
+    //   if (user) {
+    //     const { location } = user;
+    //     map.setOptions({
+    //       center: location,
+    //       zoom: 12,
+    //     });
+    //   }
+    
     // Add markers to all appropriate zips
     currMapLocs.forEach((mapLoc) => {
-      addMarker(mapLoc, sessionsMarker);
-    });
-  }
+        addMarker(mapLoc, sessionsMarker);
+      });
+    }
+  // }, [map])
 
   // Watching the sessions prop for update
   useEffect(() => {
@@ -405,7 +244,7 @@ const FindSessions = ({ user, sessions }) => {
         zipsForMarkers[session.zip].push(session);
       }
     });
-    // console.log('zipsForMarkers:', zipsForMarkers);
+
     delete zipsForMarkers.null;
     setSessionColl(zipsForMarkers);
 
@@ -443,8 +282,6 @@ const FindSessions = ({ user, sessions }) => {
   // (When a user searches by subject)
   useEffect(() => {
     // Remove any markers from the map that do not have any sessions that have the subject of searched value
-    console.log('subject:', subject);
-    console.log('markers:', markers);
     clearMarkersWhere('topic', subject);
   }, [subject]);
 
@@ -462,12 +299,13 @@ const FindSessions = ({ user, sessions }) => {
     Geocode.fromAddress(zip).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log('searched zip:', lat, lng);
+        // Update the user's 'location' with the geocoded data
         setUserLoc({
           lat,
           lng,
           zipcode: zip,
         });
+        // Center and zoom the map to match the current value in the zip search field
         map.setOptions({
           center: {
             lat,
@@ -475,14 +313,17 @@ const FindSessions = ({ user, sessions }) => {
           },
           zoom: 12,
         });
-        // if (zip.toString.length === 5) {
-        addMarker({
-          lat,
-          lng,
-          zipcode: zip,
-        },
-        centerMarker);
-        // }
+
+        // Only allow the custom ZipCenter marker to be added after the finished zip search, not an incomplete code.
+        // Only allow if there are no sessions scheduled in that area.
+        if (zip.toString().length === 5) {
+          addMarker({
+            lat,
+            lng,
+            zipcode: zip,
+          },
+            centerMarker);
+        }
       },
       error => {
         console.error(error);
@@ -490,24 +331,11 @@ const FindSessions = ({ user, sessions }) => {
     );
   }, [zip]);
 
-  // Watching the userLoc state value for update
-  // (When the userLoc state value is updated)
-  // useEffect(() => {
-  //   // Add a new marker over the center
-  //   /* Does not necessarily mean there are session there but signifies to the user
-  //      that a new zipcode has been focused on */
-  //   addMarker(userLoc, centerMarker);
-  // }, [userLoc]);
-
-  // When the map is dragged, write the new center zip to the form
-  // $('form').form('set values', {
-  //   zip: CODE TO FIND NEW MAP CENTER, THEN GEOCODED,
-  // })
-
   return (
     <div className="Find">
       <Grid container justify="space-around" className={classes.grid}>
         <div>
+          {/* Search Filter Component */}
           <Card className={classes.searchCard} variant="outlined">
             <CardActionArea className={classes.actionArea}>
               <div style={{ marginTop: '10px' }}>
@@ -560,56 +388,35 @@ const FindSessions = ({ user, sessions }) => {
             </CardContent>
           </Card>
         </div>
+
+        {/* Session List 'Popup' Component */}
         <Dialog
-          fullWidth="true"
           className={classes.dialog}
-          maxWidth="md"
+          aria-labelledby="max-width-dialog-title"
+          variant="outlined"
           scroll="paper"
+          fullWidth="true"
+          maxWidth="md"
           open={listOpen}
           onClose={handleClose}
-          aria-labelledby="max-width-dialog-title"
           hideBackdrop="true"
+          TransitionComponent={Transition}
         >
-          <Card className={classes.root} variant="outlined">
+          <Card className={classes.card} variant="outlined">
             <DialogTitle id="max-width-dialog-title" className={classes.actionArea}>
-                <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close" style={{ float: 'left' }}>
-                  <CloseIcon />
-                </IconButton>
-                <Typography variant="h3" align="center">
-                  SCHEDULED SESSIONS
+              <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close" style={{ float: 'left' }}>
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h3" align="center">
+                SCHEDULED SESSIONS
                 </Typography>
             </DialogTitle>
 
-            <List style={{ width: '100%' }}>
-              { sessionList.map((session) => (
-                <ListItem alignItems="flex-start" style={{ backgroundColor: '#2d2e2e', color: '#f6fef5' }}>
-                  <Grid container justify="space-evenly">
-                    <Typography variant="h5">
-                      <b>{session.name.toUpperCase()}</b>
-                    </Typography><br />
-                    <Typography variant="h7">
-                      {session.date} {session.time}
-                    </Typography>
-                  </Grid>
-
-                  <Grid container justify="space-evenly">
-                    <Typography variant="h5">
-                      {session.topic.toUpperCase()}
-                    </Typography>
-                    <Typography variant="h7">
-                      {session.description}
-                    </Typography>
-                  </Grid><br />
-                  <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
-                    Register
-                  </Button>
-                  <Divider variant="middle" color="primary" /><br />
-                </ListItem>
-              ))}
-            </List>
-
+            <MapSessionList user={user} sessionList={sessionList} regSessions={regSessions}/>
           </Card>
         </Dialog>
+
+        {/* Map Component */}
         <Card className={classes.mapCard} variant="outlined">
           <div ref={ref} style={{ width: 798, height: 498 }} />
         </Card>
