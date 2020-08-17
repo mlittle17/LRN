@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import clsx from 'clsx';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
+import Register from './Register.jsx';
 import {
- Button, Chip, Divider, Grid, Typography,
+ Button, Divider, Grid, Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,10 +30,6 @@ const useStyles = makeStyles((theme) => ({
   helper: {
     borderLeft: `2px solid ${theme.palette.divider}`,
     padding: theme.spacing(1, 2),
-  },
-  chip: {
-    backgroundColor: '#474a2c',
-    color: '#f6fef5',
   }
 }));
 
@@ -86,7 +83,7 @@ const AccordionActions = withStyles({
   },
 })(MuiAccordionSummary);
 
-const MapSessionList = ({ sessionList }) => {
+const MapSessionList = ({ user, sessionList, regSessions }) => {
   const [expanded, setExpanded] = useState(0);
 
   const classes = useStyles();
@@ -94,6 +91,12 @@ const MapSessionList = ({ sessionList }) => {
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+
+  useEffect(() => {
+    console.log('regSessions:', regSessions);
+  }, [sessionList])
+  console.log('sessionList:', sessionList)
+
 
   return (
     <div className="map-list">
@@ -129,48 +132,9 @@ const MapSessionList = ({ sessionList }) => {
             </Typography>
 
           <AccordionActions style={{ marginTop: 10 }}>
-            {/* { clicked
-              ? ( */}
-                <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
-                  Register
-                </Button>
-              {/* ) 
-              : ( */}
-                <Chip className={classes.chip} size="medium" icon={<DoneAllIcon style={{ color: '#f7fff6' }} />} label="Registered" />
-              {/* )
-            } */}
+            <Register user={user} session={session} />
           </AccordionActions>
         </Accordion>
-
-        // <Accordion square key={index} expanded={expanded === index} onChange={handleChange(index)}>
-        //   <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-        //   <Typography variant="h5">
-        //     <b>{session.name.toUpperCase()}</b>
-        //   </Typography><br />
-        //   </AccordionSummary>
-        //   <AccordionDetails>
-        //   <Grid container justify="space-around">
-        //     <Typography variant="h5">
-        //       {session.topic.toUpperCase()}
-        //     </Typography>
-        //     <Typography variant="h7">
-        //       {session.date}
-        //     </Typography>
-        //   </Grid>
-
-        //   <Grid container justify="space-around">
-        //     <Typography variant="h7">
-        //       {session.time}
-        //     </Typography>
-        //   </Grid>
-        //   <Typography variant="h7">
-        //       {session.description}
-        //   </Typography>
-        //   <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
-        //     Register
-        //   </Button>
-        //   </AccordionDetails>
-        // </Accordion>
       ))}
     </div>
   );
