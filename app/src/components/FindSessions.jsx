@@ -88,13 +88,13 @@ const FindSessions = ({ user, sessions }) => {
   // Input field states
   const [subject, setSubject] = useState('');
   const [sessionDate, setSessionDate] = useState('');
-  const [zip, setZip] = useState(0);
+  const [zip, setZip] = useState('*****');
 
   // Map and location data states
   const [listOpen, setListOpen] = useState(false);
   const [userLoc, setUserLoc] = useState(() => {
     if (user) {
-      console.log(user.location);
+      console.log('user', user);
       return user.location;
     }
   });
@@ -125,7 +125,7 @@ const FindSessions = ({ user, sessions }) => {
     setZip(e.target.rawValue);
   };
 
-  const { ref, map, google } = useGoogleMaps(
+  let { ref, map, google } = useGoogleMaps(
     // Use your own API key, you can get one from Google (https://console.cloud.google.com/google/maps-apis/overview)
     'AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68',
     {
@@ -145,11 +145,11 @@ const FindSessions = ({ user, sessions }) => {
     },
   );
 
-  // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
-  // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
+  console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
+  console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
 
 
-  // Marker visibility functions
+  /* Marker visibility functions */
   // Sets the map on all markers in the array, making them visible
   const showMarkers = () => {
     markers.forEach((marker) => {
@@ -160,30 +160,32 @@ const FindSessions = ({ user, sessions }) => {
 
   // Removes the markers from the map, but does not delete them from the array
   const clearMarkersWhere = (searchType, searchValue) => {
-    markers.forEach((marker) => {
-      marker.setMap(null);
-      marker.setVisible(false);
-
+    markers.length = 0
+    
+    // markers.forEach((marker) => {
+    //   marker.setMap(null);
+    //   marker.icon = null;
+    //   marker.zip = null;
+    //   marker.setVisible(false);
+    //   console.log('marker after clear:', marker)
       // if (!(sessionColl[marker.zip].every((session) => session[searchType] === searchValue))) {
       //   // marker.setMap(null);
       //   marker.setVisible(false);
 
       // }
-    });
+    // });
+    console.log('markers after clear:', markers)
     // if (marker[searchType] !== searchValue) {
   };
 
   // Clear the form of all searched and reset the map view
   const clearForm = () => {
-    // let form = document.querySelector('form');
-    // console.log('form:', form);
-    // $('form').form('reset');
-
     setSubject('');
     setSessionDate('');
-    setZip(0);
+    setZip('*****');
     showMarkers();
   };
+
   // Add a marker to the map, at the provided coordinates, with the provided image
   const addMarker = (markerObj, url) => {
     console.log('add marker, markerObj:', markerObj);
@@ -199,7 +201,6 @@ const FindSessions = ({ user, sessions }) => {
     });
     marker.zip = zipcode;
     marker.addListener('click', () => {
-      console.log(marker.title);
       setSessionsList(sessionColl[marker.title]);
       setListOpen(true);
       // map.setZoom(8);
@@ -210,23 +211,28 @@ const FindSessions = ({ user, sessions }) => {
     // setMarkers([...markers, marker]);
     return marker;
   };
+  console.log('markers:', markers)
 
   // Execute when map object is ready
   // Add the markers for session object zips that exist within the state
-  if (map) {
-    // if (user) {
-    //   const { location } = user;
-    //   map.setOptions({
-    //     center: location,
-    //     zoom: 12,
-    //   });
-    // }
+  // useEffect(() => {
 
-    // Add markers to all appropriate zips
-    currMapLocs.forEach((mapLoc) => {
-      addMarker(mapLoc, sessionsMarker);
-    });
-  }
+    if (map) {
+    //   if (user) {
+    //     const { location } = user;
+    //     map.setOptions({
+    //       center: location,
+    //       zoom: 12,
+    //     });
+    //   }
+    
+  
+      // Add markers to all appropriate zips
+      currMapLocs.forEach((mapLoc) => {
+        addMarker(mapLoc, sessionsMarker);
+      });
+    }
+  // }, [map])
 
   // Watching the sessions prop for update
   useEffect(() => {
@@ -240,7 +246,7 @@ const FindSessions = ({ user, sessions }) => {
         zipsForMarkers[session.zip].push(session);
       }
     });
-    // console.log('zipsForMarkers:', zipsForMarkers);
+
     delete zipsForMarkers.null;
     setSessionColl(zipsForMarkers);
 
@@ -278,8 +284,6 @@ const FindSessions = ({ user, sessions }) => {
   // (When a user searches by subject)
   useEffect(() => {
     // Remove any markers from the map that do not have any sessions that have the subject of searched value
-    console.log('subject:', subject);
-    console.log('markers:', markers);
     clearMarkersWhere('topic', subject);
   }, [subject]);
 
@@ -297,12 +301,13 @@ const FindSessions = ({ user, sessions }) => {
     Geocode.fromAddress(zip).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log('searched zip:', lat, lng);
+        // Update the user's 'location' with the geocoded data
         setUserLoc({
           lat,
           lng,
           zipcode: zip,
         });
+        // Center and zoom the map to match the current value in the zip search field
         map.setOptions({
           center: {
             lat,
@@ -310,14 +315,17 @@ const FindSessions = ({ user, sessions }) => {
           },
           zoom: 12,
         });
-        // if (zip.toString.length === 5) {
-        addMarker({
-          lat,
-          lng,
-          zipcode: zip,
-        },
-          centerMarker);
-        // }
+
+        // Only allow the custom ZipCenter marker to be added after the finished zip search, not an incomplete code.
+        // Only allow if there are no sessions scheduled in that area.
+        if (zip.toString().length === 5) {
+          addMarker({
+            lat,
+            lng,
+            zipcode: zip,
+          },
+            centerMarker);
+        }
       },
       error => {
         console.error(error);
