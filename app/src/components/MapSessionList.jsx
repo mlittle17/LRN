@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import {
- Button, Divider, Grid, Typography,
+ Button, Chip, Divider, Grid, Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: `2px solid ${theme.palette.divider}`,
     padding: theme.spacing(1, 2),
   },
+  chip: {
+    backgroundColor: '#474a2c',
+    color: '#f6fef5',
+  }
 }));
 
 const Accordion = withStyles({
@@ -124,9 +129,16 @@ const MapSessionList = ({ sessionList }) => {
             </Typography>
 
           <AccordionActions style={{ marginTop: 10 }}>
-            <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
-              Register
-            </Button>
+            {/* { clicked
+              ? ( */}
+                <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
+                  Register
+                </Button>
+              {/* ) 
+              : ( */}
+                <Chip className={classes.chip} size="medium" icon={<DoneAllIcon style={{ color: '#f7fff6' }} />} label="Registered" />
+              {/* )
+            } */}
           </AccordionActions>
         </Accordion>
 
