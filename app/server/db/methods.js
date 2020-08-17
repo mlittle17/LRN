@@ -72,18 +72,50 @@ const getEventbyUser = async(req, res) => {
   }
 };
 
-/*
-Topic
- */
-
-const createTopic = async(req, res) => {
+// add user events
+const addUserEvent = async(req, res) => {
+  const {
+    name, topic, description, duration, date, time, user_id, classLimit, zip, uuid,
+  } = req.body;
   try {
-    await db.query('INSERT INTO topic (name) VALUES (${name})', req.body);
+    await db.query(`INSERT INTO event (name, topic, description, duration, date, time, users_id, classLimit, zip, uuid) VALUES ( '${name}', '${topic}', '${description}', '${duration}', '${date}', '${time}', '${user_id}', '${classLimit}', '${zip}', '${uuid}')`);
+    res.send('user added');
+  } catch (err) {
+    console.log('nah bruh', err);
+  }
+};
+
+const addStudentEvents = async(req, res) => {
+  try {
+    await db.query('INSERT INTO student_event (users_id, event_id) VALUES (${users}, ${event})', req.body);
     res.send('it worked');
   } catch (err) {
     console.log('nah', err);
   }
 };
+
+const getStudentevents = async(req, res) => {
+  try {
+    const studentEvents = await db.any(`SELECT S.*, U.nameFirst, U.nameLast, E.name, E.time, E.date from student_event S INNER JOIN event E on E.id = S.event_id INNER JOIN users U on U.id = S.users_id WHERE S.users_id= ${req.params.id}`);
+    res.send(studentEvents);
+  } catch (err) {
+    console.log(`no events, ${err}`);
+  }
+};
+
+/*
+Topic
+ */
+
+// const createTopic = async(req, res) => {
+//   try {
+//     await db.query('INSERT INTO topic (name) VALUES (${name})', req.body);
+//     res.send('it worked');
+//   } catch (err) {
+//     console.log('nah', err);
+//   }
+// };
+
 // method that get from topic
 // const getTopic = async(req, res) => {
 //   try {
@@ -95,14 +127,14 @@ const createTopic = async(req, res) => {
 // };
 
 // get topics a user likes
-const getTopicByUser = async(req, res) => {
-  try {
-    const userTopics = await db.any(`SELECT * FROM topic WHERE user_id = ${req.params.id}`);
-    res.send(userTopics);
-  } catch (err) {
-    console.log(`no user topics, ${err}`);
-  }
-};
+// const getTopicByUser = async(req, res) => {
+//   try {
+//     const userTopics = await db.any(`SELECT * FROM topic WHERE user_id = ${req.params.id}`);
+//     res.send(userTopics);
+//   } catch (err) {
+//     console.log(`no user topics, ${err}`);
+//   }
+// };
 
 /*
 Document
@@ -110,10 +142,10 @@ Document
 
 const addDocument = async(req, res) => {
   const {
-    type, link, user_id, event_id,
+    type, name, link, user_id, event_id,
   } = req.body;
   try {
-    const id = await db.query(`INSERT INTO document (documentType, linkTo, users_id, event_id) VALUES ('${type}', '${link}', '${user_id}', '${event_id}') RETURNING id`);
+    const id = await db.query(`INSERT INTO document (documentType, name, linkTo, users_id, event_id) VALUES ('${type}', '${name}','${link}', '${user_id}', '${event_id}') RETURNING id`);
     res.send(id);
   } catch (err) {
     console.log('got documents', err);
@@ -153,7 +185,8 @@ const addToBinder = async(req, res) => {
 // method that get from topic.
 const getUserBinder = async(req, res) => {
   try {
-    const userBinder = await db.any(`SELECT B.*, U.nameFirst, U.nameLast, D.linkTo, D.documentType from binder B INNER JOIN document D on D.id = B.document_id INNER JOIN users U on U.id = D.users_id WHERE D.users_id = ${req.params.id}`);
+    const userBinder = await db.any(`SELECT B.*, U.nameFirst, U.nameLast, D.linkTo, D.documentType, D.name from binder B INNER JOIN document D on D.id = B.document_id 
+    INNER JOIN users U on U.id = D.users_id WHERE D.users_id = ${req.params.id}`);
     res.send(userBinder);
   } catch (err) {
     console.log(`No Binder, ${err}`);
@@ -195,8 +228,11 @@ module.exports = {
   getAllUser,
   getUser,
   createUser,
-  createTopic,
-  getTopicByUser,
+  addUserEvent,
+  addStudentEvents,
+  getStudentevents,
+  // createTopic,
+  // getTopicByUser,
   getEventbyUser,
   addDocument,
   getAllDocument,

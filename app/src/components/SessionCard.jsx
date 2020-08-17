@@ -2,14 +2,12 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
-
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar, Button, Card, CardContent, CardActionArea, CardActions,
   CardHeader, Collapse, Dialog, Grid, Typography, IconButton,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
@@ -36,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
 }));
-
 const SessionCard = ({ event }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -45,25 +42,20 @@ const SessionCard = ({ event }) => {
     name, namefirst, namelast, date, time, description, duration,
     topic, capacitycount, classlimit,
   } = event.other;
-
   // Open the event card window
+  console.log(event);
   const handleClickOpen = () => {
-    console.log(event);
     setOpen(true);
   };
-
   // Close the event card window
   const handleClose = () => {
     setOpen(false);
   };
-
   // Set the Card to expand show the extra details
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   const location = useLocation();
-
   return (
     <>
       <Button size="small" onClick={handleClickOpen}>
@@ -138,7 +130,6 @@ const SessionCard = ({ event }) => {
                   </Typography>
                 </div>
               </Grid>
-
             </CardContent>
             <CardActions>
               <Grid container justify="space-between">
@@ -165,7 +156,6 @@ const SessionCard = ({ event }) => {
                 </IconButton>
               </Grid>
             </CardActions>
-
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
@@ -174,7 +164,6 @@ const SessionCard = ({ event }) => {
                 <Typography variant="body1" color="textSecondary" component="p">
                   {description}
                 </Typography>
-
                 <Typography gutterBottom variant="h5" component="h2">
                   Est. Duration:
                 </Typography>
@@ -189,5 +178,4 @@ const SessionCard = ({ event }) => {
     </>
   );
 };
-
 export default SessionCard;

@@ -32,16 +32,11 @@ CREATE TABLE student_event (
   event_id Integer NOT NULL
 );
 
-CREATE TABLE topic (
-  id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(50)
-);
-
-CREATE TABLE users_topic (
-  id SERIAL PRIMARY KEY NOT NULL,
-  users_id Integer NOT NULL,
-  topic_id Integer NOT NULL
-);
+-- CREATE TABLE users_topic (
+--   id SERIAL PRIMARY KEY NOT NULL,
+--   users_id Integer NOT NULL,
+--   topic_id Integer NOT NULL
+-- );
 
 CREATE TABLE document (
   id SERIAL PRIMARY KEY NOT NULL,
@@ -59,7 +54,7 @@ CREATE TABLE binder (
   flashCardPack_id Integer
 );
 
-CREATE TABLE FlashCard (
+CREATE TABLE flashCard (
   id SERIAL PRIMARY KEY NOT NULL,
   question VARCHAR(100),
   answer VARCHAR(100),
@@ -88,9 +83,9 @@ ALTER TABLE student_event ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
 ALTER TABLE student_event ADD FOREIGN KEY (event_id) REFERENCES event (id);
 
-ALTER TABLE users_topic ADD FOREIGN KEY (users_id) REFERENCES users (id);
+-- ALTER TABLE users_topic ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
-ALTER TABLE users_topic ADD FOREIGN KEY (topic_id) REFERENCES topic (id);
+-- ALTER TABLE users_topic ADD FOREIGN KEY (topic_id) REFERENCES topic (id);
 
 ALTER TABLE binder ADD FOREIGN KEY (users_id) REFERENCES users (id);
 
