@@ -15,6 +15,7 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: '#474a2c',
+      side: '#f6fef5',
     },
   },
 });
@@ -26,6 +27,7 @@ function App() {
   const [notes, setNotes] = useState([]);
   // const [users, setUsers] = useState([]);
 
+  // Retrieve all scheduled sessions
   useEffect(() => {
     axios.get('/event')
       .then(response => {
@@ -33,6 +35,15 @@ function App() {
         setSessions(response.data);
       });
   }, []);
+
+  // Retrive all registered sessions
+  // useEffect(() => {
+  //   axios.get('/event')
+  //     .then(response => {
+  //       console.log('response data:', response.data);
+  //       setSessions(response.data);
+  //     });
+  // })
 
   useEffect(() => {
     // may need to change to user documents
@@ -62,40 +73,19 @@ function App() {
 
   if (user) {
     // Set up the Geocoding for transforming the zip to lat and lon
-    Geocode.setApiKey(process.env.GOOGLE_API_KEY);
-    console.log('User obj in App.jsx:', user);
-    Geocode.fromAddress('70810').then(
+    // Geocode.setApiKey(process.env.GOOGLE_API_KEY);
+    Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
+    Geocode.fromAddress(user.zip).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
-        user.location = { lat, lng, zipcode: 70810 };
+        user.location = { lat, lng, zipcode: user.zip };
+        console.log('User obj in App.jsx:', user);
       },
       error => {
-        console.error(error);
+        console.error('Error geocoding in App:', error);
       },
     );
   }
-  // useEffect(() => {
-  // axios.get('event/1/documents')
-  //   .then(response => {
-  //     setNotes(response.data);
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
-  // fetch('8080/students/event/1/documents',
-  // {
-  //     /*
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept':'application/json'
-  //     },
-  //     */
-  //     method: "get",
-  //     dataType: 'json',
-  // })
-  // .then((res) => res.json())
-  // .catch(err => console.log(err));
-  // }, []);
 
   const googleLogin = () => {
     window.location.replace('http://localhost:8080/auth/login');
