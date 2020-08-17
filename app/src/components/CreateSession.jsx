@@ -94,6 +94,10 @@ const CreateSession = ({ user }) => {
     })
       .then(response => response.data[0].id)
       .then(eventId => {
+        axios.post(`event/${id}/student`, { user: id, event: eventId })
+          .then(() => {
+            console.log('Successfully registered you for your session')
+          })
         axios.post('/event/documents', {
           type,
           name,
@@ -121,8 +125,8 @@ const CreateSession = ({ user }) => {
                   cards: cards.cards,
                 });
                 window.location.replace('/');
-              }),
-          );
+              })
+          )
       })
       .catch(err => console.log(err));
   };
@@ -164,7 +168,6 @@ const CreateSession = ({ user }) => {
                     placeholder="MM/DD/YYYY"
                     options={{ date: true, datePattern: ['m', 'd', 'Y'] }}
                     onChange={onSessionDateChange}
-                  // className="form-field"
                   />
                 </Form.Field>
 
@@ -176,7 +179,6 @@ const CreateSession = ({ user }) => {
                       placeholder="HH:MM"
                       options={{ time: true, timePattern: ['h', 'm'] }}
                       onChange={onSessionTimeChange}
-                    // className="form-field"
                     />
                   </Form.Field>
                   {/* am / pm */}
@@ -195,7 +197,6 @@ const CreateSession = ({ user }) => {
                       placeholder="H:MM"
                       options={{ delimiters: [' hr ', ' mins'], blocks: [1, 2, 0] }}
                       onChange={onSessionLengthChange}
-                    // className="form-field"
                     />
                   </Form.Field>
                 </Form.Group>
@@ -215,7 +216,6 @@ const CreateSession = ({ user }) => {
                   </Form.Field>
                   <FormControlLabel
                     control={<Switch size="large" color="primary" />}
-                    // <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
                     labelPlacement="end"
                     label={<b>Private</b>}
                   />
