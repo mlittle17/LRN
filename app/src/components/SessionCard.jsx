@@ -67,7 +67,7 @@ const SessionCard = ({ event }) => {
   return (
     <>
       <Button size="small" onClick={handleClickOpen}>
-        SESSION {/* {event.name} */}
+        SESSION
       </Button>
       <Dialog
         fullWidth="true"
