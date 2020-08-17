@@ -415,34 +415,6 @@ const FindSessions = ({ user, sessions }) => {
             </DialogTitle>
 
             <MapSessionList sessionList={sessionList}/>
-
-            {/* <List style={{ width: '100%' }}>
-              {sessionList.map((session) => (
-                <ListItem alignItems="flex-start" style={{ backgroundColor: '#2d2e2e', color: '#f6fef5' }}>
-                  <Grid container justify="space-evenly">
-                    <Typography variant="h5">
-                      <b>{session.name.toUpperCase()}</b>
-                    </Typography><br />
-                    <Typography variant="h7">
-                      {session.date} {session.time}
-                    </Typography>
-                  </Grid>
-
-                  <Grid container justify="space-evenly">
-                    <Typography variant="h5">
-                      {session.topic.toUpperCase()}
-                    </Typography>
-                    <Typography variant="h7">
-                      {session.description}
-                    </Typography>
-                  </Grid><br />
-                  <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
-                    Register
-                  </Button>
-                  <Divider variant="middle" color="primary" /><br />
-                </ListItem>
-              ))}
-            </List> */}
           </Card>
         </Dialog>
 
