@@ -132,7 +132,7 @@ const MapSessionList = ({ user, sessionList, regSessions }) => {
             </Typography>
 
           <AccordionActions style={{ marginTop: 10 }}>
-            <Register user={user} session={session} />
+            <Register userId={user.id} sessionId={session.id} />
           </AccordionActions>
         </Accordion>
       ))}
