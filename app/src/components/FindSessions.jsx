@@ -83,7 +83,7 @@ const subOptions = [
   { key: 'ot', text: 'Other', value: 'other' },
 ];
 
-const FindSessions = ({ user, sessions }) => {
+const FindSessions = ({ user, sessions, regSessions }) => {
   const classes = useStyles();
   // Input field states
   const [subject, setSubject] = useState('');
@@ -145,8 +145,8 @@ const FindSessions = ({ user, sessions }) => {
     },
   );
 
-  console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
-  console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
+  // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
+  // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
 
 
   /* Marker visibility functions */
@@ -211,7 +211,6 @@ const FindSessions = ({ user, sessions }) => {
     // setMarkers([...markers, marker]);
     return marker;
   };
-  console.log('markers:', markers)
 
   // Execute when map object is ready
   // Add the markers for session object zips that exist within the state
@@ -226,9 +225,8 @@ const FindSessions = ({ user, sessions }) => {
     //     });
     //   }
     
-  
-      // Add markers to all appropriate zips
-      currMapLocs.forEach((mapLoc) => {
+    // Add markers to all appropriate zips
+    currMapLocs.forEach((mapLoc) => {
         addMarker(mapLoc, sessionsMarker);
       });
     }
@@ -414,7 +412,7 @@ const FindSessions = ({ user, sessions }) => {
                 </Typography>
             </DialogTitle>
 
-            <MapSessionList sessionList={sessionList}/>
+            <MapSessionList user={user} sessionList={sessionList} regSessions={regSessions}/>
           </Card>
         </Dialog>
 
