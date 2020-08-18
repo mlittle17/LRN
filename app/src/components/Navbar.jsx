@@ -40,13 +40,13 @@ const Navbar = ({
           </Link>
         </Menu.Item>
         <Menu.Menu position="right" class="right menu">
-          <Menu.Item
+          {/* <Menu.Item
             name="student"
             active={activeItem === 'student'}
             onClick={handleItemClick}
           >
             <Link to={`/student/${id}`} class="item" style={{ color: '#a58e57', fontSize: '24px' }}>Student</Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item
             name="profile"
             active={activeItem === 'profile'}
