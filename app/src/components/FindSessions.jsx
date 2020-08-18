@@ -212,6 +212,19 @@ const FindSessions = ({ user, sessions, regSessions }) => {
     showMarkers();
   };
 
+  // Focus on the user's recorded area
+  const focusLocalSessions= () => {
+    if(map) {
+      if(user) {
+        const { location } = user;
+        map.setOptions({
+          center: location,
+          zoom: 12,
+        });
+      }
+    }
+  }
+
   // Add a marker to the map, at the provided coordinates, with the provided image
   const addMarker = (markerObj, url) => {
     const { zipcode } = markerObj;
