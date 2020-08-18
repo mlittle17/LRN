@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 import clsx from 'clsx';
 import Register from './Register.jsx';
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SessionCard = ({ event }) => {
   const classes = useStyles();
+  const [user, setUser] = useState(null)
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const {
@@ -47,8 +49,22 @@ const SessionCard = ({ event }) => {
     topic, capacitycount, classlimit, users_id,
   } = event.other;
 
+  useEffect(() => {
+    axios.get('/auth/exist')
+      .then(res => {
+        if (res.data === 'no one here') {
+          console.log('I am not logged in');
+        } else {
+          console.log(res.data.username, 'I am logged in');
+          setUser(res.data);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
   // Open the event card window
-  console.log(event);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -148,8 +164,8 @@ const SessionCard = ({ event }) => {
                     Close
                   </Button>
                   {/* && registered !== true */}
-                  {(location.pathname !== '/registered') && (
-                    <Register userId={users_id} sessionId={id} />
+                  {(location.pathname !== '/registered' && user !== null) && (
+                    <Register userId={user.id} sessionId={id} />
                   )}
                 </Grid>
                 </div>
