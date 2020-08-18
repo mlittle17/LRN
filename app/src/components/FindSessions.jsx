@@ -8,6 +8,7 @@ import MapSessionList from './MapSessionList';
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
+import ZoomOutIcon from '@material-ui/icons/ZoomOut';
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
 import {
   Card, CardActionArea, CardContent, Collapse, Dialog, DialogTitle,
@@ -94,8 +95,9 @@ const FindSessions = ({ user, sessions, regSessions }) => {
   const [zip, setZip] = useState('*****');
 
   // Map and location data states
-  const ref = useRef()
-  let [map, setMap] = useState()
+  const ref = useRef();
+  let [map, setMap] = useState();
+  const [focused, setFocused] = useState(false);
   const [listOpen, setListOpen] = useState(false);
   const [userLoc, setUserLoc] = useState(() => {
     if (user) {
@@ -216,11 +218,19 @@ const FindSessions = ({ user, sessions, regSessions }) => {
   const focusLocalSessions= () => {
     if(map) {
       if(user) {
-        const { location } = user;
-        map.setOptions({
-          center: location,
-          zoom: 12,
-        });
+        setFocused(!focused);
+        if(focused) {
+          map.setOptions({
+            center: { lat: 39.7837304, lng: -100.4458825 }, // set the map to focus over the us,
+            zoom: 4.4,
+          });
+        } else {
+          const { location } = user;
+          map.setOptions({
+            center: location,
+            zoom: 12,
+          });
+        }
       }
     }
   }
@@ -419,7 +429,16 @@ const FindSessions = ({ user, sessions, regSessions }) => {
                   />
                 </Form.Field>
               </Form><br /><br />
-              <Button onClick={focusLocalSessions} style={{ backgroundColor: '#474A2C', color: '#F6FEF5', float: 'left' }}>My Area</Button>
+              <Button onClick={focusLocalSessions} style={{ backgroundColor: '#474A2C', color: '#F6FEF5', float: 'left' }}>
+                {focused === false
+                ? (
+                  'My Area'
+                )
+                : (
+                  <ZoomOutIcon fontSize="large"/>
+                )
+                }
+              </Button>
               <Button onClick={clearForm} style={{ backgroundColor: '#474a2c', color: '#f6fef5', float: 'right' }}>Clear Search</Button>
             </CardContent>
           </Card>
