@@ -46,6 +46,8 @@ function App() {
 
   useEffect(() => {
     // may need to change to user documents
+  
+    
     axios.get('users/1/binder')
       .then(response => {
         setBinder(response.data);

@@ -32,7 +32,7 @@ Object.defineProperty(Array.prototype, 'chunk', {
   },
 });
 
-const UpcomingSessions = ({ sessions, user, setNavbarSessionName }) => {
+const UpcomingSessions = ({ sessions, user, setNavbarSessionName, setEventId }) => {
   const [upcomingSessions, setUpcomingSessions] = useState([]);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const UpcomingSessions = ({ sessions, user, setNavbarSessionName }) => {
         {rows.map((sessionPage) => {
           return (
             <div>
-              <UpcomingTable sessionPage={sessionPage} user={user} setNavbarSessionName={setNavbarSessionName} />
+              <UpcomingTable sessionPage={sessionPage} user={user} setNavbarSessionName={setNavbarSessionName} setEventId={setEventId} />
             </div>
           );
         })}

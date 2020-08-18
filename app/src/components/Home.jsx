@@ -12,7 +12,7 @@ import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
 const Home = ({
-  user, binder, sessions, setNavbarSessionName,
+  user, binder, sessions, setNavbarSessionName, setEventId
 }) => {
   const [currentTime, setCurrentTime] = useState();
   const [joinSession, setJoinSession] = useState(false);
@@ -30,7 +30,7 @@ const Home = ({
             <Button as={Link} to="/create" style={{ backgroundColor: '#474a2c', color: '#f6fef5' }}>Create Session</Button>
           </>
           <div style={{ marginTop: '30px' }}>
-            <UpcomingSessions sessions={sessions} user={user} setNavbarSessionName={setNavbarSessionName} />
+            <UpcomingSessions sessions={sessions} user={user} setNavbarSessionName={setNavbarSessionName} setEventId={setEventId} />
           </div>
           <Binder binder={binder} />
         </div>

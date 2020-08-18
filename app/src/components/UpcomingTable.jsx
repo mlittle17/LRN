@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 });
 
 const UpcomingTable = ({
-  sessionPage, user, setNavbarSessionName,
+  sessionPage, user, setNavbarSessionName, setEventId,
 }) => {
   // const {
   //   name, creator, date, time,
@@ -72,10 +72,12 @@ const UpcomingTable = ({
     }
   }
 
-  const placeInSession = (uuid, date, sessionName, creatorUserId) => {
+  const placeInSession = (uuid, date, sessionName, creatorUserId, id) => {
     doWeNeedButton(date);
     console.log('you pushed a button', uuid, sessionName);
     setNavbarSessionName(sessionName);
+    console.log(id);
+    setEventId(id);
     console.log(user.id, 'userid', creatorUserId, 'creatorId');
     if (user.id === creatorUserId) {
       history.push(`/instructor/${uuid}/${sessionName}`);
@@ -109,7 +111,7 @@ const UpcomingTable = ({
               <StyledTableCell align="right" className={classes.rowText}>{`${session.namefirst} ${session.namelast}`}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>{session.date}</StyledTableCell>
               <StyledTableCell align="right" className={classes.rowText}>
-                {doWeNeedButton(session.date, session.time) && <Fab color="primary" aria-label="add" style={{ marginLeft: '30px' }} onClick={() => placeInSession(session.uuid, session.date, session.name, session.users_id )} >
+                {doWeNeedButton(session.date, session.time) && <Fab color="primary" aria-label="add" style={{ marginLeft: '30px' }} onClick={() => placeInSession(session.uuid, session.date, session.name, session.users_id, session.id )} >
                   <VoiceChatIcon fontSize="large" />
                 </Fab> || session.time}
               </StyledTableCell>

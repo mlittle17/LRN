@@ -92,9 +92,9 @@ const StudentSession = (props) => {
   const [notes, setNotes] = useState([]);
   const classes = useStyles();
 
-
+ 
   useEffect(() => {
-    axios.get('/event/1/documents')
+    axios.get(`/event/${props.eventId}/documents`)
       .then(response => {
         setNotes(response.data);
       })
