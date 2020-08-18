@@ -23,6 +23,7 @@ const Navbar = ({
 }) => {
   const [activeItem, setActiveItem] = useState('home');
   const [navBarSessionName, setNavbarSessionName] = useState('');
+  const [navBarEventId, setNavbarEventId] = useState('');
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
   const id = uuid();
@@ -90,7 +91,8 @@ const Navbar = ({
       <div>
         <Switch>
           {!user && <Route exact path="/" render={() => (<NotLoggedIn />)} />}
-          {user && <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} regSessions={regSessions} setNavbarSessionName={setNavbarSessionName} />)} />}
+          {user && <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} setNavbarSessionName={setNavbarSessionName} setEventId={setNavbarEventId} regSessions={regSessions} />)} />}
+          {/* <Route exact path="/" render={() => (<Home user={user} binder={binder} sessions={sessions} setNavbarSessionName={setNavbarSessionName} />)} /> */}
           <Route exact path="/profile" render={() => (<Profile user={user} binder={binder} />)} />
           <Route exact path="/sessions" render={() => (<Sessions user={user} sessions={sessions} regSessions={regSessions}/>)} />
           <Route exact path="/find" render={() => (<FindSessions user={user} sessions={sessions} regSessions={regSessions}/>)} />
@@ -98,7 +100,7 @@ const Navbar = ({
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/registered" render={() => (<Sessions user={user} sessions={sessions} regSessions={regSessions}/>)} />
           <Route path="/instructor/:roomID" render={(props) => (<InstructorSession {...props} user={user} sessionName={navBarSessionName} />)} />
-          <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} notes={notes} sessionName={navBarSessionName} />)} />
+          <Route path="/student/:roomID" render={(props) => (<StudentSession {...props} user={user} notes={notes} sessionName={navBarSessionName} sessions={sessions} eventId={navBarEventId} />)} />
         </Switch>
       </div>
     </div>

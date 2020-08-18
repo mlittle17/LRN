@@ -47,7 +47,7 @@ function App() {
 
   // Retrieve all registered sessions
   useEffect(() => {
-    if(user) {
+    if (user) {
       axios.get(`event/${user.id}/student`)
         .then((response) => {
           const sortedRegSessions = response.data.sort(function(a, b) {
@@ -64,6 +64,8 @@ function App() {
 
   useEffect(() => {
     // may need to change to user documents
+  
+    
     axios.get('users/1/binder')
       .then(response => {
         setBinder(response.data);

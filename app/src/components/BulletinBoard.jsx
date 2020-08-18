@@ -39,11 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BulletinBoard = ({ notes, user }) => {
   const classes = useStyles();
-  console.log(user);
-  console.log(notes);
   const clickIcon = (documentId) => {
-    // do a post request to add the documents to the students binder
-    console.log(user);
     axios.post(`users/${user.id}/binder`, { users_id: user.id, document_id: documentId })
       .then(response => {
         console.log(response);
@@ -67,7 +63,7 @@ const BulletinBoard = ({ notes, user }) => {
             <div>
               {notes.map((session) => (
                 <div>
-                  {document.documenttype === 'google docs' && (
+                  {document.documenttype === 'Google Doc' && (
                     <InsertDriveFileIcon />
                   )}
                   {/* {document.documenttype === 'slides' && (
@@ -84,16 +80,12 @@ const BulletinBoard = ({ notes, user }) => {
 
                 </div>
               ))}
+              {/* {console.log(notes)} */}
             </div>
             )}
           </Typography>
         </div>
-
       </CardContent>
-      {/* <CardActions>
-
-      </CardActions> */}
-
     </Card>
   );
 };
