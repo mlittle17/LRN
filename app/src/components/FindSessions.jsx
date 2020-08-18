@@ -419,6 +419,7 @@ const FindSessions = ({ user, sessions, regSessions }) => {
                   />
                 </Form.Field>
               </Form><br /><br />
+              <Button onClick={focusLocalSessions} style={{ backgroundColor: '#474A2C', color: '#F6FEF5', float: 'left' }}>My Area</Button>
               <Button onClick={clearForm} style={{ backgroundColor: '#474a2c', color: '#f6fef5', float: 'right' }}>Clear Search</Button>
             </CardContent>
           </Card>
