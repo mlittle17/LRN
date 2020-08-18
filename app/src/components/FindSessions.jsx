@@ -10,8 +10,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
 import {
-  Card, CardActionArea, CardContent, Collapse, Dialog, DialogTitle, Divider,
-  Grid, IconButton, Typography, Zoom,
+  Card, CardActionArea, CardContent, Collapse, Dialog, DialogTitle,
+  Grid, IconButton, Typography,
 } from '@material-ui/core';
 
 import '../styles/Form.css';
@@ -87,6 +87,7 @@ const markers = [];
 
 const FindSessions = ({ user, sessions, regSessions }) => {
   const classes = useStyles();
+
   // Input field states
   const [subject, setSubject] = useState('');
   const [sessionDate, setSessionDate] = useState('');
@@ -104,7 +105,6 @@ const FindSessions = ({ user, sessions, regSessions }) => {
   const [sessionColl, setSessionColl] = useState({});
   const [sessionList, setSessionList] = useState({});
   const [currMapLocs, setCurrMapLocs] = useState([]);
-  // const [markers, setMarkers] = useState([]);
 
   // The custom marker images
   const sessionsMarker = 'https://res.cloudinary.com/dbw14clas/image/upload/c_scale,h_80,w_90/v1595383700/CustomBlackMapMarker.png';
@@ -158,30 +158,6 @@ const FindSessions = ({ user, sessions, regSessions }) => {
     
   }, []);
 
-  // let { ref, map, google } = useGoogleMaps(
-  //   // Use your own API key, you can get one from Google (https://console.cloud.google.com/google/maps-apis/overview)
-  //   'AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68',
-  //   {
-  //     center: { lat: 39.7837304, lng: -100.4458825 }, // set the map to focus over the us when it loads, so the user experiences the zoom in on their location once the user object becomes available
-  //     zoom: 4.4,
-  //     zoomControl: false,
-  //     mapTypeControl: true,
-  //     // mapTypeControlOptions: {
-  //     //   style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-  //     //   mapTypeIds: ['roadmap', 'terrain'],
-  //     // },
-  //     scaleControl: false,
-  //     streetViewControl: false,
-  //     rotateControl: false,
-  //     fullscreenControl: true,
-  //     styles: mapStyles,
-  //   },
-  // );
-
-  // console.log('map instance:', map); // instance of created Map object (https://developers.google.com/maps/documentation/javascript/reference/map)
-  // console.log('google api object:', google); // google API object (easily get google.maps.LatLng or google.maps.Marker or any other Google Maps class)
-
-
   /* Marker visibility functions */
   // Sets the map on all markers in the array, making them visible
   const showMarkers = () => {
@@ -194,17 +170,13 @@ const FindSessions = ({ user, sessions, regSessions }) => {
   // Removes the markers from the map, but does not delete them from the array
   const clearMarkersWhere = (searchType, searchValue) => {
     markers.forEach((marker) => {
-      // marker.setVisible(false);
-      // sessionColl[marker.zip].forEach((session) => console.log(session[searchType], searchValue));
-      if (!(sessionColl[marker.zip].some((session) => session[searchType].toLowerCase() === searchValue))) {
-        // marker.setMap(null);
-        marker.setMap(null);
-        marker.setVisible(false);
-
+      if(sessionColl[marker.zip]) {
+        if (!(sessionColl[marker.zip].some((session) => session[searchType].toLowerCase() === searchValue))) {
+          marker.setMap(null);
+          marker.setVisible(false);
+        }
       }
     });
-    console.log('markers after clear:', markers)
-    // if (marker[searchType] !== searchValue) {
   };
 
   // Clear the form of all searched and reset the map view
@@ -217,7 +189,6 @@ const FindSessions = ({ user, sessions, regSessions }) => {
 
   // Add a marker to the map, at the provided coordinates, with the provided image
   const addMarker = (markerObj, url) => {
-    console.log('add marker, markerObj:', markerObj);
     const { zipcode } = markerObj;
 
     const marker = new window.google.maps.Marker({
@@ -229,34 +200,30 @@ const FindSessions = ({ user, sessions, regSessions }) => {
       },
     });
     marker.zip = zipcode;
-    marker.addListener('click', () => {
-      setSessionList({ zip: marker.title, sessions: sessionColl[marker.title] });
-      setListOpen(true);
-      // map.setZoom(8);
-      // map.setCenter(marker.getPosition());
-    });
+
+    /* Assign click events only to the (black) Session markers-- 
+       (White)Center markers will only appear when a user searches a zip that contains no sessions & have nothing to display */
+    if(!url.includes('customWhiteCenterMarker')) {
+      marker.addListener('click', () => {
+        setSessionList({ zip: marker.title, sessions: sessionColl[marker.title] });
+        setListOpen(true);
+
+        // Focus the map onto the selected zip code
+        map.setZoom(8);
+        map.setCenter(marker.getPosition());
+      });
+    }
 
     markers.push(marker);
-    // setMarkers([...markers, marker]);
     return marker;
   };
 
   // Execute when map object is ready
   // Add the markers for session object zips that exist within the state
   useEffect(() => {
-
     if (map) {
-    //   if (user) {
-    //     const { location } = user;
-    //     map.setOptions({
-    //       center: location,
-    //       zoom: 12,
-    //     });
-    //   }
-    
-    // Add markers to all appropriate zips
-    console.log('currMapLocs', currMapLocs);
-    currMapLocs.forEach((mapLoc) => {
+      // Add markers to all appropriate zips
+      currMapLocs.forEach((mapLoc) => {
         addMarker(mapLoc, sessionsMarker);
       });
     }
@@ -281,7 +248,6 @@ const FindSessions = ({ user, sessions, regSessions }) => {
     // Iterate over the new zipcode key sorted collection of sessions arrays.
     // Geocode the zipcodes associated with the sessions in order to create the collection that can be used for populating the map with markers
     Object.keys(zipsForMarkers).forEach((zipForMarker) => {
-      console.log(`zipForMarker: ${zipForMarker}: ${zipsForMarkers[zipForMarker]}`);
       Geocode.fromAddress(zipForMarker)
       .then((response) => {
           const { lat, lng } = response.results[0].geometry.location;
