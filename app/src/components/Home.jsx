@@ -8,7 +8,7 @@ import Binder from './Binder.jsx';
 import UpcomingSessions from './UpcomingSessions.jsx';
 
 const Home = ({
-  user, binder, sessions, regSessions, setNavbarSessionName,
+  user, binder, sessions, setNavbarSessionName, setEventId, regSessions
 }) => {
 
   return (
@@ -22,7 +22,7 @@ const Home = ({
             <Button as={Link} to="/create" style={{ backgroundColor: '#474a2c', color: '#f6fef5' }}>Create Session</Button>
           </>
           <div style={{ marginTop: '30px' }}>
-            <UpcomingSessions sessions={sessions} regSessions={regSessions} user={user} setNavbarSessionName={setNavbarSessionName} />
+            <UpcomingSessions sessions={sessions} user={user} setNavbarSessionName={setNavbarSessionName} setEventId={setEventId} regSessions={regSessions} />
           </div>
           <Binder binder={binder} />
         </div>
