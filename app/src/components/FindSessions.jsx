@@ -205,15 +205,28 @@ const FindSessions = ({ user, sessions, regSessions }) => {
        (White)Center markers will only appear when a user searches a zip that contains no sessions & have nothing to display */
     if(!url.includes('customWhiteCenterMarker')) {
       marker.addListener('click', () => {
-        setSessionList({ zip: marker.title, sessions: sessionColl[marker.title] });
+        let filteredSearchList;
+        // Check the current state of the inputs for Subject and Date
+        // Filter the sessions collection passed down to the dialog list
+        if(sessionDate !== '' && sessionDate.length === 10) {
+          filteredSearchList = sessionColl[marker.title].filter(session => session.date === sessionDate)
+          setSessionList({ zip: marker.title, sessions: filteredSearchList });
+        }
+        if(subject !== '') {
+          filteredSearchList = sessionColl[marker.title].filter(session => session.subject.toLowerCase() === subject)
+          setSessionList({ zip: marker.title, sessions: filteredSearchList });
+        } else {
+          setSessionList({ zip: marker.title, sessions: sessionColl[marker.title] });
+        }
         setListOpen(true);
 
-        // Focus the map onto the selected zip code
+        // Focus the map onto the selected zip code area, by clicked marker
         map.setZoom(8);
         map.setCenter(marker.getPosition());
       });
     }
 
+    // Store the created markers to allow removing and readding by visibility needs later
     markers.push(marker);
     return marker;
   };
@@ -263,20 +276,6 @@ const FindSessions = ({ user, sessions, regSessions }) => {
     });
   }, [sessions]);
 
-  // Watching the user prop for update
-  // When the user prop becomes available, and is no longer null
-  useEffect(() => {
-    if (map) {
-      if (user) {
-        const { location } = user;
-        map.setOptions({
-          center: location,
-          zoom: 12,
-        });
-      }
-    }
-  }, [user]);
-
   // Watching the subject state value for update
   // (When a user searches by subject)
   useEffect(() => {
@@ -287,7 +286,7 @@ const FindSessions = ({ user, sessions, regSessions }) => {
   // Watching the date state value for update
   // (When a user searches by date)
   useEffect(() => {
-    // Remove any markers from the map that do not have any sessions that have the subject of searched value
+    // Remove any markers from the map that do not have any sessions that have the date of searched value
     if (sessionDate.toString().length === 10) {
       clearMarkersWhere('date', sessionDate);
     }
@@ -315,9 +314,9 @@ const FindSessions = ({ user, sessions, regSessions }) => {
           zoom: 12,
         });
 
-        // Only allow the custom ZipCenter marker to be added after the finished zip search, not an incomplete code.
+        // Only allow the custom ZipCenter marker to be added after the finished zip search, not on an incomplete code.
         // Only allow if there are no sessions scheduled in that area.
-        if (zip.toString().length === 5) {
+        if (zip.toString().length === 5 && sessionColl[zip] === undefined) {
           addMarker({
             lat,
             lng,
