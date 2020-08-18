@@ -5,3 +5,4 @@ app/.env
 app/src/components/holdthis.jsx
 app/src/components/holdThisRoom.jsx
 app/src/components/holdThisQuest.jsx
+eventSeeding.js
