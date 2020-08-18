@@ -104,6 +104,7 @@ const FindSessions = ({ user, sessions, regSessions }) => {
   });
   const [sessionColl, setSessionColl] = useState({});
   const [sessionList, setSessionList] = useState({});
+  const [filteredSearchList, setFilteredSearchList] = useState(null);
   const [currMapLocs, setCurrMapLocs] = useState([]);
 
   // The custom marker images
@@ -169,6 +170,7 @@ const FindSessions = ({ user, sessions, regSessions }) => {
 
   // Removes the markers from the map, but does not delete them from the array
   const clearMarkersWhere = (searchType, searchValue) => {
+    // Remove the markers where at least one session does not exist that matches the criteria in the search fields
     markers.forEach((marker) => {
       if(sessionColl[marker.zip]) {
         if (!(sessionColl[marker.zip].some((session) => session[searchType].toLowerCase() === searchValue))) {
@@ -177,6 +179,28 @@ const FindSessions = ({ user, sessions, regSessions }) => {
         }
       }
     });
+
+    let filtered;
+    if(filteredSearchList === null) {
+      filtered = {...sessionColl}
+    } else {
+      filtered = {...filteredSearchList}
+    }
+
+    if(sessionDate !== '' && sessionDate.length === 10) {
+      for(let key in filtered) {
+        filtered[key] = filtered[key].filter(session => session.date === sessionDate)
+      }
+      console.log(filtered, 'filtered by date')
+      setFilteredSearchList(filtered);
+    }
+    if(subject !== '') {
+      for(let key in filtered) {
+        filtered[key] = filtered[key].filter(session => session.topic.toLowerCase() === subject)
+      }
+      console.log(filtered, 'filtered by subject')
+      setFilteredSearchList(filtered);
+    }
   };
 
   // Clear the form of all searched and reset the map view
@@ -184,6 +208,7 @@ const FindSessions = ({ user, sessions, regSessions }) => {
     setSubject('');
     setSessionDate('');
     setZip('*****');
+    setFilteredSearchList(null)
     showMarkers();
   };
 
@@ -205,15 +230,12 @@ const FindSessions = ({ user, sessions, regSessions }) => {
        (White)Center markers will only appear when a user searches a zip that contains no sessions & have nothing to display */
     if(!url.includes('customWhiteCenterMarker')) {
       marker.addListener('click', () => {
-        let filteredSearchList;
         // Check the current state of the inputs for Subject and Date
         // Filter the sessions collection passed down to the dialog list
         if(sessionDate !== '' && sessionDate.length === 10) {
-          filteredSearchList = sessionColl[marker.title].filter(session => session.date === sessionDate)
           setSessionList({ zip: marker.title, sessions: filteredSearchList });
         }
         if(subject !== '') {
-          filteredSearchList = sessionColl[marker.title].filter(session => session.subject.toLowerCase() === subject)
           setSessionList({ zip: marker.title, sessions: filteredSearchList });
         } else {
           setSessionList({ zip: marker.title, sessions: sessionColl[marker.title] });
