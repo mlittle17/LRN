@@ -3,9 +3,8 @@ import axios from 'axios';
 
 import { Grid } from '@material-ui/core';
 import Calendar from './Calendar.jsx';
-import SessionCard from './SessionCard.jsx';
 
-function Sessions() {
+function Sessions({ user, sessions, regSessions }) {
   const [sessionObjs, setSessionObjs] = useState([]);
   useEffect(() => {
     // get all events
@@ -19,7 +18,6 @@ function Sessions() {
   }, []);
 
   useEffect(() => {
-    // console.log('reaching sessions', sessionObjs);
     sessionObjs.forEach((sessionObj) => {
       axios.get(`/users/${sessionObj.users_id}`)
         .then(response => {
@@ -35,7 +33,7 @@ function Sessions() {
     <div className="Sessions">
       <br />
       <Grid container justify="space-evenly">
-        <Calendar sessions={sessionObjs} />
+        <Calendar sessions={sessionObjs} regSessions={regSessions}/>
         <div>
           {/* <SessionCard /> */}
         </div>

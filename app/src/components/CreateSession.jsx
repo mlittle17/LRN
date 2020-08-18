@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Cleave from 'cleave.js/react';
-import CounterInput from 'react-counter-input';
+import React, { useState } from 'react';
 import axios from 'axios';
+import Cleave from 'cleave.js/react';
 import { v1 as generateUuid } from 'uuid';
+import CounterInput from 'react-counter-input';
 
+import AddDocuments from './AddDocuments.jsx';
+import CreateFlashCards from './CreateFlashCards.jsx';
 import { Button, Form } from 'semantic-ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -11,8 +13,7 @@ import {
 } from '@material-ui/core';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
-import AddDocuments from './AddDocuments.jsx';
-import CreateFlashCards from './CreateFlashCards.jsx';
+
 import '../styles/Form.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 620,
     minWidth: 620,
     minHeight: 340,
-    // maxHeight: 340,
   },
   large: {
     width: theme.spacing(7),
@@ -58,6 +58,8 @@ const CreateSession = ({ user }) => {
   const [documents, setDocuments] = useState([]);
   const [document, setDocument] = useState('');
   const [cards, setCards] = useState('');
+  const [name, setName] = useState('');
+  const [type, setType] = useState('');
 
   const onSessionNameChange = (e) => {
     setSessionTitle(e.target.value);
@@ -92,8 +94,13 @@ const CreateSession = ({ user }) => {
     })
       .then(response => response.data[0].id)
       .then(eventId => {
+        axios.post(`event/${id}/student`, { user: id, event: eventId })
+          .then(() => {
+            console.log('Successfully registered you for your session')
+          })
         axios.post('/event/documents', {
-          type: 'google docs',
+          type,
+          name,
           link: document,
           user_id: id,
           event_id: eventId,
@@ -118,8 +125,8 @@ const CreateSession = ({ user }) => {
                   cards: cards.cards,
                 });
                 window.location.replace('/');
-              }),
-          );
+              })
+          )
       })
       .catch(err => console.log(err));
   };
@@ -161,7 +168,6 @@ const CreateSession = ({ user }) => {
                     placeholder="MM/DD/YYYY"
                     options={{ date: true, datePattern: ['m', 'd', 'Y'] }}
                     onChange={onSessionDateChange}
-                  // className="form-field"
                   />
                 </Form.Field>
 
@@ -173,7 +179,6 @@ const CreateSession = ({ user }) => {
                       placeholder="HH:MM"
                       options={{ time: true, timePattern: ['h', 'm'] }}
                       onChange={onSessionTimeChange}
-                    // className="form-field"
                     />
                   </Form.Field>
                   {/* am / pm */}
@@ -192,7 +197,6 @@ const CreateSession = ({ user }) => {
                       placeholder="H:MM"
                       options={{ delimiters: [' hr ', ' mins'], blocks: [1, 2, 0] }}
                       onChange={onSessionLengthChange}
-                    // className="form-field"
                     />
                   </Form.Field>
                 </Form.Group>
@@ -212,12 +216,11 @@ const CreateSession = ({ user }) => {
                   </Form.Field>
                   <FormControlLabel
                     control={<Switch size="large" color="primary" />}
-                    // <Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />
                     labelPlacement="end"
                     label={<b>Private</b>}
                   />
                 </Grid>
-                <AddDocuments setDocs={setDocuments} />
+                <AddDocuments setDocs={setDocuments} setName={setName} setType={setType} />
                 <CreateFlashCards setCards={setCards} />
               </Form> <br />
               <Button

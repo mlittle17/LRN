@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import clsx from 'clsx';
 
+import clsx from 'clsx';
+import Register from './Register.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar, Button, Card, CardContent, CardActionArea, CardActions,
@@ -42,13 +43,13 @@ const SessionCard = ({ event }) => {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const {
-    name, namefirst, namelast, date, time, description, duration,
-    topic, capacitycount, classlimit,
+    id, name, namefirst, namelast, date, time, description, duration,
+    topic, capacitycount, classlimit, users_id,
   } = event.other;
 
   // Open the event card window
+  console.log(event);
   const handleClickOpen = () => {
-    console.log(event);
     setOpen(true);
   };
 
@@ -67,7 +68,7 @@ const SessionCard = ({ event }) => {
   return (
     <>
       <Button size="small" onClick={handleClickOpen}>
-        SESSION {/* {event.name} */}
+        SESSION
       </Button>
       <Dialog
         fullWidth="true"
@@ -138,20 +139,19 @@ const SessionCard = ({ event }) => {
                   </Typography>
                 </div>
               </Grid>
-
             </CardContent>
             <CardActions>
               <Grid container justify="space-between">
                 <div>
+                <Grid container justify="space-between">
                   <Button size="small" onClick={handleClose} style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
                     Close
                   </Button>
                   {/* && registered !== true */}
                   {(location.pathname !== '/registered') && (
-                    <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
-                      Register
-                    </Button>
+                    <Register userId={users_id} sessionId={id} />
                   )}
+                </Grid>
                 </div>
                 <IconButton
                   className={clsx(classes.expand, {
@@ -165,7 +165,6 @@ const SessionCard = ({ event }) => {
                 </IconButton>
               </Grid>
             </CardActions>
-
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
@@ -174,7 +173,6 @@ const SessionCard = ({ event }) => {
                 <Typography variant="body1" color="textSecondary" component="p">
                   {description}
                 </Typography>
-
                 <Typography gutterBottom variant="h5" component="h2">
                   Est. Duration:
                 </Typography>
@@ -189,5 +187,4 @@ const SessionCard = ({ event }) => {
     </>
   );
 };
-
 export default SessionCard;

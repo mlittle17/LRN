@@ -57,14 +57,14 @@ const Binder = ({ userInfo, binder }) => {
               <StyledTableCell className={classes.colLabel}>Type</StyledTableCell>
               <StyledTableCell align="right" className={classes.colLabel}>Name</StyledTableCell>
               <StyledTableCell align="right" className={classes.colLabel}>Creator</StyledTableCell>
-              <StyledTableCell align="right" className={classes.colLabel}>Saved Date</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+            {console.log(binder)}
             {binder.map((document) => (
               <StyledTableRow key={document.id}>
                 <StyledTableCell component="th" scope="row" className={classes.rowText}>
-                  {document.documenttype === 'google docs' && (
+                  {document.documenttype === 'Google Doc' && (
                     <InsertDriveFileIcon />
                   )}
                   {document.documenttype === 'slides' && (
@@ -74,9 +74,8 @@ const Binder = ({ userInfo, binder }) => {
                     <ViewCarouselTwoToneIcon />
                   )}
                 </StyledTableCell>
-                <StyledTableCell align="right" className={classes.rowText}><a href={document.linkto}> {document.title} </a></StyledTableCell>
+                <StyledTableCell align="right" className={classes.rowText}><a href={document.linkto}> {document.name}</a></StyledTableCell>
                 <StyledTableCell align="right" className={classes.rowText}>{`${document.namefirst} ${document.namelast}`}</StyledTableCell>
-                <StyledTableCell align="right" className={classes.rowText}>{document.dateSaved}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
