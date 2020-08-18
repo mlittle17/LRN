@@ -20,7 +20,7 @@ import mapStyles from '../styles/Map.js'
 
 // Set up the Geocoding for transforming the zip to lat and lon
 // process.env.GOOGLE_API_KEY
-Geocode.setApiKey('AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68');
+Geocode.setApiKey('AIzaSyAXFaDwiusxkZM2RX83GvVl0-vFIlx9VV0');
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -151,7 +151,7 @@ const FindSessions = ({ user, sessions, regSessions }) => {
       ))
     if (!window.google) {
       const script = document.createElement(`script`)
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCVPR2bv5DCVKltpal636K0ei6zCIGb_68`
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAXFaDwiusxkZM2RX83GvVl0-vFIlx9VV0`
       document.head.append(script)
       script.addEventListener(`load`, onLoad)
       return () => script.removeEventListener(`load`, onLoad)
@@ -351,13 +351,13 @@ const FindSessions = ({ user, sessions, regSessions }) => {
           zipcode: zip,
         });
         // Center and zoom the map to match the current value in the zip search field
-        map.setOptions({
-          center: {
-            lat,
-            lng,
-          },
-          zoom: 12,
-        });
+        // map.setOptions({
+        //   center: {
+        //     lat,
+        //     lng,
+        //   },
+        //   zoom: 12,
+        // });
 
         // Only allow the custom ZipCenter marker to be added after the finished zip search, not on an incomplete code.
         // Only allow if there are no sessions scheduled in that area.
@@ -368,6 +368,15 @@ const FindSessions = ({ user, sessions, regSessions }) => {
             zipcode: zip,
           },
             centerMarker);
+
+          // Center and zoom the map to match the finished value in the zip search field
+          map.setOptions({
+          center: {
+            lat,
+            lng,
+          },
+          zoom: 12,
+          });
         }
       },
       error => {
