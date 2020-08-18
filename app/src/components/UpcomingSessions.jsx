@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import moment, { isBefore, isSameOrAfter } from 'moment';
+import moment from 'moment';
 
 import { Typography } from '@material-ui/core';
 import Slider from 'react-slick';
@@ -32,13 +31,13 @@ Object.defineProperty(Array.prototype, 'chunk', {
   },
 });
 
-const UpcomingSessions = ({ sessions, user, setNavbarSessionName, setEventId }) => {
+const UpcomingSessions = ({ sessions, user, setNavbarSessionName, setEventId, regSessions }) => {
   const [upcomingSessions, setUpcomingSessions] = useState([]);
 
   useEffect(() => {
     // remove the sessions that are before todays date
     const set = [];
-    sessions.forEach((session) => {
+    regSessions.forEach((session) => {
       const mDY = session.date.split('/').join('-');
       var date = moment(mDY);
       var now = moment();

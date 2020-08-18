@@ -1,13 +1,16 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import clsx from 'clsx';
+import Register from './Register.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar, Button, Card, CardContent, CardActionArea, CardActions,
   CardHeader, Collapse, Dialog, Grid, Typography, IconButton,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
@@ -34,32 +37,38 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
 }));
+
 const SessionCard = ({ event }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const {
-    name, namefirst, namelast, date, time, description, duration,
-    topic, capacitycount, classlimit,
+    id, name, namefirst, namelast, date, time, description, duration,
+    topic, capacitycount, classlimit, users_id,
   } = event.other;
+
   // Open the event card window
   console.log(event);
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   // Close the event card window
   const handleClose = () => {
     setOpen(false);
   };
+
   // Set the Card to expand show the extra details
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   const location = useLocation();
+
   return (
     <>
       <Button size="small" onClick={handleClickOpen}>
-        SESSION {/* {event.name} */}
+        SESSION
       </Button>
       <Dialog
         fullWidth="true"
@@ -134,15 +143,15 @@ const SessionCard = ({ event }) => {
             <CardActions>
               <Grid container justify="space-between">
                 <div>
+                <Grid container justify="space-between">
                   <Button size="small" onClick={handleClose} style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
                     Close
                   </Button>
                   {/* && registered !== true */}
                   {(location.pathname !== '/registered') && (
-                    <Button size="small" style={{ color: '#f7fff6', backgroundColor: '#474a2c' }}>
-                      Register
-                    </Button>
+                    <Register userId={users_id} sessionId={id} />
                   )}
+                </Grid>
                 </div>
                 <IconButton
                   className={clsx(classes.expand, {
