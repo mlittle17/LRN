@@ -47,7 +47,7 @@ function App() {
 
   // Retrieve all registered sessions
   useEffect(() => {
-    if(user) {
+    if (user) {
       axios.get(`event/${user.id}/student`)
         .then((response) => {
           const sortedRegSessions = response.data.sort(function(a, b) {

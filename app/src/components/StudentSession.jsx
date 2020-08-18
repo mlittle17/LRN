@@ -153,7 +153,7 @@ const StudentSession = (props) => {
     // });
   }, []);
 
-  console.log(notes);
+  // console.log(notes);
   const createPeer = (userToSignal, callerID, stream) => {
     const peer = new Peer({
       initiator: true,
