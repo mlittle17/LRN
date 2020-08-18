@@ -9,7 +9,7 @@ import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Register from './Register.jsx';
 import {
- Button, Divider, Grid, Typography,
+  Divider, Grid, Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -95,7 +95,6 @@ const MapSessionList = ({ user, sessionList, regSessions }) => {
   useEffect(() => {
     console.log('regSessions:', regSessions);
   }, [sessionList])
-  console.log('sessionList:', sessionList)
 
 
   return (

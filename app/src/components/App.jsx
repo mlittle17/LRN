@@ -98,7 +98,6 @@ function App() {
       response => {
         const { lat, lng } = response.results[0].geometry.location;
         user.location = { lat, lng, zipcode: user.zip };
-        console.log('User obj in App.jsx:', user);
       },
       error => {
         console.error('Error geocoding in App:', error);
@@ -113,7 +112,6 @@ function App() {
   const googleLogout = () => {
     axios.get('auth/logout')
       .then(res => {
-        console.log(res, 'in logout function');
         setUser(null);
         window.location.reload(false);
       })
