@@ -50,22 +50,23 @@ function App() {
     if (user) {
       axios.get(`event/${user.id}/student`)
         .then((response) => {
-          const sortedRegSessions = response.data.sort(function(a, b) {
-            const aMDY = a.date.split('/').join('-');
-            const bMDY = b.date.split('/').join('-');
-            const aUnix = moment(aMDY + ' ' + a.time, 'MM-DD-YY HH:mm a').unix();
-            const bUnix = moment(bMDY + ' ' + b.time, 'MM-DD-YY HH:mm a').unix();
-            return aUnix - bUnix;
-          })
-          setRegSessions(sortedRegSessions);
+          console.log('r.d', response.data)
+          if(response.data.length > 2) {
+            const sortedRegSessions = response.data.sort(function(a, b) {
+              const aMDY = a.date.split('/').join('-');
+              const bMDY = b.date.split('/').join('-');
+              const aUnix = moment(aMDY + ' ' + a.time, 'MM-DD-YY HH:mm a').unix();
+              const bUnix = moment(bMDY + ' ' + b.time, 'MM-DD-YY HH:mm a').unix();
+              return aUnix - bUnix;
+            })
+            setRegSessions(sortedRegSessions);
+          }
         });
     }
-  });
+  }, []);
 
   useEffect(() => {
     // may need to change to user documents
-  
-    
     axios.get('users/1/binder')
       .then(response => {
         setBinder(response.data);
