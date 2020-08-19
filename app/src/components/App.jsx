@@ -58,30 +58,21 @@ function App() {
             return aUnix - bUnix;
           });
           setRegSessions(sortedRegSessions);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      axios.get(`users/${user.id}/binder`)
+        .then(response => {
+          setBinder(response.data);
         })
-        .then(() => {
-          axios.get(`users/${user.id}/binder`)
-            .then(response => {
-              setBinder(response.data);
-            })
-            .catch(err => {
-              console.log(err);
-            });
+        .catch(err => {
+          console.log(err);
         });
     }
   });
-
-  // useEffect(() => {
-  //   // may need to change to user documents
-
-  //   axios.get('users/1/binder')
-  //     .then(response => {
-  //       setBinder(response.data);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }, []);
 
   useEffect(() => {
     axios.get('/auth/exist')
