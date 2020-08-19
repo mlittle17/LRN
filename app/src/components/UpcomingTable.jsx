@@ -29,12 +29,6 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-// const createData = (name, creator, date, time) => {
-//   return {
-//     name, creator, date, time,
-//   };
-// };
-
 const useStyles = makeStyles({
   table: {
     minWidth: 550,
@@ -52,17 +46,12 @@ const useStyles = makeStyles({
 const UpcomingTable = ({
   sessionPage, user, setNavbarSessionName, setEventId,
 }) => {
-  // const {
-  //   name, creator, date, time,
-  // } = sessions;
   const classes = useStyles();
   const history = useHistory();
 
-  
   const doWeNeedButton = (date, time) => {
     const mDY = date.split('/').join('-');
-    // console.log(mDY);
-    // console.log(time, moment().isSameOrAfter(moment(time, 'HH:mm a')));
+
     if (moment().isSameOrAfter(mDY)) {
       if(moment().isSameOrAfter(moment(time, 'HH:mm a'))){
         return true;
@@ -75,10 +64,10 @@ const UpcomingTable = ({
   const placeInSession = (uuid, date, sessionName, creatorUserId, id) => {
     doWeNeedButton(date);
     console.log('you pushed a button', uuid, sessionName);
+
     setNavbarSessionName(sessionName);
-    console.log(id);
     setEventId(id);
-    console.log(user.id, 'userid', creatorUserId, 'creatorId');
+
     if (user.id === creatorUserId) {
       history.push(`/instructor/${uuid}/${sessionName}`);
     } else {
@@ -86,8 +75,6 @@ const UpcomingTable = ({
     }
 
     // check if the user is the instructor or the student
-
-    
   };
 
   return (
@@ -102,7 +89,6 @@ const UpcomingTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* rows.forEach((sessionArray) => { */}
           {sessionPage.map((session) => (
             <StyledTableRow key={session.name}>
               <StyledTableCell component="th" scope="row" className={classes.rowText}>
@@ -117,14 +103,10 @@ const UpcomingTable = ({
               </StyledTableCell>
             </StyledTableRow>
           ))}
-          {/* }) */}
         </TableBody>
       </Table>
     </TableContainer>
   );
 };
-
-
-// INSERT INTO event (zip, name, topic, description, duration, date, time, users_id, classLimit, capacityCount, privacy, uuid) VALUES ('70063', 'Fake Session 3', 'Food', 'FakeDescription 3', '45 mins', '07/25/2020', '7:30 pm', 1, 25, 10, 'public', 'cc8f09f1-cd77-11ea-b352-1795043c4790');
 
 export default UpcomingTable;
