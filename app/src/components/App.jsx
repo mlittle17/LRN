@@ -32,14 +32,14 @@ function App() {
   useEffect(() => {
     axios.get('/event')
       .then(response => {
-        // Put upcoming session in order by date and time. 
-        const sortedSessions = response.data.sort(function(a, b) {
+        // Put upcoming session in order by date and time.
+        const sortedSessions = response.data.sort((a, b) => {
           const aMDY = a.date.split('/').join('-');
           const bMDY = b.date.split('/').join('-');
-          const aUnix = moment(aMDY + ' ' + a.time, 'MM-DD-YY HH:mm a').unix();
-          const bUnix = moment(bMDY + ' ' + b.time, 'MM-DD-YY HH:mm a').unix();
+          const aUnix = moment(`${aMDY} ${a.time}`, 'MM-DD-YY HH:mm a').unix();
+          const bUnix = moment(`${bMDY} ${b.time}`, 'MM-DD-YY HH:mm a').unix();
           return aUnix - bUnix;
-        })
+        });
 
         setSessions(sortedSessions);
       });
@@ -61,19 +61,8 @@ function App() {
             })
             setRegSessions(sortedRegSessions);
           }
-        });
+        })
     }
-  }, []);
-
-  useEffect(() => {
-    // may need to change to user documents
-    axios.get('users/1/binder')
-      .then(response => {
-        setBinder(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }, []);
 
   useEffect(() => {
