@@ -60,24 +60,25 @@ const Binder = ({ userInfo, binder }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {console.log(binder)}
-            {binder.map((document) => (
-              <StyledTableRow key={document.id}>
-                <StyledTableCell component="th" scope="row" className={classes.rowText}>
-                  {document.documenttype === 'Google Doc' && (
-                    <InsertDriveFileIcon />
-                  )}
-                  {document.documenttype === 'slides' && (
-                    <SlideshowTwoToneIcon />
-                  )}
-                  {document.documenttype === 'flash cards' && (
-                    <ViewCarouselTwoToneIcon />
-                  )}
-                </StyledTableCell>
-                <StyledTableCell align="right" className={classes.rowText}><a href={document.linkto}> {document.name}</a></StyledTableCell>
-                <StyledTableCell align="right" className={classes.rowText}>{`${document.namefirst} ${document.namelast}`}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {binder.length >= 1 && (
+              binder.map((document) => (
+                <StyledTableRow key={document.id}>
+                  <StyledTableCell component="th" scope="row" className={classes.rowText}>
+                    {document.documenttype === 'Google Doc' && (
+                      <InsertDriveFileIcon />
+                    )}
+                    {document.documenttype === 'slides' && (
+                      <SlideshowTwoToneIcon />
+                    )}
+                    {document.documenttype === 'flash cards' && (
+                      <ViewCarouselTwoToneIcon />
+                    )}
+                  </StyledTableCell>
+                  <StyledTableCell align="right" className={classes.rowText}><a href={document.linkto}> {document.name}</a></StyledTableCell>
+                  <StyledTableCell align="right" className={classes.rowText}>{`${document.namefirst} ${document.namelast}`}</StyledTableCell>
+                </StyledTableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>
