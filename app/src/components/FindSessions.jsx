@@ -20,7 +20,7 @@ import mapStyles from '../styles/Map.js'
 
 // Set up the Geocoding for transforming the zip to lat and lon
 // process.env.GOOGLE_API_KEY
-Geocode.setApiKey('AIzaSyAXFaDwiusxkZM2RX83GvVl0-vFIlx9VV0');
+Geocode.setApiKey('AIzaSyBGDKoZw-9lBvWcgE4rgOpsq6xNeRWyBi0');
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -151,7 +151,7 @@ const FindSessions = ({ user, sessions, regSessions }) => {
       ))
     if (!window.google) {
       const script = document.createElement(`script`)
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAXFaDwiusxkZM2RX83GvVl0-vFIlx9VV0`
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBGDKoZw-9lBvWcgE4rgOpsq6xNeRWyBi0`
       document.head.append(script)
       script.addEventListener(`load`, onLoad)
       return () => script.removeEventListener(`load`, onLoad)
