@@ -29,6 +29,7 @@ const getUser = (id) => {
 const getSessionCreator = (id) => {
   return db.query(`SELECT * FROM users WHERE id = '${id}'`);
 };
+// const [allUsers, setAllUsers] = useState([]);
 
 // method that gets all the users info
 const getAllUser = async(req, res) => {
@@ -97,10 +98,11 @@ const addStudentEvents = async(req, res) => {
 
 const getStudentEvents = async(req, res) => {
   try {
-    const studentEvents = await db.any(`SELECT S.*, U.nameFirst, U.nameLast, E.name, E.time, E.date, E.description, E.duration, E.topic, E.classLimit, E.capacityCount, E.uuid from student_event S INNER JOIN event E on E.id = S.event_id INNER JOIN users U on U.id = S.users_id WHERE S.users_id= ${req.params.id}`);
+    const studentEvents = await db.any(`SELECT S.*, U.nameFirst, U.nameLast, E.name, E.users_id, E.time, E.date, E.description, E.duration, E.topic, E.classLimit, E.capacityCount, E.uuid from student_event S INNER JOIN event E on E.id = S.event_id INNER JOIN users U on U.id = S.users_id WHERE S.users_id= ${req.params.id}`);
     res.send(studentEvents);
   } catch (err) {
     console.log(`no events, ${err}`);
+    
   }
 };
 
