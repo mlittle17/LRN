@@ -97,7 +97,7 @@ const addStudentEvents = async(req, res) => {
 
 const getStudentEvents = async(req, res) => {
   try {
-    const studentEvents = await db.any(`SELECT S.*, U.nameFirst, U.nameLast, E.name, E.time, E.date from student_event S INNER JOIN event E on E.id = S.event_id INNER JOIN users U on U.id = S.users_id WHERE S.users_id= ${req.params.id}`);
+    const studentEvents = await db.any(`SELECT S.*, U.nameFirst, U.nameLast, E.name, E.time, E.date, E.uuid from student_event S INNER JOIN event E on E.id = S.event_id INNER JOIN users U on U.id = S.users_id WHERE S.users_id= ${req.params.id}`);
     res.send(studentEvents);
   } catch (err) {
     console.log(`no events, ${err}`);
