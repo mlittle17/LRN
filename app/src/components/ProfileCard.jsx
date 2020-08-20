@@ -38,8 +38,6 @@ const ProfileCard = ({ userInfo }) => {
     subjects: ['Music', 'Math', 'History', 'Food'],
   });
 
-  console.log(user, 'ProfileCard');
-
   return (
     <Card variant="outlined" className={classes.root}>
       <CardActionArea className={classes.actionArea}>

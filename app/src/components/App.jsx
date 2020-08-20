@@ -45,10 +45,28 @@ function App() {
       });
   }, []);
 
-  // Retrieve all registered sessions
   useEffect(() => {
     if (user) {
-      axios.get(`event/${user.id}/student`)
+      axios.get(`users/${user.id}/binder`)
+      .then(response => {
+        setBinder(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+  });
+  
+  useEffect(() => {
+    axios.get('/auth/exist')
+    .then(res => {
+      if (res.data === 'no one here') {
+        console.log('I am not logged in');
+      } else {
+        console.log(res.data.username, 'I am logged in');
+
+        // Retrieve all registered sessions
+        axios.get(`event/${res.data.id}/student`)
         .then((response) => {
           const sortedRegSessions = response.data.sort((a, b) => {
             const aMDY = a.date.split('/').join('-');
@@ -57,30 +75,8 @@ function App() {
             const bUnix = moment(`${bMDY} ${b.time}`, 'MM-DD-YY HH:mm a').unix();
             return aUnix - bUnix;
           });
-          setRegSessions(sortedRegSessions);
-        });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      axios.get(`users/${user.id}/binder`)
-        .then(response => {
-          setBinder(response.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  });
-
-  useEffect(() => {
-    axios.get('/auth/exist')
-      .then(res => {
-        if (res.data === 'no one here') {
-          console.log('I am not logged in');
-        } else {
-          console.log(res.data.username, 'I am logged in');
+              setRegSessions(sortedRegSessions);
+            });
           setUser(res.data);
         }
       })
