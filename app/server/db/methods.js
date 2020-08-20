@@ -102,6 +102,7 @@ const getStudentEvents = async(req, res) => {
     res.send(studentEvents);
   } catch (err) {
     console.log(`no events, ${err}`);
+    
   }
 };
 
