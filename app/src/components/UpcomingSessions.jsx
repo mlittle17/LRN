@@ -48,7 +48,7 @@ const UpcomingSessions = ({ sessions, user, setNavbarSessionName, setEventId, re
     })
     setUpcomingSessions(set);
 
-  }, [])
+  }, [regSessions])
 
 
   const rows = upcomingSessions.chunk(3);
