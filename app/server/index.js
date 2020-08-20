@@ -71,6 +71,7 @@ io.on('connection', socket => {
       users[roomID] = room;
     }
     // io.emit('disconnected user', socket.id);
+    // thursday
 
   });
 });
