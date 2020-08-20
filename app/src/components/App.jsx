@@ -92,7 +92,7 @@ function App() {
   if (user) {
     // Set up the Geocoding for transforming the zip to lat and lon
     // Geocode.setApiKey(process.env.GOOGLE_API_KEY);
-    Geocode.setApiKey('AIzaSyAXFaDwiusxkZM2RX83GvVl0-vFIlx9VV0');
+    Geocode.setApiKey('AIzaSyBGDKoZw-9lBvWcgE4rgOpsq6xNeRWyBi0');
     Geocode.fromAddress(user.zip).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
