@@ -3,7 +3,7 @@ const passport = require('passport');
 const cors = require('cors');
 
 router.use(cors());
-
+// for deploy
 // auth login
 router.get('/', (req, res) => {
   res.redirect('/auth/google');
