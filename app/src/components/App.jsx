@@ -50,20 +50,29 @@ function App() {
     if (user) {
       axios.get(`event/${user.id}/student`)
         .then((response) => {
-          console.log('r.d', response.data)
-          if(response.data.length > 2) {
-            const sortedRegSessions = response.data.sort(function(a, b) {
-              const aMDY = a.date.split('/').join('-');
-              const bMDY = b.date.split('/').join('-');
-              const aUnix = moment(aMDY + ' ' + a.time, 'MM-DD-YY HH:mm a').unix();
-              const bUnix = moment(bMDY + ' ' + b.time, 'MM-DD-YY HH:mm a').unix();
-              return aUnix - bUnix;
-            })
-            setRegSessions(sortedRegSessions);
-          }
-        })
+          const sortedRegSessions = response.data.sort((a, b) => {
+            const aMDY = a.date.split('/').join('-');
+            const bMDY = b.date.split('/').join('-');
+            const aUnix = moment(`${aMDY} ${a.time}`, 'MM-DD-YY HH:mm a').unix();
+            const bUnix = moment(`${bMDY} ${b.time}`, 'MM-DD-YY HH:mm a').unix();
+            return aUnix - bUnix;
+          });
+          setRegSessions(sortedRegSessions);
+        });
     }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      axios.get(`users/${user.id}/binder`)
+        .then(response => {
+          setBinder(response.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  });
 
   useEffect(() => {
     axios.get('/auth/exist')
@@ -83,7 +92,7 @@ function App() {
   if (user) {
     // Set up the Geocoding for transforming the zip to lat and lon
     // Geocode.setApiKey(process.env.GOOGLE_API_KEY);
-    Geocode.setApiKey('AIzaSyAXFaDwiusxkZM2RX83GvVl0-vFIlx9VV0');
+    Geocode.setApiKey('AIzaSyBGDKoZw-9lBvWcgE4rgOpsq6xNeRWyBi0');
     Geocode.fromAddress(user.zip).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
