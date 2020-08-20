@@ -85,20 +85,22 @@ function App() {
       });
   }, []);
 
-  if (user) {
-    // Set up the Geocoding for transforming the zip to lat and lon
-    // Geocode.setApiKey(process.env.GOOGLE_API_KEY);
-    Geocode.setApiKey('AIzaSyBGDKoZw-9lBvWcgE4rgOpsq6xNeRWyBi0');
-    Geocode.fromAddress(user.zip).then(
-      response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        user.location = { lat, lng, zipcode: user.zip };
-      },
-      error => {
-        console.error('Error geocoding in App:', error);
-      },
-    );
-  }
+  useEffect(() => {
+    if (user) {
+      // Set up the Geocoding for transforming the zip to lat and lon
+      // Geocode.setApiKey(process.env.GOOGLE_API_KEY);
+      Geocode.setApiKey('AIzaSyBGDKoZw-9lBvWcgE4rgOpsq6xNeRWyBi0');
+      Geocode.fromAddress(user.zip).then(
+        response => {
+          const { lat, lng } = response.results[0].geometry.location;
+          user.location = { lat, lng, zipcode: user.zip };
+        },
+        error => {
+          console.error('Error geocoding in App:', error);
+        },
+      );
+    }
+  }, [user])
 
   const googleLogin = () => {
     window.location.replace('https://lrn-solid-sun-282620.uc.r.appspot.com/auth/login');
